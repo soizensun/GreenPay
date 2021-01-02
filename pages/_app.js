@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com"></link>
-        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400&display=swap" rel="stylesheet"></link>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css"/>
           <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"

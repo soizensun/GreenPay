@@ -40,12 +40,12 @@ export default function MainLayout(props) {
 
     return (
         <div>
-            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "35px", fontSize: "12px" }}>
+            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "white", height: "40px", fontSize: "15px" }}>
                 <Nav className="mr-auto" style={{ marginLeft: "14px" }}>
-                    <Nav.Link style={{ color: "white" }}>วิธีขาย</Nav.Link>
-                    <Nav.Link style={{ color: "white" }}>วิธีสั่งซื้อ</Nav.Link>
+                    <Nav.Link style={{ color: "#2C3E50" }}>วิธีขาย</Nav.Link>
+                    <Nav.Link style={{ color: "#2C3E50" }}>วิธีสั่งซื้อ</Nav.Link>
                     <Link href="/Test" passHref>
-                        <Nav.Link style={{ color: "white" }}>เกี่ยวกับ GreenPay</Nav.Link>
+                        <Nav.Link style={{ color: "#2C3E50" }}>เกี่ยวกับ GreenPay</Nav.Link>
                     </Link>
                 </Nav>
                 <Nav>
@@ -54,8 +54,8 @@ export default function MainLayout(props) {
                             <GoogleLogin
                                 clientId="1068628232562-qm0ssc22ls4ks62jcopg1frqbdau8jau.apps.googleusercontent.com"
                                 render={renderProps => (
-                                    <LoginButton onClick={renderProps.onClick} style={{ color: "white" }}>
-                                        <GrGoogle style={{ marginRight: "5px", marginBottom: "1px" }} />Login
+                                    <LoginButton onClick={renderProps.onClick} style={{ color: "#2C3E50" }}>
+                                        <GrGoogle style={{ marginRight: "5px", marginBottom: "3px" }} />Login
                                     </LoginButton>
                                 )}
                                 buttonText="Login with google"
@@ -71,7 +71,7 @@ export default function MainLayout(props) {
             </Navbar>
 
 
-            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "49px", borderRadius: "0px 0px 10px 10px", fontSize: "13px" }}>
+            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "85px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
                 <Link href="/Home" passHref>
                     <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
@@ -95,6 +95,16 @@ export default function MainLayout(props) {
                     <Link href="/" passHref>
                         <Nav.Link><BiCartAlt style={{ fontSize: "23px", marginRight: "17px", color: "white" }} /></Nav.Link>
                     </Link>
+                                    <Search
+                    size='mini'
+                        // loading={loading}
+                        // onResultSelect={(e, data) =>
+                        //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                        // }
+                        // onSearchChange={handleSearchChange}
+                        // results={results}
+                        // value={value}
+                    />
                 </Nav>
             </Navbar>
 
