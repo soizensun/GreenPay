@@ -10,8 +10,8 @@ export default function Home() {
 
         <main>
           <div style={{ height: "4000px", marginTop: "100px"}}>
-            <CustomButton/>
-            asdfasdfbbbb
+            {/* <CustomButton/>
+            asdfasdfbbbb */}
           </div>
 
         </main>
