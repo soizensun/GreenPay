@@ -19,8 +19,6 @@ export default function Home() {
             <ProductCard/>
             <ProductCard/>
             <ProductCard/>
-            <CustomButton/>
-            asdfasdfbbbb
           </div>
 
         </main>
