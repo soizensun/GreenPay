@@ -1,6 +1,7 @@
 import MainLayout from "../layouts/MainLayout";
 import Axios from 'axios'
 import CustomButton from '../components/CustomButton'
+import ProductCard from '../components/ProductCard'
 
 export default function Home() {
 
@@ -12,6 +13,12 @@ export default function Home() {
           <div style={{ height: "4000px", marginTop: "100px"}}>
             {/* <CustomButton/>
             asdfasdfbbbb */}
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
+            <ProductCard/>
           </div>
 
         </main>
