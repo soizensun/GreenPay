@@ -9,6 +9,8 @@ import { GoogleLogin } from 'react-google-login';
 import { ImSearch } from "react-icons/im";
 import { BiCartAlt } from "react-icons/bi";
 import styled from 'styled-components'
+import { Search } from 'semantic-ui-react'
+
 
 const HEADERS = { 'Content-Type': 'application/json' }
 
@@ -38,14 +40,13 @@ export default function MainLayout(props) {
 
     return (
         <div>
-            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#56762E", height: "40px" }}>
-                <Nav className="mr-auto">
-                    <Nav.Link>วิธีขาย</Nav.Link>
-                    <Nav.Link>วิธีสั่งซื้อ</Nav.Link>
+            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "white", height: "40px", fontSize: "15px" }}>
+                <Nav className="mr-auto" style={{ marginLeft: "14px" }}>
+                    <Nav.Link style={{ color: "#2C3E50" }}>วิธีขาย</Nav.Link>
+                    <Nav.Link style={{ color: "#2C3E50" }}>วิธีสั่งซื้อ</Nav.Link>
                     <Link href="/Test" passHref>
-                        <Nav.Link>เกี่ยวกับ GreenPay</Nav.Link>
+                        <Nav.Link style={{ color: "#2C3E50" }}>เกี่ยวกับ GreenPay</Nav.Link>
                     </Link>
-
                 </Nav>
                 <Nav>
                     <Link href="/" passHref>
@@ -53,7 +54,7 @@ export default function MainLayout(props) {
                             <GoogleLogin
                                 clientId="1068628232562-qm0ssc22ls4ks62jcopg1frqbdau8jau.apps.googleusercontent.com"
                                 render={renderProps => (
-                                    <LoginButton onClick={renderProps.onClick}>
+                                    <LoginButton onClick={renderProps.onClick} style={{ color: "#2C3E50" }}>
                                         <GrGoogle style={{ marginRight: "5px", marginBottom: "3px" }} />Login
                                     </LoginButton>
                                 )}
@@ -70,21 +71,40 @@ export default function MainLayout(props) {
             </Navbar>
 
 
-            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#6D953A", height: "70px" }}>
+            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "85px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
                 <Link href="/Home" passHref>
-                    <Navbar.Brand href="">GreenPay</Navbar.Brand>
+                    <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
+                    {/* <Search
+                    size='mini'
+                        // loading={loading}
+                        // onResultSelect={(e, data) =>
+                        //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                        // }
+                        // onSearchChange={handleSearchChange}
+                        // results={results}
+                        // value={value}
+                    /> */}
+                    <Nav.Link style={{ color: "white" }}>menu1</Nav.Link>
+                    <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
+                    <Nav.Link style={{ color: "white" }}>menu3</Nav.Link>
+                    <Nav.Link style={{ color: "white" }}>menu4</Nav.Link>
                 </Nav>
                 <Nav>
                     <Link href="/" passHref>
-                        <Nav.Link><BiCartAlt style={{fontSize: "23px", marginRight: "17px"}}/></Nav.Link>
+                        <Nav.Link><BiCartAlt style={{ fontSize: "23px", marginRight: "17px", color: "white" }} /></Nav.Link>
                     </Link>
-                    <Form inline>
-                        <FormControl type="text" size="sm" placeholder="ค้นหาสินค้า หรือร้านค้า" className="mr-sm-2" />
-                        <ImSearch style={{color: "#DBEAC9", fontSize: "17px"}}/> 
-                    </Form>
-
+                                    <Search
+                    size='mini'
+                        // loading={loading}
+                        // onResultSelect={(e, data) =>
+                        //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                        // }
+                        // onSearchChange={handleSearchChange}
+                        // results={results}
+                        // value={value}
+                    />
                 </Nav>
             </Navbar>
 
