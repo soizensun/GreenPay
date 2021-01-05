@@ -1,12 +1,9 @@
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Link from 'next/link'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
-import { GrGoogle } from "react-icons/gr";
 import Axios from 'axios'
 import { GoogleLogin } from 'react-google-login';
-import { ImSearch } from "react-icons/im";
+import { GrGoogle } from "react-icons/gr";
 import { BiCartAlt } from "react-icons/bi";
 import styled from 'styled-components'
 import { Search } from 'semantic-ui-react'
@@ -76,16 +73,6 @@ export default function MainLayout(props) {
                     <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
-                    {/* <Search
-                    size='mini'
-                        // loading={loading}
-                        // onResultSelect={(e, data) =>
-                        //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-                        // }
-                        // onSearchChange={handleSearchChange}
-                        // results={results}
-                        // value={value}
-                    /> */}
                     <Nav.Link style={{ color: "white" }}>menu1</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu3</Nav.Link>
@@ -95,15 +82,16 @@ export default function MainLayout(props) {
                     <Link href="/" passHref>
                         <Nav.Link><BiCartAlt style={{ fontSize: "23px", marginRight: "17px", color: "white" }} /></Nav.Link>
                     </Link>
-                                    <Search
-                    size='mini'
-                        // loading={loading}
-                        // onResultSelect={(e, data) =>
-                        //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-                        // }
-                        // onSearchChange={handleSearchChange}
-                        // results={results}
-                        // value={value}
+
+                    <Search
+                        size='mini'
+                    // loading={loading}
+                    // onResultSelect={(e, data) =>
+                    //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                    // }
+                    // onSearchChange={handleSearchChange}
+                    // results={results}
+                    // value={value}
                     />
                 </Nav>
             </Navbar>

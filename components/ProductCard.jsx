@@ -1,27 +1,39 @@
+import Link from 'next/link'
 import React from 'react'
+import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
+import { clickedProduct as clickedProductAtom } from "../recoil/atoms";
 
 export default function ProductCard(props) {
+    const [clickedProduct, setClickedProduct] = useRecoilState(clickedProductAtom)
+
+
     return (
         <div>
-            <Card>
-                <Image/>
-                <Name>{props.name || "product name "}</Name>
-                <Price>{props.price || "25 บาท"}</Price>
-            </Card>
+            <Link href="/ProductDetail">
+                <Card onClick={() => setClickedProduct(props.id)}>
+                    <Image imageUrl={props.imageUrl} />
+                    <Name>{props.name || "product name "}</Name>
+                    <Price>{props.price || "-"} บาท</Price>
+                </Card>
+            </Link>
+
         </div>
     )
 }
 
 const Card = styled.div`
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     box-shadow: 1px 1px 5px #ABB2B9;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
+    cursor: pointer;
+    padding: 8px;
 
     &:hover{
         box-shadow: 2px 2px 7px 2px #ABB2B9;
@@ -32,17 +44,20 @@ const Card = styled.div`
 const Image = styled.div`
     width: 110px;
     height: 110px;
-    background-image: url('https://backend.tops.co.th/media//catalog/product/3/4/3415581119183_e29-03-2019.jpg');
+    background-image: url(${props => props.imageUrl || "https://backend.tops.co.th/media//catalog/product/3/4/3415581119183_e29-03-2019.jpg"});
     background-size: 110px 110px;
 `
 
 const Name = styled.div`
     margin-top: 20px;
     font-size: 19px;
-
+    color: #185341;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center
 `
 
 const Price = styled.div`
     margin-top: 5px;
-    font-size: 19px
+    font-size: 17px
 `
