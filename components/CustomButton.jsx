@@ -4,7 +4,13 @@ import styled from 'styled-components'
 export default function CustomButton(props) {
     return (
         <div>
-            <PrimaryButton>{props.buttonText || "primaryButton"}</PrimaryButton>
+            <PrimaryButton
+                width={props.width}
+                height={props.height}
+                backgroundColor={props.backgroundColor}
+            >
+                {props.buttonText || "primaryButton"}
+            </PrimaryButton>
         </div>
     )
 }
