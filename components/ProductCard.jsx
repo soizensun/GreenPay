@@ -11,7 +11,7 @@ export default function ProductCard(props) {
     return (
         <div>
             <Link href="/ProductDetail">
-                <Card onClick={() => setClickedProduct(props.id)}>
+                <Card onClick={() => localStorage.setItem("productDetail", props.id)}>
                     <Image imageUrl={props.imageUrl} />
                     <Name>{props.name || "product name "}</Name>
                     <Price>{props.price || "-"} บาท</Price>
