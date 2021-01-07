@@ -1,27 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import MainLayout from "../layouts/MainLayout";
-import CustomButton from "../components/CustomButton";
+import CustomButton from "./CustomButton";
 import styled from "styled-components";
+import Axios from 'axios'
 
-export default function FoodDetail(props) {
+const HEADERS = { headers: { 'Content-Type': 'application/json' } }
+
+export default function ProductDetail(props) {
     const [count, setCount] = useState(1);
     const [stock, setStock] = useState(0)
+    const [product, setProduct] = useState({});
+
+
+    useEffect(() => {
+        Axios.post("/api/getProductDetail", JSON.stringify({ productId: props.productId }), HEADERS)
+            .then((res) => {
+                console.log(res.data);
+                setProduct(res.data)
+                setStock(res.data.stock)
+            })
+    }, [])
 
 
     return (
         <>
             <DetailContainer>
                 <SubContainerImage>
-                    <Image mainPicture={props.product.mainPicture} />
+                    <Image mainPicture={product.mainPicture} />
                 </SubContainerImage>
 
                 <SubContainerDetail>
                     <div style={{ flexGrow: "5" }}>
-                        <NameLabel>{props.product.name}</NameLabel>
-                        <PriceLabel>{props.product.price} บาท (Green Point {10 / 100 * props.product.price} บาท) </PriceLabel>
+                        <NameLabel>{product.name}</NameLabel>
+                        <PriceLabel>{product.price} บาท (Green Point {10 / 100 * product.price} บาท) </PriceLabel>
                         <br />
                         <DescriptionLabel>รายละเอียดสินค้า</DescriptionLabel>
-                        <Description>{props.product.description}</Description>
+                        <Description>{product.description}</Description>
 
                     </div>
                     <div style={{ flexGrow: "6" }}>
@@ -29,8 +43,10 @@ export default function FoodDetail(props) {
                             <Counter>
                                 <span
                                     onClick={() => {
-                                        setCount(count - 1)
-                                        setStock(stock + 1)
+                                        if (count > 1) {
+                                            setCount(count - 1)
+                                        }
+
                                     }}
                                 >
                                     <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#2E4053" />
@@ -38,8 +54,10 @@ export default function FoodDetail(props) {
                                 <ShowCount>{count}</ShowCount>
                                 <span
                                     onClick={() => {
-                                        setCount(count + 1)
-                                        setStock(stock - 1)
+                                        if(count < stock){
+                                            setCount(count + 1)
+                                        }
+                                        
                                     }}
                                 >
                                     <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" />
@@ -62,10 +80,11 @@ export default function FoodDetail(props) {
 const DetailContainer = styled.div`
     display: flex;
     align-items: stretch;
-    margin-top: 90px;
+    margin-top: 50px;
     margin-right: 20px;
     margin-left: 20px;
-    /* background-color: greenyellow; */
+    margin-bottom: 30px;
+    background-color: greenyellow;
 
 `
 

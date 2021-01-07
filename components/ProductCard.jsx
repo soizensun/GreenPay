@@ -10,7 +10,7 @@ export default function ProductCard(props) {
 
     return (
         <div>
-            <Link href="/ProductDetail">
+            <Link href="/ProductDetails">
                 <Card onClick={() => localStorage.setItem("productDetail", props.id)}>
                     <Image imageUrl={props.imageUrl} />
                     <Name>{props.name || "product name "}</Name>
