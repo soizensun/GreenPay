@@ -6,8 +6,7 @@ import ProductDetail from "../components/ProductDetail";
 export default function ProductDetails() {
     return (
         <MainLayout>
-            {localStorage.getItem('productDetail')}
-            {/* <ProductDetail productId={localStorage.getItem('productDetail')}/> */}
+            <ProductDetail productId={(typeof window !== "undefined") ? `${localStorage.getItem('productDetail')}` : ""}/>
         </MainLayout>
     )
 
