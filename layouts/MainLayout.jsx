@@ -73,10 +73,10 @@ export default function MainLayout(props) {
                     <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
-                    <Nav.Link style={{ color: "white" }}>menu1</Nav.Link>
-                    <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
+                    <Nav.Link style={{ color: "white" }}>โครงการสิ่งแวดล้อม</Nav.Link>
+                    {/* <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu3</Nav.Link>
-                    <Nav.Link style={{ color: "white" }}>menu4</Nav.Link>
+                    <Nav.Link style={{ color: "white" }}>menu4</Nav.Link> */}
                 </Nav>
                 <Nav>
                     <Link href="/" passHref>
