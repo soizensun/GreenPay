@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import MainLayout from "../layouts/MainLayout";
 import CustomButton from "./CustomButton";
 import styled from "styled-components";
-import Axios from 'axios'
+import Axios from 'axios';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -10,7 +10,7 @@ export default function ProductDetail(props) {
     const [count, setCount] = useState(1);
     const [stock, setStock] = useState(0)
     const [product, setProduct] = useState({});
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Axios.post("/api/getProductDetail", JSON.stringify({ productId: props.productId }), HEADERS)
@@ -18,60 +18,83 @@ export default function ProductDetail(props) {
                 console.log(res.data);
                 setProduct(res.data)
                 setStock(res.data.stock)
+                setIsLoading(false)
             })
     }, [])
 
 
     return (
         <>
-            <DetailContainer>
-                <SubContainerImage>
-                    <Image mainPicture={product.mainPicture} />
-                </SubContainerImage>
+            {
+                isLoading ?
+                    <DetailContainer>
+                        <SubContainerImage>
+                            <Skeleton animation="wave" variant="rect" width={250} height={250} />
+                        </SubContainerImage>
 
-                <SubContainerDetail>
-                    <div style={{ flexGrow: "5" }}>
-                        <NameLabel>{product.name}</NameLabel>
-                        <PriceLabel>{product.price} บาท (Green Point {10 / 100 * product.price} บาท) </PriceLabel>
-                        <br />
-                        <DescriptionLabel>รายละเอียดสินค้า</DescriptionLabel>
-                        <Description>{product.description}</Description>
-
-                    </div>
-                    <div style={{ flexGrow: "6" }}>
-                        <div style={{ textAlign: "center", fontSize: "18px" }}>
-                            <Counter>
-                                <span
-                                    onClick={() => {
-                                        if (count > 1) {
-                                            setCount(count - 1)
-                                        }
-
-                                    }}
-                                >
-                                    <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#2E4053" />
-                                </span>
-                                <ShowCount>{count}</ShowCount>
-                                <span
-                                    onClick={() => {
-                                        if(count < stock){
-                                            setCount(count + 1)
-                                        }
-                                        
-                                    }}
-                                >
-                                    <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" />
-                                </span>
-                            </Counter>
-                            จำนวนสินค้าในคลัง : {stock}
-                            <div style={{ marginTop: "10px" }}>
-                                <CustomButton buttonText="เพิ่มลงตะกร้า"></CustomButton>
+                        <SubContainerDetail>
+                            <div style={{ flexGrow: "5" }}>
+                                <Skeleton animation="wave" variant="text" width={150} height={45}/>
+                                <Skeleton animation="wave" variant="text" width={250} height={45}/>
+                                <br />
+                                <Skeleton animation="wave" variant="text" width={200} height={45}/>
+                                <Skeleton animation="wave" variant="text" width={250} height={45}/>
                             </div>
-                        </div>
-                    </div>
-                </SubContainerDetail>
+                            <div style={{ flexGrow: "6" }}>
+                                <div style={{ textAlign: "center", fontSize: "18px" }}>
+                                    <Counter>
+                                        <span onClick={() => { if (count > 1) setCount(count - 1) }} >
+                                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#2E4053" />
+                                        </span>
+                                        <ShowCount>{count}</ShowCount>
+                                        <span onClick={() => { if (count < stock) setCount(count + 1) }} >
+                                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" />
+                                        </span>
+                                    </Counter>
+                                    จำนวนสินค้าในคลัง : -
+                                    <div style={{ marginTop: "10px" }}>
+                                        <CustomButton buttonText="เพิ่มลงตะกร้า"></CustomButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </SubContainerDetail>
+                    </DetailContainer>
+                    :
+                    <DetailContainer>
+                        <SubContainerImage>
+                            <Image mainPicture={product.mainPicture} />
+                        </SubContainerImage>
 
-            </DetailContainer>
+                        <SubContainerDetail>
+                            <div style={{ flexGrow: "5" }}>
+                                <NameLabel>{product.name}</NameLabel>
+                                <PriceLabel>{product.price} บาท (Green Point {10 / 100 * product.price} บาท) </PriceLabel>
+                                <br />
+                                <DescriptionLabel>รายละเอียดสินค้า</DescriptionLabel>
+                                <Description>{product.description}</Description>
+
+                            </div>
+                            <div style={{ flexGrow: "6" }}>
+                                <div style={{ textAlign: "center", fontSize: "18px" }}>
+                                    <Counter>
+                                        <span onClick={() => { if (count > 1) setCount(count - 1) }} >
+                                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#2E4053" />
+                                        </span>
+                                        <ShowCount>{count}</ShowCount>
+                                        <span onClick={() => { if (count < stock) setCount(count + 1) }} >
+                                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" />
+                                        </span>
+                                    </Counter>
+                            จำนวนสินค้าในคลัง : {stock}
+                                    <div style={{ marginTop: "10px" }}>
+                                        <CustomButton buttonText="เพิ่มลงตะกร้า"></CustomButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </SubContainerDetail>
+                    </DetailContainer>
+            }
+
         </>
     )
 
@@ -84,7 +107,7 @@ const DetailContainer = styled.div`
     margin-right: 20px;
     margin-left: 20px;
     margin-bottom: 30px;
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
 
 `
 

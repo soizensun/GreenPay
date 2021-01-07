@@ -7,6 +7,7 @@ import { GrGoogle } from "react-icons/gr";
 import { BiCartAlt } from "react-icons/bi";
 import styled from 'styled-components'
 import { Search } from 'semantic-ui-react'
+import Badge from '@material-ui/core/Badge';
 
 
 const HEADERS = { 'Content-Type': 'application/json' }
@@ -36,7 +37,7 @@ export default function MainLayout(props) {
     }
 
     return (
-        <div>
+        <div style={{paddingBottom: "70px"}}>
             <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "white", height: "40px", fontSize: "15px" }}>
                 <Nav className="mr-auto" style={{ marginLeft: "14px" }}>
                     <Nav.Link style={{ color: "#2C3E50" }}>วิธีขาย</Nav.Link>
@@ -79,11 +80,16 @@ export default function MainLayout(props) {
                     <Nav.Link style={{ color: "white" }}>menu4</Nav.Link> */}
                 </Nav>
                 <Nav>
-                    <Link href="/" passHref>
-                        <Nav.Link><BiCartAlt style={{ fontSize: "23px", marginRight: "17px", color: "white" }} /></Nav.Link>
-                    </Link>
+                    {/* <Link href="/MyCart" passHref> */}
+                    <Nav.Link>
+                        <Badge badgeContent={8} color="secondary">
+                            <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
+                        </Badge>
+                    </Nav.Link>
+                    {/* </Link> */}
 
                     <Search
+                        style={{marginLeft: "20px"}}
                         size='mini'
                     // loading={loading}
                     // onResultSelect={(e, data) =>
@@ -97,6 +103,7 @@ export default function MainLayout(props) {
             </Navbar>
 
             {props.children}
+            {/* <Footer>asdfasfd</Footer> */}
         </div>
     )
 }
