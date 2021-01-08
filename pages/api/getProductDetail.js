@@ -6,7 +6,7 @@ const res = async (req, res) => {
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-    Axios.get(`https://greenpay-service.herokuapp.com/products/${data.productId}`, HEADERS)
+    Axios.get(`http://localhost:4000/products/${data.productId}`, HEADERS)
         .then(r => 
 
             res.status(200).send(r.data)

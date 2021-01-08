@@ -9,8 +9,9 @@ function MyApp({ Component, pageProps }) {
     <div style={{ fontFamily: 'Prompt' }}>
 
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Green Pay</title>
+        <link rel="icon" href="/tree.ico" />
+        
         <link rel="preconnect" href="https://fonts.gstatic.com"></link>
         <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400&display=swap" rel="stylesheet"></link>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css" />
