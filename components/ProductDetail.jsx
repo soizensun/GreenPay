@@ -68,7 +68,7 @@ export default function ProductDetail(props) {
                         <SubContainerDetail>
                             <div style={{ flexGrow: "5" }}>
                                 <NameLabel>{product.name}</NameLabel>
-                                <PriceLabel>{product.price} บาท (Green Point {10 / 100 * product.price} บาท) </PriceLabel>
+                                <PriceLabel>{product.price + product.greenPrice} บาท (Green price {product.greenPrice} บาท) </PriceLabel>
                                 <br />
                                 <DescriptionLabel>รายละเอียดสินค้า</DescriptionLabel>
                                 <Description>{product.description}</Description>

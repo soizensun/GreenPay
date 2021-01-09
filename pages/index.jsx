@@ -29,6 +29,7 @@ export default function Home() {
               allProduct.map(item => {
                 return (
                   <ProductCard
+                    shopId={item.shopId}
                     imageUrl={item.mainPicture}
                     name={item.name}
                     price={item.price}

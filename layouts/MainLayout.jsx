@@ -10,8 +10,8 @@ import styled from 'styled-components'
 import { Search } from 'semantic-ui-react'
 import Badge from '@material-ui/core/Badge';
 import { FaSignOutAlt } from "react-icons/fa";
-import {currentUser as currentUserAtom} from '../recoil/atoms'
-import { useRecoilState } from 'recoil';
+import { currentUser as currentUserAtom, cartCounter as cartCounterAtom } from '../recoil/atoms'
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 
 const HEADERS = { 'Content-Type': 'application/json' }
@@ -29,6 +29,7 @@ const LoginButton = styled.button`
 
 export default function MainLayout(props) {
     const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
+    const cartCounter = useRecoilValue(cartCounterAtom)
 
     const responseGoogle = (response) => {
         console.log(response);
@@ -50,7 +51,6 @@ export default function MainLayout(props) {
             (localStorage.getItem("userToken") != null) ?
                 Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
                     .then(res => {
-                        console.log(res.data);
                         setCurrentUser(res.data)
                     })
                 :
@@ -71,19 +71,20 @@ export default function MainLayout(props) {
                 </Nav>
                 <Nav>
                     <Nav.Link style={{ color: "#2C3E50" }}>
-                        {currentUser.displayName}{console.log(currentUser)}
+                        {currentUser.displayName}
                     </Nav.Link>
                     {
-                        // console.log(user)
                         (Object.keys(currentUser).length !== 0) ?
-                            <Nav.Link
-                                style={{ color: "#2C3E50" }}
-                                onClick={() => {
-                                    localStorage.removeItem('userToken')
-                                    setCurrentUser({})
-                                }}>
-                                <FaSignOutAlt /> logout
+                            <Link href="/" passHref>
+                                <Nav.Link
+                                    style={{ color: "#2C3E50" }}
+                                    onClick={() => {
+                                        localStorage.removeItem('userToken')
+                                        setCurrentUser({})
+                                    }}>
+                                    <FaSignOutAlt /> logout
                             </Nav.Link>
+                            </Link>
                             :
                             <Nav.Link>
                                 <GoogleLogin
@@ -116,13 +117,18 @@ export default function MainLayout(props) {
                     <Nav.Link style={{ color: "white" }}>menu4</Nav.Link> */}
                 </Nav>
                 <Nav>
-                    {/* <Link href="/MyCart" passHref> */}
-                    <Nav.Link>
-                        <Badge badgeContent={8} color="secondary">
-                            <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
-                        </Badge>
-                    </Nav.Link>
-                    {/* </Link> */}
+                    {
+                        (Object.keys(currentUser).length !== 0) ?
+                            <Link href="/Cart" passHref>
+                                <Nav.Link>
+                                    <Badge badgeContent={cartCounter} color="secondary">
+                                        <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
+                                    </Badge>
+                                </Nav.Link>
+                            </Link>
+                            : <></>
+                    }
+
 
                     <Search
                         style={{ marginLeft: "20px" }}
