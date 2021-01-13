@@ -32,7 +32,8 @@ export default function Home() {
                     shopId={item.shopId}
                     imageUrl={item.mainPicture}
                     name={item.name}
-                    price={item.price}
+                    price={item.price + item.greenPrice}
+                    greenPrice={item.greenPrice}
                     id={item._id}
                   />)
               })

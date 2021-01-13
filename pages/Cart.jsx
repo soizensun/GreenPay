@@ -53,6 +53,9 @@ export default function Cart() {
 
         <MainLayout>
             <div>
+                <div>
+                    ตำแหน่ง
+                </div>
                 {
                     carts ?
                         carts.map(shop =>

@@ -3,35 +3,36 @@ import styled from 'styled-components'
 
 export default function CustomButton(props) {
     return (
-            <PrimaryButton
-                width={props.width}
-                height={props.height}
-                backgroundColor={props.backgroundColor}
-            >
-                {props.buttonText || "primaryButton"}
-            </PrimaryButton>
+        <PrimaryButton
+            color={props.color}
+            width={props.width}
+            height={props.height}
+            backgroundColor={props.backgroundColor}
+        >
+            {props.buttonText || "primaryButton"}
+        </PrimaryButton>
     )
 }
 
 const PrimaryButton = styled.button`
     background-color: ${props => {
-        if(props.backgroundColor) 
-            return props.backgroundColor + "af" 
+        if (props.backgroundColor)
+            return props.backgroundColor + "af"
         else return "#3949ABaf"
-        } };
-    color: white;
+    }};
+    color: ${props => props.color || "white"};
     width: ${props => props.width || "200px"};
     height: ${props => props.height || "45px"};
-    border: solid 1.5px ${props => props.backgroundColor || "#3949AB" }; ;
+    border: solid 1.5px ${props => props.backgroundColor || "#3949AB"}; ;
     font-size: 17px;
     border-radius: 7px;
     transition: .6s;
     overflow: hidden;
 
     &:hover {
-        background: ${props => props.backgroundColor || "#3949AB" };
+        background: ${props => props.backgroundColor || "#3949AB"};
         cursor: pointer;
-        color: rgb(255, 255, 255)
+        color: ${props => props.color || "white"};
     }
 
     &:disabled, .submitBTN[disabled] {
