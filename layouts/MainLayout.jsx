@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Link from 'next/link'
 import Axios from 'axios'
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { GrGoogle } from "react-icons/gr";
 import { BiCartAlt } from "react-icons/bi";
 import styled from 'styled-components'
@@ -31,11 +31,13 @@ export default function MainLayout(props) {
     const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
     const cartCounter = useRecoilValue(cartCounterAtom)
 
+
     const responseGoogle = (response) => {
         console.log(response);
 
         Axios.post('/api/googleAuth', JSON.stringify({ "tokenId": response.tokenId }), { headers: HEADERS })
             .then(res => {
+                console.log(res.data);
                 localStorage.setItem("userToken", res.data.token)
 
                 Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
@@ -94,7 +96,6 @@ export default function MainLayout(props) {
                                             <GrGoogle style={{ marginRight: "5px", marginBottom: "3px" }} />Login
                                         </LoginButton>
                                     )}
-                                    buttonText="Login with google"
                                     onSuccess={responseGoogle}
                                     onFailure={responseGoogle}
                                     cookiePolicy={'single_host_origin'}

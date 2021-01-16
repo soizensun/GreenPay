@@ -28,6 +28,7 @@ const PrimaryButton = styled.button`
     border-radius: 7px;
     transition: .6s;
     overflow: hidden;
+    font-family: Prompt;
 
     &:hover {
         background: ${props => props.backgroundColor || "#3949AB"};

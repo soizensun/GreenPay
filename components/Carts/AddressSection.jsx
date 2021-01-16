@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { Label } from 'semantic-ui-react'
+import { Popup } from 'semantic-ui-react'
+import CustomButton from '../util/CustomButton'
 import styled from 'styled-components'
+import { BiEdit } from "react-icons/bi";
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -50,12 +52,28 @@ export default function AddressSection() {
                 </div>
             </div> */}
             {
-                (address) ?
+                (address.houseNumber != undefined) ?
                     <div style={{ textAlign: "right" }}>
                         {address.houseNumber}, {address.moo}, {address.road}, {address.subDistrict}, {address.district}, {address.province}, {address.postCode}
+                        <BiEdit style={{ color: "yellow", fontSize: "25px", marginLeft: "10px" }} />
                     </div>
                     :
-                    <div>fff</div>
+                    <div>
+                        <span style={{ marginRight: "10px" }}>
+                            ไม่มีรายละเอียดการจัดส่ง
+                        </span>
+                        <span onClick={() => { console.log("create address") }}>
+                            <CustomButton
+                                color="#212F3D"
+                                height="40px"
+                                width="250px"
+                                backgroundColor="#F1C40F"
+                                buttonText="สร้างรายละเอียดการจัดส่ง"
+                            />
+                        </span>
+
+                    </div>
+
             }
 
 
@@ -69,18 +87,18 @@ const Container = styled.div`
     margin-bottom: 5px;
 
     padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 40px;
+    padding-right: 30px;
     padding-bottom: 20px;
     /* box-shadow: 1px 1px 3px #ABB2B9; */
-    font-size: 16px;
+    font-size: 17px;
     background-color: #90B099;
     color: white;
     border-radius: 0px 0px 10px 10px;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: center;
 `
 const AddressHeader = styled.div`
     /* padding-bottom: 15px; */
-    padding-left: 20px;
 `
