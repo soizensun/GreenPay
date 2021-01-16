@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import MainLayout from "../layouts/MainLayout";
 import Axios from 'axios'
-import CustomButton from '../components/CustomButton'
-import ProductCard from '../components/ProductCard'
+import ProductCard from '../components/index/ProductCard'
 import styled from "styled-components";
 import { useRecoilValue } from 'recoil';
 import {currentUser as currentUserAtom} from '../recoil/atoms'

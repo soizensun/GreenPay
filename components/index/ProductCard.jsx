@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
-import { clickedProduct as clickedProductAtom } from "../recoil/atoms";
+import { clickedProduct as clickedProductAtom } from "../../recoil/atoms";
 
 export default function ProductCard(props) {
     const [clickedProduct, setClickedProduct] = useRecoilState(clickedProductAtom)

@@ -1,7 +1,8 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import MainLayout from "../layouts/MainLayout";
-import CartShop from '../components/CartShop'
+import CartShop from '../components/Carts/CartShop'
+import AddressSection from '../components/Carts/AddressSection'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -54,7 +55,7 @@ export default function Cart() {
         <MainLayout>
             <div>
                 <div>
-                    ตำแหน่ง
+                    <AddressSection/>
                 </div>
                 {
                     carts ?

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CustomButton from "./CustomButton";
+import CustomButton from "../util/CustomButton";
 import styled from "styled-components";
 import Axios from 'axios';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -21,7 +21,6 @@ export default function ProductDetail(props) {
                 setIsLoading(false)
             })
     }, [])
-
 
     return (
         <>
