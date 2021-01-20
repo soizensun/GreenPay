@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Link from 'next/link'
 import Axios from 'axios'
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import { GrGoogle } from "react-icons/gr";
 import { BiCartAlt } from "react-icons/bi";
 import styled from 'styled-components'
@@ -107,12 +107,26 @@ export default function MainLayout(props) {
             </Navbar>
 
 
-            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "85px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
+            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "70px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
                 <Link href="/" passHref>
                     <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
-                    <Nav.Link style={{ color: "white" }}>โครงการสิ่งแวดล้อม</Nav.Link>
+                    {/* <Nav.Link style={{ color: "white" }}>โครงการสิ่งแวดล้อม</Nav.Link> */}
+                    {
+                        (currentUser.role != undefined) ?
+                            ((currentUser.role).includes('shopper')) ?
+                                <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
+                                : ""
+                            : ""
+                    }
+                    {
+                        (currentUser.role != undefined) ?
+                            ((currentUser.role).includes('admin')) ?
+                                <Nav.Link style={{ color: "white" }}>สำหรับ admin</Nav.Link>
+                                : ""
+                            : ""
+                    }
                     {/* <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu3</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu4</Nav.Link> */}

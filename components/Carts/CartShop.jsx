@@ -10,7 +10,8 @@ export default function CartShop(props) {
     const [shop, setShop] = useState({})
     const [products, setProducts] = useState([])
     const [amount, setAmount] = useState([]);
-    const [shipings, setShipings] = useState([]);
+    const [shippings, setShippings] = useState([]);
+    const [shippingPrice, setShippingPrice] = useState(0);
 
     useEffect(async () => {
 
@@ -26,7 +27,7 @@ export default function CartShop(props) {
 
                     tmpArray.push(tmpShippingObj)
                 })
-                setShipings(tmpArray);
+                setShippings(tmpArray);
                 setShop(res.data)
             })
 
@@ -50,6 +51,42 @@ export default function CartShop(props) {
 
     }, [])
 
+    const calculatePrice = () => {
+        let totalPrice = 0
+        let greenPrice = 0
+        let amountPrice = 0
+        let count = 0
+
+        if (products.length != 0) {
+            products.map((product, index) => {
+                amountPrice = amountPrice + ((amount[index] * (product.price + product.greenPrice)))
+                totalPrice = totalPrice + ((amount[index] * product.price))
+                greenPrice = greenPrice + ((amount[index] * product.greenPrice))
+                count = count + 1
+            })
+        }
+
+        if (!isNaN(totalPrice) && totalPrice != 0) {
+            if (localStorage.getItem('totalPrice')) {
+                let amountPrice = totalPrice + parseInt(localStorage.getItem('totalPrice'))
+                localStorage.setItem('totalPrice', amountPrice)
+
+                let totalGreenPrice = greenPrice + parseInt(localStorage.getItem('greenPrice'))
+                localStorage.setItem('greenPrice', totalGreenPrice)
+            }
+            else {
+                localStorage.setItem('totalPrice', totalPrice)
+                localStorage.setItem('greenPrice', greenPrice)
+            } 
+        }
+
+        return (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+                <div>ยอดสั่งซื้อ ({count} ชิ้น) : {amountPrice} บาท</div>
+            </div>
+        )
+    }
+
 
     return (
         <div>
@@ -57,25 +94,34 @@ export default function CartShop(props) {
             <ShopContainer>
                 <ShopNameLabel>
                     ร้าน {shop.name}
-                    <div>
+                    {/* <div>
                         <label>เลือกช่องทางการส่ง </label>
                         <Dropdown
                             placeholder='ช่องทางการส่ง'
                             selection
-                            options={shipings}
+                            options={shippings}
                             style={{ marginRight: "20px", marginLeft: "10px" }}
-                            onChange={(e, { value }) => console.log(value)}
+                            onChange={(e, { value }) => setShippingPrice(value)}
                         />
-                    </div>
-
+                    </div> */}
                 </ShopNameLabel>
+
                 {
                     (products.length != 0) ?
                         products.map((product, index) =>
-                            <ProductList product={product} amount={amount[index]} />
+                            <ProductList key={index} product={product} amount={amount[index]} />
                         )
                         : ""
                 }
+
+                <PriceLabel>
+                    <span></span>
+                    <span>
+                        {
+                            calculatePrice()
+                        }
+                    </span>
+                </PriceLabel>
 
             </ShopContainer>
 
@@ -86,21 +132,16 @@ export default function CartShop(props) {
 
 const ShopContainer = styled.div`
     box-shadow: 1px 1px 3px #ABB2B9;
-    /* border-style: solid;
-    border-width: 1px; */
     border-radius: 5px;
     align-items: center;
     margin-bottom: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    /* background-color: #F8F9F9; */
+    margin-left: 50px;
+    margin-right: 50px;
 `
 
 const ShopNameLabel = styled.div`
     font-size: 17px;
-    padding-left: 37px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding: 20px 0 20px 37px;
     color: white;
     background-color: #679072;
     border-radius: 5px 5px 0px 0px;
@@ -108,5 +149,17 @@ const ShopNameLabel = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`
 
+const PriceLabel = styled.div`
+    font-size: 17px;
+    margin: 0 0 0 0;
+    padding: 15px 35px 15px 0;
+    color: #131B15;
+    background-color: #EFF4F1;
+    border-radius: 0px 0px 0px 0px;
+    border-color: #EFF4F1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `

@@ -18,12 +18,12 @@ const PrimaryButton = styled.button`
     background-color: ${props => {
         if (props.backgroundColor)
             return props.backgroundColor + "af"
-        else return "#3949ABaf"
+        else return "#5C6E9Aaf"
     }};
     color: ${props => props.color || "white"};
     width: ${props => props.width || "200px"};
     height: ${props => props.height || "45px"};
-    border: solid 1.5px ${props => props.backgroundColor || "#3949AB"}; ;
+    border: solid 1.5px ${props => props.backgroundColor || "#5C6E9A"}; ;
     font-size: 17px;
     border-radius: 7px;
     transition: .6s;
@@ -31,7 +31,7 @@ const PrimaryButton = styled.button`
     font-family: Prompt;
 
     &:hover {
-        background: ${props => props.backgroundColor || "#3949AB"};
+        background: ${props => props.backgroundColor || "#5C6E9A"};
         cursor: pointer;
         color: ${props => props.color || "white"};
     }

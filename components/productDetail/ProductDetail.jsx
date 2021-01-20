@@ -15,12 +15,31 @@ export default function ProductDetail(props) {
     useEffect(() => {
         Axios.post("/api/getProductDetail", JSON.stringify({ productId: props.productId }), HEADERS)
             .then((res) => {
-                console.log(res.data);
                 setProduct(res.data)
                 setStock(res.data.stock)
                 setIsLoading(false)
             })
     }, [])
+
+    const addToCart = () => {
+        console.log(product._id);
+        console.log(count);
+
+        (localStorage.getItem("userToken") != null) ?
+            Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
+                "tokenId": localStorage.getItem("userToken"),
+                "productId": product._id,
+                "amount": count
+            }), HEADERS)
+                .then(res => {
+                    console.log(res.data);
+                    // window.location.reload();
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            : ""
+    }
 
     return (
         <>
@@ -90,7 +109,7 @@ export default function ProductDetail(props) {
                                     </Counter>
                                     จำนวนสินค้าในคลัง : {stock}
                                     <div style={{ marginTop: "10px" }}>
-                                        <div onClick={() => console.log("fasdf")}>
+                                        <div onClick={addToCart}>
                                             <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
                                         </div>
                                         <div style={{ marginTop: "5px" }}>
@@ -102,7 +121,7 @@ export default function ProductDetail(props) {
                         </SubContainerDetail>
                     </DetailContainer>
             }
-            <Divition/>
+            <Divition />
             <MoreProduct>
                 afsdf
             </MoreProduct>

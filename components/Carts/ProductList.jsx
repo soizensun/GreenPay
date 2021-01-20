@@ -13,30 +13,32 @@ export default function ProductCartList(props) {
         <div>
             <ProductContainer>
                 <ProductImage imageUrl={props.product.mainPicture} />
+
                 <ProductName>
                     {props.product.name}
                 </ProductName>
+
                 <ProductAmount>
                     <Counter>
                         <span onClick={() => {
                             (localStorage.getItem("userToken") != null) ?
-                            Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
-                                "tokenId": localStorage.getItem("userToken"),
-                                "productId": props.product._id,
-                                "amount": -1
-                            }), HEADERS)
-                                .then(res => {
-                                    console.log(res.data);
-                                    window.location.reload();
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                })
-                            : ""
+                                Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
+                                    "tokenId": localStorage.getItem("userToken"),
+                                    "productId": props.product._id,
+                                    "amount": -1
+                                }), HEADERS)
+                                    .then(res => {
+                                        console.log(res.data);
+                                        window.location.reload();
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    })
+                                : ""
                         }}>
-                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#6495ED" />
+                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#17202A" />
                         </span>
-                        <ShowCount>{props.amount }</ShowCount>
+                        <ShowCount>{props.amount}</ShowCount>
                         <span onClick={() => {
                             (localStorage.getItem("userToken") != null) ?
                                 Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
@@ -53,16 +55,19 @@ export default function ProductCartList(props) {
                                     })
                                 : ""
                         }} >
-                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#6495ED" />
+                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#17202A" />
                         </span>
                     </Counter>
                 </ProductAmount>
+
                 <ProductPrice>
                     {props.product.price + props.product.greenPrice} บาท (+ {props.product.greenPrice} บาท)
                 </ProductPrice>
+
                 <ProductAmountPrice>
                     รวม {(props.product.price + props.product.greenPrice) * props.amount} บาท
                 </ProductAmountPrice>
+
                 <ProductDeleteIcon>
                     <span onClick={() => {
                         (localStorage.getItem("userToken") != null) ?
@@ -83,13 +88,14 @@ export default function ProductCartList(props) {
                         <AiTwotoneDelete />
                     </span>
                 </ProductDeleteIcon>
+
             </ProductContainer>
         </div>
     )
 }
 
 const ProductContainer = styled.div`
-    height: 100px;
+    height: 90px;
     font-size: 17px;
     display: flex;
     align-items: stretch;
@@ -108,10 +114,10 @@ const ProductImage = styled.div`
     /* flex-grow: 1; */
     margin-left: 30px;
     margin-right: 50px;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background-image: url(${props => props.imageUrl || "https://backend.tops.co.th/media//catalog/product/3/4/3415581119183_e29-03-2019.jpg"});
-    background-size: 80px 80px;
+    background-size: 70px 70px;
 
 `
 
