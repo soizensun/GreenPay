@@ -116,7 +116,9 @@ export default function MainLayout(props) {
                     {
                         (currentUser.role != undefined) ?
                             ((currentUser.role).includes('shopper')) ?
-                                <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
+                                <Link href="/ShopManagement" passHref>
+                                    <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
+                                </Link>
                                 : ""
                             : ""
                     }

@@ -15,7 +15,7 @@ export default function AddressSection() {
         (localStorage.getItem("userToken") !== undefined) ?
             Axios.post('api/getAddress', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), HEADERS)
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     setAddress(res.data)
                 })
             : ""
@@ -23,7 +23,6 @@ export default function AddressSection() {
 
     return (
         <Container>
-
             <AddressHeader>
                 รายละเอียดการจัดส่ง
             </AddressHeader>
@@ -67,12 +66,12 @@ export default function AddressSection() {
 }
 
 const Container = styled.div`
-    margin: 0 50px 5px 50px;
-    padding: 30px 30px 30px 40px;
-    font-size: 17px;
-    background-color: #90B099;
-    color: white;
-    border-radius: 0 0 10px 10px;
+    /* margin: 0 0 20px 0; */
+    padding: 30px 30px 30px 30px;
+    font-size: 18px;
+    background-color: #B0C7B7;
+    /* color: white; */
+    border-radius: 10px 10px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;

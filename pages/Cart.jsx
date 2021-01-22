@@ -14,13 +14,20 @@ export default function Cart() {
     const [carts, setCarts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [tmpCart, setTmpCart] = useState([]);
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
+
+        if (typeof window !== "undefined") {
+            localStorage.removeItem('totalPrice')
+            localStorage.removeItem('greenPrice')
+        }
 
         (typeof window !== "undefined") ?
             (localStorage.getItem("userToken") != null) ?
                 Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), HEADERS)
                     .then(res => {
+                        setUserId(res.data._id)
                         Axios.post('/api/getCart', { "userId": res.data._id }, HEADERS)
                             .then(res => {
                                 setTmpCart(res.data.product)
@@ -36,6 +43,7 @@ export default function Cart() {
     const filter = (allProduct) => {
         let shopList = []
         let realCart = []
+        
         if (allProduct) {
             allProduct.map(product => {
                 if (!shopList.includes(product.shopId)) {
@@ -56,13 +64,6 @@ export default function Cart() {
             })
         }
         return realCart
-    }
-
-    const clearLocalStorage = () => {
-        if (typeof window !== "undefined") {
-            localStorage.removeItem('totalPrice')
-            localStorage.removeItem('greenPrice')
-        }
     }
 
     return (
@@ -88,10 +89,6 @@ export default function Cart() {
                         {
                             (carts.length !== 0) ?
                                 <div>
-                                    <AddressSection />
-
-                                    { clearLocalStorage() }
-
                                     {
                                         carts.map(shop =>
                                             <CartShop shop={shop} />
@@ -108,7 +105,6 @@ export default function Cart() {
                                             </span>
                                         } />
                                     </CartFooter>
-
                                 </div>
                                 :
                                 <div>no cart</div>

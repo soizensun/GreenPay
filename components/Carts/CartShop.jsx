@@ -94,16 +94,6 @@ export default function CartShop(props) {
             <ShopContainer>
                 <ShopNameLabel>
                     ร้าน {shop.name}
-                    {/* <div>
-                        <label>เลือกช่องทางการส่ง </label>
-                        <Dropdown
-                            placeholder='ช่องทางการส่ง'
-                            selection
-                            options={shippings}
-                            style={{ marginRight: "20px", marginLeft: "10px" }}
-                            onChange={(e, { value }) => setShippingPrice(value)}
-                        />
-                    </div> */}
                 </ShopNameLabel>
 
                 {
@@ -122,9 +112,7 @@ export default function CartShop(props) {
                         }
                     </span>
                 </PriceLabel>
-
             </ShopContainer>
-
 
         </div>
     )
@@ -134,9 +122,7 @@ const ShopContainer = styled.div`
     box-shadow: 1px 1px 3px #ABB2B9;
     border-radius: 5px;
     align-items: center;
-    margin-bottom: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin: 10px 50px 10px 50px;
 `
 
 const ShopNameLabel = styled.div`

@@ -3,6 +3,7 @@ import Axios from 'axios';
 import styled from 'styled-components'
 import CustomButton from "../util/CustomButton";
 import { AiTwotoneDelete } from "react-icons/ai";
+import { CgTrees } from "react-icons/cg";
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -61,7 +62,8 @@ export default function ProductCartList(props) {
                 </ProductAmount>
 
                 <ProductPrice>
-                    {props.product.price + props.product.greenPrice} บาท (+ {props.product.greenPrice} บาท)
+                    {props.product.price + props.product.greenPrice} บาท
+                    <span style={{ fontSize: "25px", color: "#679072", marginLeft: "10px"}}><CgTrees/></span> {props.product.greenPrice} บาท
                 </ProductPrice>
 
                 <ProductAmountPrice>
