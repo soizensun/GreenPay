@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
-import { clickedProduct as clickedProductAtom } from "../recoil/atoms";
+import { clickedProduct as clickedProductAtom } from "../../recoil/atoms";
 
 export default function ProductCard(props) {
     const [clickedProduct, setClickedProduct] = useRecoilState(clickedProductAtom)
@@ -12,9 +12,10 @@ export default function ProductCard(props) {
         <div>
             <Link href="/ProductDetails">
                 <Card onClick={() => localStorage.setItem("productDetail", props.id)}>
+                    {/* {props.shopId} */}
                     <Image imageUrl={props.imageUrl} />
                     <Name>{props.name || "product name "}</Name>
-                    <Price>{props.price || "-"} บาท</Price>
+                    <Price>{props.price || "-"} บาท (+ {props.greenPrice} บาท)</Price>
                 </Card>
             </Link>
 
@@ -24,7 +25,7 @@ export default function ProductCard(props) {
 
 const Card = styled.div`
     width: 230px;
-    height: 230px;
+    height: 250px;
     box-shadow: 1px 1px 5px #ABB2B9;
     border-radius: 10px;
     display: flex;
@@ -49,7 +50,7 @@ const Image = styled.div`
 `
 
 const Name = styled.div`
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 19px;
     color: #185341;
     font-weight: bold;
@@ -58,6 +59,6 @@ const Name = styled.div`
 `
 
 const Price = styled.div`
-    margin-top: 5px;
+    margin-top: 15px;
     font-size: 17px
 `

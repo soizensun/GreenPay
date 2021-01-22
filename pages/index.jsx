@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import MainLayout from "../layouts/MainLayout";
 import Axios from 'axios'
-import CustomButton from '../components/CustomButton'
-import ProductCard from '../components/ProductCard'
+import ProductCard from '../components/index/ProductCard'
 import styled from "styled-components";
 import { useRecoilValue } from 'recoil';
 import {currentUser as currentUserAtom} from '../recoil/atoms'
@@ -29,9 +28,11 @@ export default function Home() {
               allProduct.map(item => {
                 return (
                   <ProductCard
+                    shopId={item.shopId}
                     imageUrl={item.mainPicture}
                     name={item.name}
-                    price={item.price}
+                    price={item.price + item.greenPrice}
+                    greenPrice={item.greenPrice}
                     id={item._id}
                   />)
               })

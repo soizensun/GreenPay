@@ -10,8 +10,8 @@ import styled from 'styled-components'
 import { Search } from 'semantic-ui-react'
 import Badge from '@material-ui/core/Badge';
 import { FaSignOutAlt } from "react-icons/fa";
-import {currentUser as currentUserAtom} from '../recoil/atoms'
-import { useRecoilState } from 'recoil';
+import { currentUser as currentUserAtom, cartCounter as cartCounterAtom } from '../recoil/atoms'
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 
 const HEADERS = { 'Content-Type': 'application/json' }
@@ -29,12 +29,15 @@ const LoginButton = styled.button`
 
 export default function MainLayout(props) {
     const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
+    const cartCounter = useRecoilValue(cartCounterAtom)
+
 
     const responseGoogle = (response) => {
         console.log(response);
 
         Axios.post('/api/googleAuth', JSON.stringify({ "tokenId": response.tokenId }), { headers: HEADERS })
             .then(res => {
+                console.log(res.data);
                 localStorage.setItem("userToken", res.data.token)
 
                 Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
@@ -50,7 +53,6 @@ export default function MainLayout(props) {
             (localStorage.getItem("userToken") != null) ?
                 Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
                     .then(res => {
-                        console.log(res.data);
                         setCurrentUser(res.data)
                     })
                 :
@@ -71,19 +73,20 @@ export default function MainLayout(props) {
                 </Nav>
                 <Nav>
                     <Nav.Link style={{ color: "#2C3E50" }}>
-                        {currentUser.displayName}{console.log(currentUser)}
+                        {currentUser.displayName}
                     </Nav.Link>
                     {
-                        // console.log(user)
                         (Object.keys(currentUser).length !== 0) ?
-                            <Nav.Link
-                                style={{ color: "#2C3E50" }}
-                                onClick={() => {
-                                    localStorage.removeItem('userToken')
-                                    setCurrentUser({})
-                                }}>
-                                <FaSignOutAlt /> logout
+                            <Link href="/" passHref>
+                                <Nav.Link
+                                    style={{ color: "#2C3E50" }}
+                                    onClick={() => {
+                                        localStorage.removeItem('userToken')
+                                        setCurrentUser({})
+                                    }}>
+                                    <FaSignOutAlt /> logout
                             </Nav.Link>
+                            </Link>
                             :
                             <Nav.Link>
                                 <GoogleLogin
@@ -93,7 +96,6 @@ export default function MainLayout(props) {
                                             <GrGoogle style={{ marginRight: "5px", marginBottom: "3px" }} />Login
                                         </LoginButton>
                                     )}
-                                    buttonText="Login with google"
                                     onSuccess={responseGoogle}
                                     onFailure={responseGoogle}
                                     cookiePolicy={'single_host_origin'}
@@ -105,24 +107,45 @@ export default function MainLayout(props) {
             </Navbar>
 
 
-            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "85px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
+            <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "70px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
                 <Link href="/" passHref>
                     <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
-                    <Nav.Link style={{ color: "white" }}>โครงการสิ่งแวดล้อม</Nav.Link>
+                    {/* <Nav.Link style={{ color: "white" }}>โครงการสิ่งแวดล้อม</Nav.Link> */}
+                    {
+                        (currentUser.role != undefined) ?
+                            ((currentUser.role).includes('shopper')) ?
+                                <Link href="/ShopManagement" passHref>
+                                    <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
+                                </Link>
+                                : ""
+                            : ""
+                    }
+                    {
+                        (currentUser.role != undefined) ?
+                            ((currentUser.role).includes('admin')) ?
+                                <Nav.Link style={{ color: "white" }}>สำหรับ admin</Nav.Link>
+                                : ""
+                            : ""
+                    }
                     {/* <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu3</Nav.Link>
                     <Nav.Link style={{ color: "white" }}>menu4</Nav.Link> */}
                 </Nav>
                 <Nav>
-                    {/* <Link href="/MyCart" passHref> */}
-                    <Nav.Link>
-                        <Badge badgeContent={8} color="secondary">
-                            <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
-                        </Badge>
-                    </Nav.Link>
-                    {/* </Link> */}
+                    {
+                        (Object.keys(currentUser).length !== 0) ?
+                            <Link href="/Cart" passHref>
+                                <Nav.Link>
+                                    <Badge badgeContent={cartCounter} color="secondary">
+                                        <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
+                                    </Badge>
+                                </Nav.Link>
+                            </Link>
+                            : <></>
+                    }
+
 
                     <Search
                         style={{ marginLeft: "20px" }}

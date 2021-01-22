@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CustomButton from "./CustomButton";
+import CustomButton from "../util/CustomButton";
 import styled from "styled-components";
 import Axios from 'axios';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -15,13 +15,31 @@ export default function ProductDetail(props) {
     useEffect(() => {
         Axios.post("/api/getProductDetail", JSON.stringify({ productId: props.productId }), HEADERS)
             .then((res) => {
-                console.log(res.data);
                 setProduct(res.data)
                 setStock(res.data.stock)
                 setIsLoading(false)
             })
     }, [])
 
+    const addToCart = () => {
+        console.log(product._id);
+        console.log(count);
+
+        (localStorage.getItem("userToken") != null) ?
+            Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
+                "tokenId": localStorage.getItem("userToken"),
+                "productId": product._id,
+                "amount": count
+            }), HEADERS)
+                .then(res => {
+                    console.log(res.data);
+                    // window.location.reload();
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            : ""
+    }
 
     return (
         <>
@@ -34,11 +52,11 @@ export default function ProductDetail(props) {
 
                         <SubContainerDetail>
                             <div style={{ flexGrow: "5" }}>
-                                <Skeleton animation="wave" variant="text" width={150} height={45}/>
-                                <Skeleton animation="wave" variant="text" width={250} height={45}/>
+                                <Skeleton animation="wave" variant="text" width={150} height={45} />
+                                <Skeleton animation="wave" variant="text" width={250} height={45} />
                                 <br />
-                                <Skeleton animation="wave" variant="text" width={200} height={45}/>
-                                <Skeleton animation="wave" variant="text" width={250} height={45}/>
+                                <Skeleton animation="wave" variant="text" width={200} height={45} />
+                                <Skeleton animation="wave" variant="text" width={250} height={45} />
                             </div>
                             <div style={{ flexGrow: "6" }}>
                                 <div style={{ textAlign: "center", fontSize: "18px" }}>
@@ -53,7 +71,12 @@ export default function ProductDetail(props) {
                                     </Counter>
                                     จำนวนสินค้าในคลัง : -
                                     <div style={{ marginTop: "10px" }}>
-                                        <CustomButton buttonText="เพิ่มลงตะกร้า"></CustomButton>
+                                        <div>
+                                            <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
+                                        </div>
+                                        <div style={{ marginTop: "5px" }}>
+                                            <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F"></CustomButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -68,11 +91,10 @@ export default function ProductDetail(props) {
                         <SubContainerDetail>
                             <div style={{ flexGrow: "5" }}>
                                 <NameLabel>{product.name}</NameLabel>
-                                <PriceLabel>{product.price} บาท (Green Point {10 / 100 * product.price} บาท) </PriceLabel>
+                                <PriceLabel>{product.price + product.greenPrice} บาท (Green price {product.greenPrice} บาท) </PriceLabel>
                                 <br />
                                 <DescriptionLabel>รายละเอียดสินค้า</DescriptionLabel>
                                 <Description>{product.description}</Description>
-
                             </div>
                             <div style={{ flexGrow: "6" }}>
                                 <div style={{ textAlign: "center", fontSize: "18px" }}>
@@ -85,15 +107,24 @@ export default function ProductDetail(props) {
                                             <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" />
                                         </span>
                                     </Counter>
-                            จำนวนสินค้าในคลัง : {stock}
+                                    จำนวนสินค้าในคลัง : {stock}
                                     <div style={{ marginTop: "10px" }}>
-                                        <CustomButton buttonText="เพิ่มลงตะกร้า"></CustomButton>
+                                        <div onClick={addToCart}>
+                                            <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
+                                        </div>
+                                        <div style={{ marginTop: "5px" }}>
+                                            <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F" color="#2C3E50"></CustomButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </SubContainerDetail>
                     </DetailContainer>
             }
+            <Divition />
+            <MoreProduct>
+                afsdf
+            </MoreProduct>
 
         </>
     )
@@ -108,7 +139,6 @@ const DetailContainer = styled.div`
     margin-left: 20px;
     margin-bottom: 30px;
     /* background-color: greenyellow; */
-
 `
 
 const SubContainerImage = styled.div`
@@ -157,14 +187,27 @@ const DescriptionLabel = styled.div`
 `
 
 const Counter = styled.div`
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 `
 const ShowCount = styled.span`
-    margin: 10px
+    margin: 10px;
 `
 
 const Description = styled.div`
     margin-top: 10px;
     font-size: 19px;
+`
+
+const Divition = styled.hr`
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: black;
+`
+const MoreProduct = styled.div`
+    margin-top: 20px;
+    margin-right: 70px;
+    margin-left: 70px;
+    margin-bottom: 30px;
+    background-color: greenyellow;
 `

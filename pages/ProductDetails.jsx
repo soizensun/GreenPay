@@ -1,6 +1,6 @@
 import React from 'react'
 import MainLayout from "../layouts/MainLayout";
-import ProductDetail from "../components/ProductDetail";
+import ProductDetail from "../components/productDetail/ProductDetail";
 
 
 export default function ProductDetails() {
