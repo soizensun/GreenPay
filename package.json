@@ -12,6 +12,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
+    "moment": "^2.29.1",
     "next": "10.0.4",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.0",

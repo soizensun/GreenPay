@@ -82,7 +82,7 @@ export default function CartShop(props) {
 
         return (
             <div style={{ display: "flex", flexDirection: "column" }}>
-                <div>ยอดสั่งซื้อ ({count} ชิ้น) : {amountPrice} บาท</div>
+                <div>ยอดสั่งซื้อ ({count} รายการ) : {amountPrice} บาท</div>
             </div>
         )
     }
@@ -90,18 +90,16 @@ export default function CartShop(props) {
 
     return (
         <div>
-
             <ShopContainer>
                 <ShopNameLabel>
                     ร้าน {shop.name}
                 </ShopNameLabel>
 
                 {
-                    (products.length != 0) ?
+                    (products.length != 0) &&
                         products.map((product, index) =>
                             <ProductList key={index} product={product} amount={amount[index]} />
                         )
-                        : ""
                 }
 
                 <PriceLabel>
@@ -113,7 +111,6 @@ export default function CartShop(props) {
                     </span>
                 </PriceLabel>
             </ShopContainer>
-
         </div>
     )
 }

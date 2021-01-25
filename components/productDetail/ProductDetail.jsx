@@ -32,7 +32,7 @@ export default function ProductDetail(props) {
                 "amount": count
             }), HEADERS)
                 .then(res => {
-                    console.log(res.data);
+                    console.log('add cart success');
                     // window.location.reload();
                 })
                 .catch(err => {

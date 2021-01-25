@@ -1,78 +1,73 @@
 import React, { useState } from 'react'
 import MainLayout from "../layouts/MainLayout";
-import { Dropdown, Icon, Input, Menu } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
+import styled from 'styled-components'
+import MyOrders from '../components/shopManagement/myOrder/MyOrders'
 
 export default function ShopManagement() {
-    const [activeItem, setActiveItem] = useState('');
+    const [tab, setTab] = useState('myProduct');
 
-    const handleItemClick = (e, { name }) => setActiveItem(name)
+    const switchRender = () => {
+        switch (tab) {
+            case 'myProduct':
+                return <div> <MyOrders/> </div>
+            case 'addProduct':
+                return <div> tab2  </div>
+            case 'myOrder':
+                return <div> <MyOrders/> </div>
+            case 'myIncome':
+                return <div> tab2 </div>
+            case 'myAccount':
+                return <div> tab2 </div>
+        }
+    }
 
 
     return (
         <MainLayout>
-            <Menu vertical size='huge' style={{ fontFamily: 'Prompt', width: "200px", textAlign: "center" }}>
+            <Container>
 
-                <Menu.Item>
-                    สินค้า
-                    <Menu.Menu>
-                        <Menu.Item
-                            name='search'
-                            active={activeItem === 'search'}
-                            onClick={handleItemClick}
-                        >
-                            สินค้าของฉัน
-                         </Menu.Item>
-                        <Menu.Item
-                            name='add'
-                            active={activeItem === 'add'}
-                            onClick={handleItemClick}
-                        >
-                            เพิ่มสินค้าใหม่
-                        </Menu.Item>
-
-                    </Menu.Menu>
-                </Menu.Item>
-
-                <Menu.Item>
-                    คำสั่งซื้อ
-                    <Menu.Menu>
-                        <Menu.Item
-                            name='search'
-                            active={activeItem === 'search'}
-                            onClick={handleItemClick}
-                        >
-                            คำสั่งซื้อของฉัน
-                         </Menu.Item>
-                    </Menu.Menu>
-                </Menu.Item>
-
-                <Menu.Item>
-                    การเงิน
-                    <Menu.Menu>
-                        <Menu.Item
-                            name='search'
-                            active={activeItem === 'search'}
-                            onClick={handleItemClick}
-                        >
-                            รายรับของฉัน
-                         </Menu.Item>
-                    </Menu.Menu>
-                </Menu.Item>
-
-                <Menu.Item>
-                    การตั้งค่า
-                    <Menu.Menu>
-                        <Menu.Item
-                            name='search'
-                            active={activeItem === 'search'}
-                            onClick={handleItemClick}
-                        >
-                            บัญชีของฉัน
-                         </Menu.Item>
-                    </Menu.Menu>
-                </Menu.Item>
-
-            </Menu>
+                <Grid>
+                    <Grid.Column width={3}>
+                        <div>
+                            <Tab active={tab === "myProduct"} onClick={() => setTab("myProduct")}>
+                                สินค้าของฉัน
+                            </Tab>
+                            <Tab active={tab === "addProduct"} onClick={() => setTab("addProduct")}>
+                                เพิ่มสินค้าใหม่
+                            </Tab>
+                            <Tab active={tab === "myOrder"} onClick={() => setTab("myOrder")}>
+                                คำสั่งซื้อของฉัน
+                            </Tab>
+                            <Tab active={tab === "myIncome"} onClick={() => setTab("myIncome")}>
+                                รายรับของฉัน
+                            </Tab>
+                            <Tab active={tab === "myAccount"} onClick={() => setTab("myAccount")}>
+                                บัญชีของฉัน
+                            </Tab>
+                        </div>
+                    </Grid.Column>
+                    <Grid.Column width={13}>
+                        <div style={{ height: "800px" }}>
+                            { switchRender() }
+                        </div>
+                    </Grid.Column>
+                </Grid>
+            </Container>
         </MainLayout>
     )
 }
+
+const Tab = styled.div`
+
+
+
+    ${({ active }) => active && `
+        background: gray;
+        color: white;
+    `}
+`
+
+const Container = styled.div`
+    padding: 20px 30px 0 30px;
+`

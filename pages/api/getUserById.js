@@ -5,8 +5,9 @@ const res = async (req, res) => {
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-    Axios.get(`http://localhost:4000/carts/${data.userId}`, HEADERS)
+    Axios.get(`http://localhost:4000/users/getUser/${data.userId}`, HEADERS)
         .then(r => 
+
             res.status(200).send(r.data)
         )
         .catch((err) => {

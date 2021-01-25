@@ -2,7 +2,6 @@ import Axios from 'axios';
 
 const res = async (req, res) => {
     let data = JSON.parse(JSON.stringify(req.body));
-    console.log(data.shopId);
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 

@@ -6,15 +6,15 @@ const res = async (req, res) => {
     let HEADERS = {
         headers: {
             "Content-Type": "application/json",
-            "x-auth-token":  data.tokenId
+            "x-auth-token": data.tokenId
         }
     }
-    console.log(`=> ${data}`);
+
     delete data.tokenId
 
-    Axios.post(`http://localhost:4000/users/addAddress`,data, HEADERS)
-        .then(r =>
-            res.status(200).send(r.data)
+    Axios.get(`http://localhost:4000/users/getShop`, HEADERS)
+        .then(r =>{
+            res.status(200).send(r.data)}
         )
         .catch((err) => {
             console.log(err);

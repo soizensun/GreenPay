@@ -62,12 +62,12 @@ export default function ProductCartList(props) {
                 </ProductAmount>
 
                 <ProductPrice>
-                    {props.product.price + props.product.greenPrice} บาท
-                    <span style={{ fontSize: "25px", color: "#679072", marginLeft: "10px"}}><CgTrees/></span> {props.product.greenPrice} บาท
+                    ราคา {props.product.price + props.product.greenPrice} บาท/ชิ้น
+                    {/* <span style={{ fontSize: "25px", color: "#679072", marginLeft: "10px"}}><CgTrees/></span> {props.product.greenPrice} บาท */}
                 </ProductPrice>
 
                 <ProductAmountPrice>
-                    รวม {(props.product.price + props.product.greenPrice) * props.amount} บาท
+                    ราคารวม {(props.product.price + props.product.greenPrice) * props.amount} บาท
                 </ProductAmountPrice>
 
                 <ProductDeleteIcon>

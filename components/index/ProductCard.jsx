@@ -15,7 +15,7 @@ export default function ProductCard(props) {
                     {/* {props.shopId} */}
                     <Image imageUrl={props.imageUrl} />
                     <Name>{props.name || "product name "}</Name>
-                    <Price>{props.price || "-"} บาท (+ {props.greenPrice} บาท)</Price>
+                    <Price>{props.price || "-"} บาท</Price>
                 </Card>
             </Link>
 

@@ -12,13 +12,11 @@ export default function AddressSection() {
     const [address, setAddress] = useState({});
 
     useEffect(() => {
-        (localStorage.getItem("userToken") !== undefined) ?
+        (localStorage.getItem("userToken") !== undefined) &&
             Axios.post('api/getAddress', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), HEADERS)
                 .then(res => {
-                    // console.log(res.data);
                     setAddress(res.data)
                 })
-            : ""
     }, [])
 
     return (
@@ -31,7 +29,6 @@ export default function AddressSection() {
                 (address.houseNumber !== undefined) ?
                     <div style={{ display: "flex" }}>
                         {address.houseNumber} หมู่ {address.moo} ถนน {address.road} ตำบล {address.subDistrict} อำเภอ {address.district} จังหวัด {address.province} {address.postCode}
-
 
                         <AddAddressModal buttonStyle={
                             <div></div>

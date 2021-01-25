@@ -10,8 +10,6 @@ import styled from 'styled-components'
 import { Search } from 'semantic-ui-react'
 import Badge from '@material-ui/core/Badge';
 import { FaSignOutAlt } from "react-icons/fa";
-import { currentUser as currentUserAtom, cartCounter as cartCounterAtom } from '../recoil/atoms'
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 
 const HEADERS = { 'Content-Type': 'application/json' }
@@ -28,38 +26,49 @@ const LoginButton = styled.button`
 `
 
 export default function MainLayout(props) {
-    const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
-    const cartCounter = useRecoilValue(cartCounterAtom)
+    const [currentUser, setCurrentUser] = useState({});
+    const [cart, setCart] = useState({});
 
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            if (localStorage.getItem("userToken") != null) {
+
+                Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
+                    .then(res => {
+                        setCurrentUser(res.data)
+                        Axios.post('/api/getCart', { "userId": res.data._id }, HEADERS)
+                            .then(r => {
+                                setCart(r.data)
+                            })
+                    })
+            }
+        }
+    }, [])
 
     const responseGoogle = (response) => {
-        console.log(response);
 
         Axios.post('/api/googleAuth', JSON.stringify({ "tokenId": response.tokenId }), { headers: HEADERS })
             .then(res => {
-                console.log(res.data);
                 localStorage.setItem("userToken", res.data.token)
 
                 Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
                     .then(res => {
-                        console.log(res.data);
                         setCurrentUser(res.data)
+
+                        Axios.post('api/getOwnerShop', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
+                            .then(r => {
+                                localStorage.setItem("userShop", r.data._id)
+                                window.location.reload();
+                            })
                     })
             })
     }
 
-    useEffect(() => {
-        (typeof window !== "undefined") ?
-            (localStorage.getItem("userToken") != null) ?
-                Axios.post('api/loginUser', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
-                    .then(res => {
-                        setCurrentUser(res.data)
-                    })
-                :
-                ""
-            :
-            ""
-    }, [])
+    const logout = () => {
+        localStorage.removeItem('userToken')
+        localStorage.removeItem('userShop')
+        // window.location.reload();
+    }
 
     return (
         <div style={{ paddingBottom: "70px" }}>
@@ -80,10 +89,7 @@ export default function MainLayout(props) {
                             <Link href="/" passHref>
                                 <Nav.Link
                                     style={{ color: "#2C3E50" }}
-                                    onClick={() => {
-                                        localStorage.removeItem('userToken')
-                                        setCurrentUser({})
-                                    }}>
+                                    onClick={logout}>
                                     <FaSignOutAlt /> logout
                             </Nav.Link>
                             </Link>
@@ -106,57 +112,49 @@ export default function MainLayout(props) {
                 </Nav>
             </Navbar>
 
-
             <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "#185341", height: "70px", borderRadius: "0px 0px 10px 10px", fontSize: "16px" }}>
                 <Link href="/" passHref>
                     <Navbar.Brand style={{ marginLeft: "18px" }} href="">GreenPay</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
-                    {/* <Nav.Link style={{ color: "white" }}>โครงการสิ่งแวดล้อม</Nav.Link> */}
                     {
-                        (currentUser.role != undefined) ?
-                            ((currentUser.role).includes('shopper')) ?
-                                <Link href="/ShopManagement" passHref>
-                                    <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
-                                </Link>
-                                : ""
-                            : ""
+                        (typeof window !== "undefined") &&
+                        (
+                            (localStorage.getItem('userShop') !== null && localStorage.getItem('userShop') !== 'undefined') &&
+                            <Link href="/ShopManagement" passHref>
+                                <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
+                            </Link>
+                        )
                     }
                     {
-                        (currentUser.role != undefined) ?
-                            ((currentUser.role).includes('admin')) ?
-                                <Nav.Link style={{ color: "white" }}>สำหรับ admin</Nav.Link>
-                                : ""
-                            : ""
+                        currentUser.role &&
+                        (
+                            ((currentUser.role).includes('admin')) &&
+                            <Nav.Link style={{ color: "white" }}>สำหรับ admin</Nav.Link>
+
+                        )
                     }
-                    {/* <Nav.Link style={{ color: "white" }}>menu2</Nav.Link>
-                    <Nav.Link style={{ color: "white" }}>menu3</Nav.Link>
-                    <Nav.Link style={{ color: "white" }}>menu4</Nav.Link> */}
                 </Nav>
                 <Nav>
                     {
-                        (Object.keys(currentUser).length !== 0) ?
-                            <Link href="/Cart" passHref>
-                                <Nav.Link>
-                                    <Badge badgeContent={cartCounter} color="secondary">
-                                        <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
-                                    </Badge>
-                                </Nav.Link>
-                            </Link>
-                            : <></>
-                    }
+                        (Object.keys(currentUser).length !== 0) &&
+                        (
+                            (Object.keys(cart).length !== 0) && (
+                                <Link href="/Cart" passHref>
+                                    <Nav.Link>
+                                        <Badge badgeContent={cart.product.length} color="secondary">
+                                            <BiCartAlt style={{ fontSize: "23px", marginRight: "5px", color: "white" }} />
+                                        </Badge>
+                                    </Nav.Link>
+                                </Link>
+                            )
 
+                        )
+                    }
 
                     <Search
                         style={{ marginLeft: "20px" }}
                         size='mini'
-                    // loading={loading}
-                    // onResultSelect={(e, data) =>
-                    //     dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-                    // }
-                    // onSearchChange={handleSearchChange}
-                    // results={results}
-                    // value={value}
                     />
                 </Nav>
             </Navbar>
