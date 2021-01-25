@@ -67,6 +67,7 @@ export default function MainLayout(props) {
     const logout = () => {
         localStorage.removeItem('userToken')
         localStorage.removeItem('userShop')
+        setCurrentUser({})
         // window.location.reload();
     }
 
