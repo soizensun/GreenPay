@@ -3,14 +3,11 @@ import MainLayout from "../layouts/MainLayout";
 import Axios from 'axios'
 import ProductCard from '../components/index/ProductCard'
 import styled from "styled-components";
-import { useRecoilValue } from 'recoil';
-import {currentUser as currentUserAtom} from '../recoil/atoms'
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function Home() {
   const [allProduct, setAllProduct] = useState([]);
-  const currentUser = useRecoilValue(currentUserAtom)
 
   useEffect(() => {
     Axios.get("/api/getAllProduct", HEADERS)

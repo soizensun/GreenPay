@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ProductList from './ProductList'
 import { FiMoreVertical } from "react-icons/fi";
-import moment from 'moment';
+import { Grid, Popup } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
 import Axios from 'axios';
 
@@ -71,14 +71,45 @@ export default function OrderList(props) {
                             color="#185341"
                             backgroundColor="#FDFEFE" />
                     </span>
-                    <span onClick={() => props.closeOrder(props.count - 1)}>
-                        <CustomButton
-                            buttonText="เสร็จสิ้น"
-                            width="100px"
-                            height="40px"
-                            backgroundColor="#185341" />
-                    </span>
 
+                    <Popup 
+                        wide
+                        position="bottom right"
+                        size='small'
+                        trigger={
+                            <span >
+                                <CustomButton
+                                    buttonText="เสร็จสิ้น"
+                                    width="100px"
+                                    height="40px"
+                                    backgroundColor="#185341" />
+                            </span>
+                        } on='click'>
+                        <ConfirmPopup>
+                            ยืนยันการปิดคำสั่งซื้อ ?
+                        </ConfirmPopup>
+
+                        <Grid columns='equal'>
+                            <Grid.Column>
+                                <span>
+                                    <CustomButton
+                                        buttonText="ยกเลิก"
+                                        width="100px"
+                                        height="40px"
+                                        backgroundColor="#E74C3C" />
+                                </span>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <span onClick={() => props.closeOrder(props.count - 1)}>
+                                    <CustomButton
+                                        buttonText="ยืนยัน"
+                                        width="100px"
+                                        height="40px"
+                                        backgroundColor="#185341" />
+                                </span>
+                            </Grid.Column>
+                        </Grid>
+                    </Popup>
 
                 </div>
 
@@ -96,7 +127,8 @@ export default function OrderList(props) {
 
 
 const OrderItem = styled.div`
-    box-shadow: 1px 1px 3px #ABB2B9;
+    /* box-shadow: 1px 1px 3px #ABB2B9; */
+    border: 1px solid #CDCDCF;
     border-radius: 5px;
     align-items: center;
     margin: 0 0 10px 0;
@@ -113,6 +145,7 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: -1px;
 `
 
 const OrderName = styled.span`
@@ -122,4 +155,11 @@ const OrderName = styled.span`
 
 const OrderAddress = styled.div`
     /* margin-right: 20px; */
+`
+
+const ConfirmPopup = styled.div`
+    text-align: center;
+    margin: 10px 0 20px 0;
+    font-size: 16px;
+    font-family: Prompt;
 `

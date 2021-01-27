@@ -1,12 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
-import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
-import { clickedProduct as clickedProductAtom } from "../../recoil/atoms";
 
 export default function ProductCard(props) {
-    const [clickedProduct, setClickedProduct] = useRecoilState(clickedProductAtom)
-
 
     return (
         <div>
@@ -24,20 +20,20 @@ export default function ProductCard(props) {
 }
 
 const Card = styled.div`
-    width: 230px;
-    height: 250px;
-    box-shadow: 1px 1px 5px #ABB2B9;
+    width: 250px;
+    height: 270px;
+    border: 1px solid #CDCDCF;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin: 10px;
+    margin: 8px;
     cursor: pointer;
-    padding: 8px;
+    padding: 16px;
 
     &:hover{
-        box-shadow: 2px 2px 7px 2px #ABB2B9;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
         transition: 0.3s;
     }
 `

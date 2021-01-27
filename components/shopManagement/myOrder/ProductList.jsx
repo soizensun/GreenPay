@@ -42,16 +42,17 @@ const ProductContainer = styled.div`
     justify-content: space-between;
     padding: 0 50px 0 40px;
     cursor: pointer;
+    margin: 1px;
 
     &:hover{
-        box-shadow: 1px 1px 5px 1px #F4F7F5;
         transition: 0.3s;
         background-color: #F4F7F5;
+        
     }
 `
 
 const ProductName = styled.div`
-    font-size: 18px;
+    font-size: 17px;
     width: 400px;
     /* font-weight: bold; */
 `

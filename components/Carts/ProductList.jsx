@@ -71,7 +71,7 @@ export default function ProductCartList(props) {
                 </ProductAmountPrice>
 
                 <ProductDeleteIcon>
-                    <span onClick={() => {
+                    <DeleteBTN onClick={() => {
                         (localStorage.getItem("userToken") != null) ?
                             Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
                                 "tokenId": localStorage.getItem("userToken"),
@@ -88,7 +88,7 @@ export default function ProductCartList(props) {
                             : ""
                     }}>
                         <AiTwotoneDelete />
-                    </span>
+                    </DeleteBTN>
                 </ProductDeleteIcon>
 
             </ProductContainer>
@@ -153,4 +153,22 @@ const Counter = styled.div`
 
 const ShowCount = styled.span`
     margin: 10px;
+`
+
+const DeleteBTN = styled.div`
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    /* margin: 5px; */
+    width: 55px;
+    height: 55px;
+    color: #E74C3C;
+
+    &:hover {
+        color: white;
+        background-color: #E74C3C;
+        transition: 0.3s;
+    }
 `

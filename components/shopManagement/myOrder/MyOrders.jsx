@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import OrderList from '../myOrder/OrderList'
+import NoItem from '../../util/NoItem'
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -25,11 +26,9 @@ export default function MyOrders() {
     }, [])
 
     const closeOrder = (no) => {
-        console.log(orders[no]._id);
         Axios.post('api/closeOrder', JSON.stringify({ orderId: orders[no]._id }), HEADERS)
             .then(res => {
-                console.log(res.data);
-                window.location.reload()
+                setOrders(res.data);
             })
     }
 
@@ -44,8 +43,8 @@ export default function MyOrders() {
                             )
                         }
                     </div>
-
-                    : <div>no order</div>
+                    : 
+                    <NoItem wording="no order"/>
             }
         </div>
     )
