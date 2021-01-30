@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Header, Form, Modal, Divider } from 'semantic-ui-react'
+import { Header, Form, Modal, Divider } from 'semantic-ui-react'
 import CustomButton from "../util/CustomButton";
 import Axios from "axios";
 
@@ -19,7 +19,6 @@ export default function AddAddressModal(props) {
     const [district, setDistrict] = useState('');
     const [province, setProvince] = useState('');
     const [postCode, setPostCode] = useState('');
-
 
     const inlineStyle = {
         height: "auto",
@@ -62,10 +61,7 @@ export default function AddAddressModal(props) {
                 dimmer="blurring"
                 open={open}
                 trigger={props.buttonStyle}
-                // onClose={() => {
-                //     window.location.reload();
-                //     setOpen(false)
-                // }}
+                onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 size="large"
                 style={inlineStyle}

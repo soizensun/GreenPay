@@ -1,51 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 import { Grid, Popup } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
+import ProductDetailModal from './ProductDetailModal'
 import Axios from 'axios';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function ProductCard(props) {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     return (
         <div style={{ width: "100%" }}>
             <Card>
-                <Image imageUrl={props.imageUrl} />
-                <Name>{props.name || "product name "}</Name>
-                <Price>สิ้นค้าในคลัง {props.stock || "-"} ชิ้น</Price>
-                <Price>ราคา {props.price || "-"} บาท</Price>
+                <Image imageUrl={props.product.mainPicture} />
+                <Name>{props.product.name || "product name "}</Name>
+                <Price>สิ้นค้าในคลัง {props.product.stock || "-"} ชิ้น</Price>
+                <Price>ราคา {props.product.price || "-"} บาท</Price>
 
                 <Control>
-                    <EditBTN>
-                        <AiTwotoneEdit />
-                    </EditBTN>
+                    <ProductDetailModal
+                        buttonStyle={
+                            <EditBTN>
+                                <AiTwotoneEdit />
+                            </EditBTN>}
+                        product={props.product}
+                    />
+
                     <Popup
                         wide
                         position="bottom right"
                         size='small'
+                        on='click'
+                        open={isPopupOpen}
+                        onClose={() => setIsPopupOpen(false)}
+                        onOpen={() => setIsPopupOpen(true)}
                         trigger={
                             <DeleteBTN>
                                 <AiTwotoneDelete />
                             </DeleteBTN>
-                        } on='click'>
+                        }
+                    >
                         <ConfirmPopup>
                             ยืนยันการลบ ?
                         </ConfirmPopup>
 
                         <Grid columns='equal'>
                             <Grid.Column>
-                                <span>
+                                <span onClick={() => setIsPopupOpen(false)} style={{cursor: "pointer"}}>
                                     <CustomButton
                                         buttonText="ยกเลิก"
                                         width="100px"
                                         height="40px"
                                         backgroundColor="#E74C3C" />
                                 </span>
+
                             </Grid.Column>
                             <Grid.Column>
-                                <span onClick={() => props.deleteProduct(props.id)}>
+                                <span onClick={() => {
+                                    props.deleteProduct(props.product._id)
+                                    setIsPopupOpen(false)
+                                }} style={{cursor: "pointer"}}>
                                     <CustomButton
                                         buttonText="ยืนยัน"
                                         width="100px"
@@ -71,7 +87,7 @@ const Card = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: 7px;
-    cursor: pointer;
+    /* cursor: pointer; */
     padding: 0 30px 0 30px;
 
     &:hover {
@@ -109,7 +125,7 @@ const EditBTN = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 100px;
-    /* margin: 5px; */
+    cursor: pointer;
     width: 55px;
     height: 55px;
     color: #F1C40F;
@@ -127,7 +143,7 @@ const DeleteBTN = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 100px;
-    /* margin: 5px; */
+    cursor: pointer;
     width: 55px;
     height: 55px;
     color: #E74C3C;

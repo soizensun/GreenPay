@@ -26,7 +26,6 @@ export default function ShopManagement() {
         }
     }
 
-
     return (
         <MainLayout>
             <Ref innerRef={contextRef}>
@@ -40,27 +39,26 @@ export default function ShopManagement() {
                                     </Label>
                                 </HeaderContainer>
                                 <TabContainer>
-
                                     <Tab active={tab === "myProduct"} onClick={() => setTab("myProduct")}>
                                         สินค้าของฉัน
-                            </Tab>
+                                    </Tab>
                                     <Tab active={tab === "addProduct"} onClick={() => setTab("addProduct")}>
                                         เพิ่มสินค้าใหม่
-                            </Tab>
+                                    </Tab>
                                     <Tab active={tab === "myOrder"} onClick={() => setTab("myOrder")}>
                                         คำสั่งซื้อของฉัน
-                            </Tab>
+                                    </Tab>
                                     <Tab active={tab === "myIncome"} onClick={() => setTab("myIncome")}>
                                         รายรับของฉัน
-                            </Tab>
+                                    </Tab>
                                     <Tab active={tab === "myAccount"} onClick={() => setTab("myAccount")}>
                                         บัญชีของฉัน
-                            </Tab>
+                                    </Tab>
                                 </TabContainer>
                             </Sticky>
                         </Grid.Column>
                         <Grid.Column width={13}>
-                            <div style={{ height: "800px" }}>
+                            <div>
                                 {switchRender()}
                             </div>
                         </Grid.Column>

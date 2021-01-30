@@ -47,7 +47,6 @@ const ProductContainer = styled.div`
     &:hover{
         transition: 0.3s;
         background-color: #F4F7F5;
-        
     }
 `
 

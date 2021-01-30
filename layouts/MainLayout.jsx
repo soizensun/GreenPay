@@ -161,7 +161,6 @@ export default function MainLayout(props) {
             </Navbar>
 
             {props.children}
-            {/* <Footer>asdfasfd</Footer> */}
         </div>
     )
 }
