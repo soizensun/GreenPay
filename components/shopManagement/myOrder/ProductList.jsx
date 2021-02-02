@@ -15,7 +15,7 @@ export default function ProductList(props) {
 
                 <div>
                     {
-                        (props.amount < props.product.stock) ?
+                        (props.amount <= props.product.stock) ?
                             <span style={{ marginRight: "30px", fontSize: "25px", color: "#185341", fontWeight: "bold" }}>
                                 {props.amount}
                             </span>

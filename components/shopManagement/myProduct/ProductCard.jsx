@@ -15,7 +15,7 @@ export default function ProductCard(props) {
         <div style={{ width: "100%" }}>
             <Card>
                 <Image imageUrl={props.product.mainPicture} />
-                <Name>{props.product.name || "product name "}</Name>
+                <Name>{props.product.name || "product name"}</Name>
                 <Price>สิ้นค้าในคลัง {props.product.stock || "-"} ชิ้น</Price>
                 <Price>ราคา {props.product.price || "-"} บาท</Price>
 
@@ -154,6 +154,7 @@ const DeleteBTN = styled.div`
         transition: 0.3s;
     }
 `
+
 const ConfirmPopup = styled.div`
     text-align: center;
     margin: 10px 0 20px 0;

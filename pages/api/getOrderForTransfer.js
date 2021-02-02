@@ -5,7 +5,7 @@ const res = async (req, res) => {
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-    Axios.get(`http://localhost:4000/shops/myProducts/${data.shopId}`, HEADERS)
+    Axios.get(`http://localhost:4000/admins/getOrderForTransfer/${data.shopId}`, HEADERS)
         .then(r => 
 
             res.status(200).send(r.data)

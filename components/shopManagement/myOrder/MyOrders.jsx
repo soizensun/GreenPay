@@ -28,6 +28,7 @@ export default function MyOrders() {
     const closeOrder = (no) => {
         Axios.post('api/closeOrder', JSON.stringify({ orderId: orders[no]._id }), HEADERS)
             .then(res => {
+                setOrders([])
                 setOrders(res.data);
             })
     }

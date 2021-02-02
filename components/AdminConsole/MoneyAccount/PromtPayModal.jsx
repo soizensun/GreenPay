@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Modal, Divider, Dropdown, Header } from 'semantic-ui-react'
-import CustomButton from '../util/CustomButton';
+import React, { useState } from 'react'
+import { Modal } from 'semantic-ui-react'
+import CustomButton from '../../util/CustomButton';
 import styled from 'styled-components'
 
 const inlineStyle = {
@@ -33,20 +33,13 @@ export default function PromtPayModal(props) {
                     <MiddleDivSection>
                         Promptpay
                     </MiddleDivSection>
+
                     <SubContainerImage>
-                        {
-                            (typeof window !== "undefined") ?
-                                <Image mainPicture={`https://promptpay.io/0845858267/${parseInt(localStorage.getItem('greenPrice')) + parseInt(localStorage.getItem('totalPrice'))}`} />
-                                : ""
-                        }
+                        {<Image mainPicture={`https://promptpay.io/${props.promptpayNumber}/${props.total}`} />}
                     </SubContainerImage>
+
                     <MiddleDivSection>
-                        ราคา {parseInt(localStorage.getItem('greenPrice')) + parseInt(localStorage.getItem('totalPrice'))} บาท
-                    </MiddleDivSection>
-                    <MiddleDivSection>
-                        <span onClick={() => {window.location.reload();}}>
-                            <CustomButton buttonText="เสร็จสิ้น" />
-                        </span>
+                        ราคา {props.total} บาท
                     </MiddleDivSection>
 
                 </Modal.Content>
@@ -57,7 +50,6 @@ export default function PromtPayModal(props) {
 
 const SubContainerImage = styled.div`
     flex-grow: 3;
-    /* background-color: red; */
     text-align: center;
     display: flex;
     justify-content: center;

@@ -10,9 +10,9 @@ let HEADERS = { headers: { "Content-Type": "application/json" } }
 
 export default function ConfirmCartModal(props) {
     const [open, setOpen] = useState(false)
-    // const [weeklyProject, setWeeklyProject] = useState({});
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState("");
+    const [hasAddress, setHasAddress] = useState(false);
 
     useEffect(() => {
         Axios.get('api/getWeeklyProject', HEADERS)
@@ -44,18 +44,25 @@ export default function ConfirmCartModal(props) {
         setSelectedOption(value)
     }
 
+    const checkAddress = (address) => {
+        setHasAddress(address.moo != undefined)
+    }
+
     const confirmAction = () => {
-        console.log("aaa");
-        if (typeof window !== "undefined") {
-            Axios.post('api/confirmCart', JSON.stringify({
-                projectId: selectedOption._id,
-                budget: parseInt(localStorage.getItem('greenPrice')),
-                tokenId: localStorage.getItem("userToken")
-            }), HEADERS)
-                .then(r => {
-                    console.log(r.data);
-                })
+
+        if (hasAddress) {
+            if (typeof window !== "undefined") {
+                Axios.post('api/confirmCart', JSON.stringify({
+                    projectId: selectedOption._id,
+                    budget: parseInt(localStorage.getItem('greenPrice')),
+                    tokenId: localStorage.getItem("userToken")
+                }), HEADERS)
+                    .then(r => {
+                        console.log(r.data);
+                    })
+            }
         }
+
     }
 
     const inlineStyle = {
@@ -81,11 +88,8 @@ export default function ConfirmCartModal(props) {
                 size="large"
                 style={inlineStyle}
             >
-                {/* <Header style={{ fontFamily: "Prompt" }} textAlign='center'>สร้างที่อยู่จัดส่ง</Header> */}
                 <Modal.Content>
                     <div style={{ padding: "0 0 20px 0", fontFamily: 'Prompt' }}>
-
-
 
                         <div style={{ margin: "0 30px 0 30px", fontSize: "16px", textAlign: "center" }}>
                             <div >
@@ -107,11 +111,10 @@ export default function ConfirmCartModal(props) {
                                 selection
                                 onChange={handleDropdown}
                                 options={options}
-                                value={`${selectedOption.name} ${selectedOption.location}`}
                             />
                         </div>
 
-                        <AddressSection />
+                        <AddressSection checkAddress={checkAddress} />
 
                         <MiddleDivSection>
                             <Container>
@@ -174,9 +177,10 @@ export default function ConfirmCartModal(props) {
                                 />
                             </span>
 
-                            <PromtPayModal  buttonStyle={
+                            <PromtPayModal buttonStyle={
                                 <span onClick={confirmAction}>
                                     <CustomButton
+                                        disabled={!hasAddress}
                                         color="#F6F9F7"
                                         height="40px"
                                         width="200px"

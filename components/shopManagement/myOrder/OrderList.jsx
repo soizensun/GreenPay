@@ -4,6 +4,8 @@ import ProductList from './ProductList'
 import { FiMoreVertical } from "react-icons/fi";
 import { Grid, Popup } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
+import MoreDetailModel from './MoreDetailModel';
+import moment from 'moment'
 import Axios from 'axios';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
@@ -35,8 +37,7 @@ export default function OrderList(props) {
 
         Axios.post("/api/getUserById", JSON.stringify({ userId: props.order.userId }), HEADERS)
             .then(res => {
-                // setOnwerOrder(res.data)
-
+                setOnwerOrder(res.data)
                 Axios.post("/api/getAddressById", JSON.stringify({ addressId: res.data.addressId }), HEADERS)
                     .then(res => {
                         setOnwerAddress(res.data)
@@ -54,25 +55,28 @@ export default function OrderList(props) {
                 </span>
 
                 <OrderAddress>
-
                     <span style={{ marginRight: "20px" }}>
-                        {/* {onwerAddress.houseNumber} หมู่ {onwerAddress.moo} ถนน {onwerAddress.road} ตำบล {onwerAddress.subDistrict} อำเภอ {onwerAddress.district} จังหวัด {onwerAddress.province} {onwerAddress.postCode} */}
-                        {props.order.createdAt}
+                        {moment(props.order.createdAt).format('D MMMM YYYY เวลา h:mm:ss a')}
                     </span>
                     {/* <FiMoreVertical style={{fontSize: "20px"}}/> */}
                 </OrderAddress>
 
                 <div>
-                    <span style={{ marginRight: "8px" }}>
-                        <CustomButton
-                            buttonText="รายละเอียดเพิ่มเติม"
-                            // width="100px"
-                            height="40px"
-                            color="#185341"
-                            backgroundColor="#FDFEFE" />
-                    </span>
+                    <MoreDetailModel
+                        buttonStyle={
+                            <span style={{ marginRight: "8px" }}>
+                                <CustomButton
+                                    buttonText="รายละเอียดเพิ่มเติม"
+                                    height="40px"
+                                    color="#185341"
+                                    backgroundColor="#FDFEFE" />
+                            </span>
+                        }
+                        onwerAddress={onwerAddress}
+                        onwerOrder={onwerOrder}
+                    />
 
-                    <Popup 
+                    <Popup
                         wide
                         position="bottom right"
                         size='small'
@@ -124,7 +128,6 @@ export default function OrderList(props) {
         </OrderItem>
     )
 }
-
 
 const OrderItem = styled.div`
     /* box-shadow: 1px 1px 3px #ABB2B9; */

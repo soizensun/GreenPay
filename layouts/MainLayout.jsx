@@ -131,8 +131,9 @@ export default function MainLayout(props) {
                         currentUser.role &&
                         (
                             ((currentUser.role).includes('admin')) &&
-                            <Nav.Link style={{ color: "white" }}>สำหรับ admin</Nav.Link>
-
+                            <Link href="/AdminConsole" passHref>
+                                <Nav.Link style={{ color: "white" }}>สำหรับ admin</Nav.Link>
+                            </Link>
                         )
                     }
                 </Nav>

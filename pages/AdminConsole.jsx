@@ -1,28 +1,27 @@
 import React, { useState, createRef } from 'react'
 import MainLayout from "../layouts/MainLayout";
-import { Divider, Grid, Sticky, Ref } from 'semantic-ui-react'
+import { Grid, Sticky, Ref } from 'semantic-ui-react'
+import MoneyAccount from '../components/AdminConsole/MoneyAccount/MoneyAccount'
 import styled from 'styled-components'
-import MyOrders from '../components/shopManagement/myOrder/MyOrders'
-import MyProducts from '../components/shopManagement/myProduct/myProducts'
-import AddProduct from '../components/shopManagement/addProducrt/AddProduct'
-import MyIncome from '../components/shopManagement/myIncome/MyIncome'
 
-export default function ShopManagement() {
+export default function AdminConsole() {
     const contextRef = createRef()
-    const [tab, setTab] = useState('myProduct');
+    const [tab, setTab] = useState('moneyAccount');
 
     const switchRender = () => {
         switch (tab) {
-            case 'myProduct':
-                return <MyProducts />
-            case 'addProduct':
-                return <AddProduct />
-            case 'myOrder':
-                return <MyOrders />
-            case 'myIncome':
-                return <MyIncome/>
-            case 'myAccount':
-                return <div> tab2 </div>
+            case 'allShop':
+                return <div> allShop </div>
+            case 'newShop':
+                return <div> newShop </div>
+            case 'confirmShop':
+                return <div> confirmShop </div>
+            case 'moneyAccount':
+                return <MoneyAccount/>
+            case 'addProject':
+                return <div> addProject </div>
+            case 'allProject':
+                return <div> allProject </div>
         }
     }
 
@@ -35,24 +34,27 @@ export default function ShopManagement() {
                             <Sticky context={contextRef} pushing>
                                 <HeaderContainer>
                                     <Label>
-                                        จัดการร้านค้า
+                                        Admin Console
                                     </Label>
                                 </HeaderContainer>
                                 <TabContainer>
-                                    <Tab active={tab === "myProduct"} onClick={() => setTab("myProduct")}>
-                                        สินค้าของฉัน
+                                    <Tab active={tab === "allShop"} onClick={() => setTab("allShop")}>
+                                        ร้านค้าทั้งหมด
                                     </Tab>
-                                    <Tab active={tab === "addProduct"} onClick={() => setTab("addProduct")}>
-                                        เพิ่มสินค้าใหม่
+                                    <Tab active={tab === "newShop"} onClick={() => setTab("newShop")}>
+                                        ร้านค้าใหม่
                                     </Tab>
-                                    <Tab active={tab === "myOrder"} onClick={() => setTab("myOrder")}>
-                                        คำสั่งซื้อของฉัน
+                                    <Tab active={tab === "confirmShop"} onClick={() => setTab("confirmShop")}>
+                                        ร้านค้าที่ยืนยันแล้ว
                                     </Tab>
-                                    <Tab active={tab === "myIncome"} onClick={() => setTab("myIncome")}>
-                                        รายรับของฉัน
+                                    <Tab active={tab === "moneyAccount"} onClick={() => setTab("moneyAccount")}>
+                                        รายละเอียดบัญชี
                                     </Tab>
-                                    <Tab active={tab === "myAccount"} onClick={() => setTab("myAccount")}>
-                                        ร้านของฉัน
+                                    <Tab active={tab === "addProject"} onClick={() => setTab("addProject")}>
+                                        เพิ่มโครงการใหม่
+                                    </Tab>
+                                    <Tab active={tab === "allProject"} onClick={() => setTab("allProject")}>
+                                        โครงการทังหมด
                                     </Tab>
                                 </TabContainer>
                             </Sticky>

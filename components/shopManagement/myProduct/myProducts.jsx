@@ -1,7 +1,6 @@
 import Axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
-import styled from "styled-components";
 import NoItem from '../../util/NoItem';
 import Skeleton from '@material-ui/lab/Skeleton';
 
@@ -54,7 +53,7 @@ export default function myProducts() {
                             </div>
                         </div>
                         :
-                        <ProductContainer>
+                        <div>
                             {
                                 allProduct.map(item => {
                                     return (
@@ -64,7 +63,7 @@ export default function myProducts() {
                                         />)
                                 })
                             }
-                        </ProductContainer>
+                        </div>
                     :
                     <NoItem wording="no product" />
             }
@@ -72,10 +71,3 @@ export default function myProducts() {
 
     )
 }
-
-const ProductContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 10px;
-`
-

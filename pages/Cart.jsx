@@ -6,6 +6,7 @@ import AddressSection from '../components/Carts/AddressSection'
 import CustomButton from '../components/util/CustomButton'
 import ConfirmCartModal from '../components/Carts/ConfirmCartModal'
 import Skeleton from '@material-ui/lab/Skeleton';
+import NoItem from '../components/util/NoItem'
 import styled from 'styled-components'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
@@ -107,7 +108,7 @@ export default function Cart() {
                                     </CartFooter>
                                 </div>
                                 :
-                                <div>no cart</div>
+                                <NoItem/>
                         }
                     </div>
             }

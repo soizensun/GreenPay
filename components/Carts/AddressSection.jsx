@@ -8,7 +8,7 @@ import AddAddressModal from './AddAddressModal'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-export default function AddressSection() {
+export default function AddressSection(props) {
     const [address, setAddress] = useState({});
 
     useEffect(() => {
@@ -16,6 +16,7 @@ export default function AddressSection() {
             Axios.post('api/getAddress', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), HEADERS)
                 .then(res => {
                     setAddress(res.data)
+                    props.checkAddress(res.data)
                 })
     }, [])
 
