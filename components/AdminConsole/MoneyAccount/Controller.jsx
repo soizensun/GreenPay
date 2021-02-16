@@ -4,19 +4,20 @@ import styled from 'styled-components'
 import { AiOutlineQrcode } from "react-icons/ai";
 import CustomButton from '../../util/CustomButton'
 import PromtPayModal from './PromtPayModal';
+import SnakeBar from '../../util/CustomSnakeBar'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
 export default function Controller(props) {
     const [orderList, setOrderList] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [transferSnakeBarStatus, setTransferSnakeBarStatus] = useState(false);
 
     useEffect(() => {
         Axios.post("/api/getOrderForTransfer", JSON.stringify({ shopId: props.shop._id }), HEADERS)
             .then(res => {
                 setOrderList(res.data)
                 calculate(res.data)
-
             })
     }, [])
 
@@ -37,13 +38,16 @@ export default function Controller(props) {
     const transfer = () => {
         Axios.post('/api/transferMoney', JSON.stringify({ receivedMoney: totalPrice, shopId: orderList[0].shopId }), HEADERS)
             .then(res => {
-                console.log(res.data);
                 setTotalPrice(0)
+                setTransferSnakeBarStatus(true)
             })
     }
 
     return (
         <Container>
+
+            <SnakeBar snakeStatus={transferSnakeBarStatus} setSnakeStatus={setTransferSnakeBarStatus} wording="โอนเรียบร้อย" />
+
             <PromtPayModal
                 buttonStyle={
                     <QrcodeBTN hidden={(totalPrice != 0) ? false : true}>

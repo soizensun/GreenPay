@@ -28,7 +28,7 @@ export default function ConfirmCartModal(props) {
                     tmpJson.key = index
                     tmpJson.text = a.name
                     tmpJson.value = {
-                        id: a._id,
+                        _id: a._id,
                         name: a.name,
                         location: a.location
                     }

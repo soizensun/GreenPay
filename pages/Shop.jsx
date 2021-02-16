@@ -203,7 +203,7 @@ const ProductTag = styled.div`
     cursor: pointer;
 
     ${({ active }) => active && `
-        background: #185341;
+        background: #90B099;
         color: white;
         transition: 0.3s;
     `}
