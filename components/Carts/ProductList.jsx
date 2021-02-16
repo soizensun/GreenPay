@@ -20,45 +20,56 @@ export default function ProductCartList(props) {
                 </ProductName>
 
                 <ProductAmount>
-                    <Counter>
-                        <span onClick={() => {
-                            (localStorage.getItem("userToken") != null) ?
-                                Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
-                                    "tokenId": localStorage.getItem("userToken"),
-                                    "productId": props.product._id,
-                                    "amount": -1
-                                }), HEADERS)
-                                    .then(res => {
-                                        console.log(res.data);
-                                        window.location.reload();
-                                    })
-                                    .catch(err => {
-                                        console.log(err);
-                                    })
-                                : ""
-                        }}>
-                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#17202A" />
-                        </span>
-                        <ShowCount>{props.amount}</ShowCount>
-                        <span onClick={() => {
-                            (localStorage.getItem("userToken") != null) ?
-                                Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
-                                    "tokenId": localStorage.getItem("userToken"),
-                                    "productId": props.product._id,
-                                    "amount": 1
-                                }), HEADERS)
-                                    .then(res => {
-                                        console.log(res.data);
-                                        window.location.reload();
-                                    })
-                                    .catch(err => {
-                                        console.log(err);
-                                    })
-                                : ""
-                        }} >
-                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#17202A" />
-                        </span>
-                    </Counter>
+                    {
+                        (props.amount > props.product.stock) ?
+                            <div style={{display: "flex", flexDirection: "column", color: "#E74C3C", fontSize: "15px"}}>
+                                <div>สินค้าในคลังไม่พอ</div>
+                                <div>กรุณาลบออกจากตะกร้า</div>
+                                {props.disableNextBtn()}
+                            </div>
+
+                            :
+                            <Counter>
+                                <span onClick={() => {
+                                    (localStorage.getItem("userToken") != null) ?
+                                        Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
+                                            "tokenId": localStorage.getItem("userToken"),
+                                            "productId": props.product._id,
+                                            "amount": -1
+                                        }), HEADERS)
+                                            .then(res => {
+                                                console.log(res.data);
+                                                window.location.reload();
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            })
+                                        : ""
+                                }}>
+                                    <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#17202A" />
+                                </span>
+                                <ShowCount>{props.amount}</ShowCount>
+                                <span onClick={() => {
+                                    (localStorage.getItem("userToken") != null) ?
+                                        Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
+                                            "tokenId": localStorage.getItem("userToken"),
+                                            "productId": props.product._id,
+                                            "amount": 1
+                                        }), HEADERS)
+                                            .then(res => {
+                                                console.log(res.data);
+                                                window.location.reload();
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            })
+                                        : ""
+                                }} >
+                                    <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#17202A" disabled={props.amount == props.product.stock} />
+                                </span>
+                            </Counter>
+                    }
+
                 </ProductAmount>
 
                 <ProductPrice>
@@ -124,7 +135,7 @@ const ProductImage = styled.div`
 `
 
 const ProductName = styled.div`
-    width: 200px;
+    width: 180px;
     flex-grow: 2;
 `
 const ProductAmount = styled.div`

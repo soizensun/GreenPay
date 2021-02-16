@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import CustomButton from "../util/CustomButton";
 import styled from "styled-components";
+import Link from 'next/link'
 import Axios from 'axios';
-import { Grid } from 'semantic-ui-react'
 import Skeleton from '@material-ui/lab/Skeleton';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
@@ -23,9 +23,6 @@ export default function ProductDetail(props) {
     }, [])
 
     const addToCart = () => {
-        console.log(product._id);
-        console.log(count);
-
         (localStorage.getItem("userToken") != null) ?
             Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
                 "tokenId": localStorage.getItem("userToken"),
@@ -75,9 +72,11 @@ export default function ProductDetail(props) {
                                         <div>
                                             <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
                                         </div>
+
                                         <div style={{ marginTop: "5px" }}>
                                             <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F"></CustomButton>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -99,11 +98,11 @@ export default function ProductDetail(props) {
                                 <div style={{ textAlign: "center", fontSize: "18px" }}>
                                     <Counter>
                                         <span onClick={() => { if (count > 1) setCount(count - 1) }} >
-                                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#2E4053" />
+                                            <CustomButton buttonText="-" width="30px" height="30px" backgroundColor="#2E4053" disabled={count == 1} />
                                         </span>
                                         <ShowCount>{count}</ShowCount>
                                         <span onClick={() => { if (count < stock) setCount(count + 1) }} >
-                                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" />
+                                            <CustomButton buttonText="+" width="30px" height="30px" backgroundColor="#2E4053" disabled={count == stock} />
                                         </span>
                                     </Counter>
                                     จำนวนสินค้าในคลัง : {stock}
@@ -111,24 +110,26 @@ export default function ProductDetail(props) {
                                         <div onClick={addToCart}>
                                             <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
                                         </div>
-                                        <div style={{ marginTop: "5px" }}>
-                                            <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F" color="#2C3E50"></CustomButton>
-                                        </div>
+                                        <Link href="/Shop" passHref>
+                                            <div style={{ marginTop: "5px" }}>
+                                                <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F" color="#2C3E50"></CustomButton>
+                                            </div>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                         </SubContainerDetail>
                     </DetailContainer>
             }
-            <div style={{padding: "10px 100px 30px 100px"}}>
+            <div style={{ padding: "10px 100px 30px 100px" }}>
                 <DescriptionLabel>รายละเอียดสินค้า</DescriptionLabel>
                 <Description>{product.description}</Description>
             </div>
 
-            <Divition />
+            {/* <Divition />
             <MoreProduct>
                 afsdf
-            </MoreProduct>
+            </MoreProduct> */}
 
         </>
     )
@@ -178,7 +179,7 @@ const PriceLabel = styled.div`
 
 const DescriptionLabel = styled.div`
     font-size: 18px;
-    margin-top: 20px;
+    margin: 20px 0 20px 0;
     font-weight: bold;
 `
 
@@ -192,7 +193,7 @@ const ShowCount = styled.span`
 
 const Description = styled.div`
     margin-top: 10px;
-    font-size: 19px;
+    font-size: 18px;
 `
 
 const Divition = styled.hr`

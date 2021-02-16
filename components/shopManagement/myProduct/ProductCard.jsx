@@ -11,12 +11,13 @@ const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 export default function ProductCard(props) {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+
     return (
         <div style={{ width: "100%" }}>
             <Card>
                 <Image imageUrl={props.product.mainPicture} />
                 <Name>{props.product.name || "product name"}</Name>
-                <Price>สิ้นค้าในคลัง {props.product.stock || "-"} ชิ้น</Price>
+                <Stock color={props.product.stock}>สินค้าในคลัง {props.product.stock || "-"} ชิ้น</Stock>
                 <Price>ราคา {props.product.price || "-"} บาท</Price>
 
                 <Control>
@@ -26,6 +27,7 @@ export default function ProductCard(props) {
                                 <AiTwotoneEdit />
                             </EditBTN>}
                         product={props.product}
+                        updateProduct={props.updateProduct}
                     />
 
                     <Popup
@@ -53,7 +55,8 @@ export default function ProductCard(props) {
                                         buttonText="ยกเลิก"
                                         width="100px"
                                         height="40px"
-                                        backgroundColor="#E74C3C" />
+                                        backgroundColor="#D5D8DC"
+                                        color="#1C2833" />
                                 </span>
 
                             </Grid.Column>
@@ -63,15 +66,14 @@ export default function ProductCard(props) {
                                     setIsPopupOpen(false)
                                 }} style={{cursor: "pointer"}}>
                                     <CustomButton
-                                        buttonText="ยืนยัน"
+                                        buttonText="ลบ"
                                         width="100px"
                                         height="40px"
-                                        backgroundColor="#185341" />
+                                        backgroundColor="#E74C3C" />
                                 </span>
                             </Grid.Column>
                         </Grid>
                     </Popup>
-
 
                 </Control>
             </Card>
@@ -113,6 +115,11 @@ const Name = styled.div`
 
 const Price = styled.div`
     font-size: 19px;
+`
+
+const Stock = styled.div`
+    font-size: 19px;
+    color: ${props => props.color || "#E74C3C"};
 `
 
 const Control = styled.div`

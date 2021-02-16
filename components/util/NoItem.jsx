@@ -6,7 +6,7 @@ export default function NoItem(props) {
     return (
         <Container>
             {/* <MdHourglassEmpty style={{margin: "50px"}}/> */}
-            {props.wording || "no cart"}
+            {props.wording || "ไม่มีรายการ"}
         </Container>
     )
 }

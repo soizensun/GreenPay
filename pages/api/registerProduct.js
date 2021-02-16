@@ -5,7 +5,6 @@ const res = async (req, res) => {
 
     let HEADERS = {headers: {"Content-Type": "application/json",}}
 
-    console.log(data);
 
     Axios.post(`http://localhost:4000/products/register`, data, HEADERS)
         .then(r =>

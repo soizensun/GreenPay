@@ -106,7 +106,7 @@ export default function ConfirmCartModal(props) {
                                 หรือ เลือกโครงการอื่นๆ
                             </div>
                             <Dropdown
-                                placeholder='เลือกโปรเจคอื่นๆ'
+                                placeholder='เลือกโครงการอื่นๆ'
                                 fluid
                                 selection
                                 onChange={handleDropdown}
@@ -205,7 +205,7 @@ const MiddleDivSection = styled.div`
     /* color: white; */
     /* margin-top: 20px; */
     background-color: #CFDDD3;
-    padding: 20px
+    padding: 20px;
 `
 
 const Container = styled.div`

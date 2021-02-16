@@ -28,6 +28,7 @@ const LoginButton = styled.button`
 export default function MainLayout(props) {
     const [currentUser, setCurrentUser] = useState({});
     const [cart, setCart] = useState({});
+    const [userShop, setUserShop] = useState({});
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -40,6 +41,14 @@ export default function MainLayout(props) {
                             .then(r => {
                                 setCart(r.data)
                             })
+
+                        Axios.post('api/getOwnerShop', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
+                            .then(r => {
+                                localStorage.setItem("userShop", r.data._id)
+                                // window.location.reload();
+                                setUserShop(r.data)
+                            })
+                        
                     })
             }
         }
@@ -58,6 +67,7 @@ export default function MainLayout(props) {
                         Axios.post('api/getOwnerShop', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), { headers: HEADERS })
                             .then(r => {
                                 localStorage.setItem("userShop", r.data._id)
+                                setUserShop(r.data)
                                 window.location.reload();
                             })
                     })

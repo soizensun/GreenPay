@@ -16,6 +16,7 @@ export default function Cart() {
     const [isLoading, setIsLoading] = useState(true);
     const [tmpCart, setTmpCart] = useState([]);
     const [userId, setUserId] = useState("");
+    const [disableBtn, setDisableBtn] = useState(false);
 
     useEffect(() => {
 
@@ -67,6 +68,8 @@ export default function Cart() {
         return realCart
     }
 
+    const disableNextBtn = () => {setDisableBtn(true)}
+
     return (
 
         <MainLayout>
@@ -92,7 +95,7 @@ export default function Cart() {
                                 <div>
                                     {
                                         carts.map(shop =>
-                                            <CartShop shop={shop} />
+                                            <CartShop shop={shop} disableNextBtn={disableNextBtn}/>
                                         )
                                     }
 
@@ -102,6 +105,7 @@ export default function Cart() {
                                             <span>
                                                 <CustomButton
                                                     buttonText="ถัดไป"
+                                                    disabled={disableBtn}
                                                 />
                                             </span>
                                         } />

@@ -29,7 +29,7 @@ export default function AddressSection(props) {
             {
                 (address.houseNumber !== undefined) ?
                     <div style={{ display: "flex" }}>
-                        {address.houseNumber} หมู่ {address.moo} ถนน {address.road} ตำบล {address.subDistrict} อำเภอ {address.district} จังหวัด {address.province} {address.postCode}
+                        {address.houseNumber} หมู่ {address.moo || "-"} ถนน {address.road || "-"} ตำบล {address.subDistrict || "-"} อำเภอ {address.district} จังหวัด {address.province} {address.postCode}
                         {/* <AddAddressModal buttonStyle={<div></div>} /> */}
 
                         {/* edit address */}

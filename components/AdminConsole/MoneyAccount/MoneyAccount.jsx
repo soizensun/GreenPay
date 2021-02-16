@@ -47,9 +47,8 @@ export default function MoneyAccount() {
                         <div>
                             <DateDiv>
                                 {currentDate}
-                                
                             </DateDiv>
-                            <div style={{textAlign: 'center', marginBottom: "40px", color: "#E74C3C"}}>* โอนภายในสิ้นเดือน</div>
+                            <div style={{textAlign: 'center', marginBottom: "40px", color: "#E74C3C"}}>* โอนไม่เกิน 20.00 น. ของแต่ละวัน</div>
                             
                             {
                                 allShop.map(shop =>
@@ -58,7 +57,7 @@ export default function MoneyAccount() {
                             }
                         </div>
                     :
-                    <NoItem wording="no list" />
+                    <NoItem wording="ไม่มีรายการ" />
             }
         </div>
     )

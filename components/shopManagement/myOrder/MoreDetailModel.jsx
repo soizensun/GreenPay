@@ -32,9 +32,9 @@ export default function moreDetailModel(props) {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Label>รายละเอียดผู้สั่ง</Label>
                     <Content>
-                        <span style={{ padding: "5px" }}><SubLabel>ชื่อ</SubLabel>{props.onwerOrder.displayName}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>อีเมล</SubLabel>{props.onwerOrder.email}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>เบอร์โทรศัทพ์</SubLabel>{props.onwerOrder.phoneNumber}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>ชื่อ</SubLabel>{props.onwerAddress.recipientName}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>อีเมล</SubLabel>{props.onwerAddress.recipientSirName}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>เบอร์โทรศัทพ์</SubLabel>{props.onwerAddress.phoneNumber}</span>
                     </Content>
                 </div>
                 <Divider/>
@@ -42,9 +42,9 @@ export default function moreDetailModel(props) {
                     <Label>ที่อยู่การจัดส่ง</Label>
                     <Content>
                         <span style={{ padding: "5px" }}><SubLabel>บ้านเลขที่</SubLabel>{props.onwerAddress.houseNumber}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>หมู่</SubLabel>{props.onwerAddress.moo}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>ถนน</SubLabel>{props.onwerAddress.road}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>ตำบล</SubLabel>{props.onwerAddress.subDistrict}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>หมู่</SubLabel>{props.onwerAddress.moo || '-'}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>ถนน</SubLabel>{props.onwerAddress.road || '-'}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>ตำบล</SubLabel>{props.onwerAddress.subDistrict || '-'}</span>
                         <span style={{ padding: "5px" }}><SubLabel>อำเภอ</SubLabel>{props.onwerAddress.district}</span>
                         <span style={{ padding: "5px" }}><SubLabel>จังหวัด</SubLabel>{props.onwerAddress.province}</span>
                         <span style={{ padding: "5px" }}><SubLabel>รหัสไปรษณย์</SubLabel>{props.onwerAddress.postCode}</span>

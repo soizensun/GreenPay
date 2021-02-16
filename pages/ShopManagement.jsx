@@ -6,6 +6,7 @@ import MyOrders from '../components/shopManagement/myOrder/MyOrders'
 import MyProducts from '../components/shopManagement/myProduct/myProducts'
 import AddProduct from '../components/shopManagement/addProducrt/AddProduct'
 import MyIncome from '../components/shopManagement/myIncome/MyIncome'
+import Myshop from '../components/shopManagement/myShop/Myshop'
 
 export default function ShopManagement() {
     const contextRef = createRef()
@@ -22,7 +23,7 @@ export default function ShopManagement() {
             case 'myIncome':
                 return <MyIncome/>
             case 'myAccount':
-                return <div> tab2 </div>
+                return <Myshop/>
         }
     }
 

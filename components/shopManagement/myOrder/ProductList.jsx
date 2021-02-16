@@ -15,18 +15,18 @@ export default function ProductList(props) {
 
                 <div>
                     {
-                        (props.amount <= props.product.stock) ?
+                        // (props.amount <= props.product.stock) ?
                             <span style={{ marginRight: "30px", fontSize: "25px", color: "#185341", fontWeight: "bold" }}>
                                 {props.amount}
                             </span>
-                            :
-                            <span style={{ marginRight: "30px", fontSize: "25px", color: "#E74C3C", fontWeight: "bold" }}>
-                                {props.amount}
-                            </span>
+                            // :
+                            // <span style={{ marginRight: "30px", fontSize: "25px", color: "#E74C3C", fontWeight: "bold" }}>
+                            //     {props.amount}
+                            // </span>
                     }
                     ชิ้น
                 </div>
-                <div>สินค้าในคลัง {props.product.stock} ชิ้น</div>
+                {/* <div>สินค้าในคลัง {props.product.stock} ชิ้น</div> */}
                 <div><Checkbox checked={checkBoxStatus} /></div>
 
             </ProductContainer>

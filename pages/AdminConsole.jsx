@@ -1,27 +1,26 @@
 import React, { useState, createRef } from 'react'
 import MainLayout from "../layouts/MainLayout";
 import { Grid, Sticky, Ref } from 'semantic-ui-react'
-import MoneyAccount from '../components/AdminConsole/MoneyAccount/MoneyAccount'
+import MoneyAccount from '../components/AdminConsole/moneyAccount/MoneyAccount'
+import AllShop from '../components/AdminConsole/allShop/AllShop'
+import AddProject from '../components/AdminConsole/newProject/AddProject'
+import AllProject from '../components/AdminConsole/allProject/AllProject'
 import styled from 'styled-components'
 
 export default function AdminConsole() {
     const contextRef = createRef()
-    const [tab, setTab] = useState('moneyAccount');
+    const [tab, setTab] = useState('allShop');
 
     const switchRender = () => {
         switch (tab) {
             case 'allShop':
-                return <div> allShop </div>
-            case 'newShop':
-                return <div> newShop </div>
-            case 'confirmShop':
-                return <div> confirmShop </div>
+                return <AllShop/>
             case 'moneyAccount':
                 return <MoneyAccount/>
             case 'addProject':
-                return <div> addProject </div>
+                return <AddProject/>
             case 'allProject':
-                return <div> allProject </div>
+                return <AllProject/>
         }
     }
 
@@ -39,16 +38,10 @@ export default function AdminConsole() {
                                 </HeaderContainer>
                                 <TabContainer>
                                     <Tab active={tab === "allShop"} onClick={() => setTab("allShop")}>
-                                        ร้านค้าทั้งหมด
-                                    </Tab>
-                                    <Tab active={tab === "newShop"} onClick={() => setTab("newShop")}>
-                                        ร้านค้าใหม่
-                                    </Tab>
-                                    <Tab active={tab === "confirmShop"} onClick={() => setTab("confirmShop")}>
-                                        ร้านค้าที่ยืนยันแล้ว
+                                        เกี่ยวกับร้านค้า
                                     </Tab>
                                     <Tab active={tab === "moneyAccount"} onClick={() => setTab("moneyAccount")}>
-                                        รายละเอียดบัญชี
+                                        รายละเอียดการบัญชี
                                     </Tab>
                                     <Tab active={tab === "addProject"} onClick={() => setTab("addProject")}>
                                         เพิ่มโครงการใหม่

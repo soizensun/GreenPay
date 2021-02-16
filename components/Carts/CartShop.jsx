@@ -95,7 +95,7 @@ export default function CartShop(props) {
                 {
                     (products.length != 0) &&
                         products.map((product, index) =>
-                            <ProductList key={index} product={product} amount={amount[index]} />
+                            <ProductList key={index} product={product} amount={amount[index]} disableNextBtn={props.disableNextBtn}/>
                         )
                 }
 

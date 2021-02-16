@@ -26,7 +26,8 @@ export default function Controller(props) {
             order.products.forEach(product => {
                 Axios.post("/api/getProductDetail", JSON.stringify({ productId: product.productId }), HEADERS)
                     .then(r => {
-                        summ += r.data.price
+                        console.log(product);
+                        summ += r.data.price * product.amount
                         setTotalPrice(summ);
                     })
             })
@@ -60,7 +61,7 @@ export default function Controller(props) {
                 <CustomButton
                     buttonText="โอนเสร็จสิ้น"
                     width="120px"
-                    backgroundColor="#90B099"
+                    backgroundColor="#185341"
                     disabled={(totalPrice != 0) ? false : true} />
             </BtnSpan>
         </Container>

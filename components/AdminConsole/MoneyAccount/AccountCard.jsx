@@ -50,7 +50,7 @@ const AccountDetail = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-size: 16px
+    font-size: 16px;
 `
 
 const DetailContainer = styled.span`

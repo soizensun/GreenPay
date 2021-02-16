@@ -73,7 +73,6 @@ export default function OrderList(props) {
                             </span>
                         }
                         onwerAddress={onwerAddress}
-                        onwerOrder={onwerOrder}
                     />
 
                     <Popup
@@ -81,7 +80,7 @@ export default function OrderList(props) {
                         position="bottom right"
                         size='small'
                         trigger={
-                            <span >
+                            <span>
                                 <CustomButton
                                     buttonText="เสร็จสิ้น"
                                     width="100px"
@@ -96,11 +95,12 @@ export default function OrderList(props) {
                         <Grid columns='equal'>
                             <Grid.Column>
                                 <span>
-                                    <CustomButton
+                                <CustomButton
                                         buttonText="ยกเลิก"
                                         width="100px"
                                         height="40px"
-                                        backgroundColor="#E74C3C" />
+                                        backgroundColor="#D5D8DC"
+                                        color="#1C2833" />
                                 </span>
                             </Grid.Column>
                             <Grid.Column>

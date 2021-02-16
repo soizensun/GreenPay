@@ -9,7 +9,7 @@ export default function IncomeCard(props) {
                 {moment(props.aList.receivedDate).format('วันที่ D MMMM YYYY ')}
             </Date>
             <Time>
-                {moment(props.aList.receivedDate).format('เวลา h:mm a')}
+                {moment(props.aList.receivedDate).format('เวลา h:mm:ss a')}
             </Time>
             <Income>
                 ได้รับ <span style={{fontWeight: "bold", padding: "10px"}}>{props.aList.receivedMoney}</span> บาท

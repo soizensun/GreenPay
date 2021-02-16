@@ -50,8 +50,6 @@ export default function ProductDetailModal(props) {
     }
 
     const editProduct = () => {
-        console.log(typeof (mainPicture));
-        console.log(preview);
 
         if (typeof (mainPicture) == 'object') {
 
@@ -81,7 +79,8 @@ export default function ProductDetailModal(props) {
 
                             Axios.post('api/updateProduct', JSON.stringify(body), HEADERS)
                                 .then(res => {
-                                    window.location.reload()
+                                    setOpen(false)
+                                    props.updateProduct(res.data)
                                 })
                         })
                 }
@@ -104,7 +103,8 @@ export default function ProductDetailModal(props) {
 
             Axios.post('api/updateProduct', JSON.stringify(body), HEADERS)
                 .then(res => {
-                    window.location.reload()
+                    setOpen(false)
+                    props.updateProduct(res.data)
                 })
         }
     }
@@ -131,74 +131,79 @@ export default function ProductDetailModal(props) {
                 style={inlineStyle}
             >
                 <Header style={{ fontFamily: "Prompt" }} textAlign='center'>แก้ไขรายละเอียดสินค้า</Header>
-                <Modal.Content >
-                    <Form size="large" onSubmit={editProduct} style={{paddingTop: "20px"}}>
-                        <Grid>
-                            <Grid.Row>
-                                <Grid.Column width={6}>
-                                    <ImageForm>
-                                        <Border>
-                                            <Center style={{ marginBottom: "20px" }}>
-                                                <Image imageUrl={preview} />
-                                            </Center>
-                                            <Center>
-                                                <Button
-                                                    as="label"
-                                                    content="เลือกรูปภาพ"
-                                                    labelPosition="right"
-                                                    icon="file"
-                                                    htmlFor="file"
-                                                    style={{ fontFamily: "Prompt" }}
-                                                />
-                                                <Form.Input id="file" type="file"
-                                                    onChange={upload} style={{ width: "0px" }} hidden />
-                                            </Center>
-                                        </Border>
-                                    </ImageForm>
-                                </Grid.Column>
-                                <Grid.Column width={10}>
-                                    <Form.Group>
-                                        <Form.Input required label='ชื่อสินค้า' width={16} value={name}
-                                            onChange={e => setName(e.target.value)} />
-                                    </Form.Group>
+                <div style={{ padding: "30px 60px 30px 60px" }}>
+                    <Modal.Content >
+                        <Form size="large" onSubmit={editProduct} style={{ paddingTop: "20px" }}>
+                            <Grid>
+                                <Grid.Row>
+                                    <Grid.Column width={6}>
+                                        <ImageForm>
+                                            <Border>
+                                                <Center style={{ marginBottom: "20px" }}>
+                                                    <Image imageUrl={preview} />
+                                                </Center>
+                                                <Center>
+                                                    <Button
+                                                        as="label"
+                                                        content="เลือกรูปภาพ"
+                                                        labelPosition="right"
+                                                        icon="file"
+                                                        htmlFor="file"
+                                                        style={{ fontFamily: "Prompt" }}
+                                                    />
+                                                    <Form.Input id="file" type="file"
+                                                        onChange={upload} style={{ width: "0px" }} hidden />
+                                                </Center>
+                                            </Border>
+                                        </ImageForm>
+                                    </Grid.Column>
+                                    <Grid.Column width={10}>
+                                        <Form.Group>
+                                            <Form.Input required label='ชื่อสินค้า' width={16} value={name}
+                                                onChange={e => setName(e.target.value)} />
+                                        </Form.Group>
 
-                                    <Form.Group>
-                                        <Form.Input required label='ราคา' width={8} type="number" value={price}
-                                            onChange={e => setPrice(e.target.value)} />
-                                        <Form.Input required label='Green Price' width={8} type="number" value={greenPrice}
-                                            onChange={e => setGreenPrice(e.target.value)} />
-                                    </Form.Group>
+                                        <Form.Group>
+                                            <Form.Input required label='ราคา' width={8} type="number" value={price}
+                                                onChange={e => setPrice(e.target.value)} />
+                                            <Form.Input required label='Green Price' width={8} type="number" value={greenPrice}
+                                                onChange={e => setGreenPrice(e.target.value)} />
+                                        </Form.Group>
 
-                                    <Form.Group>
-                                        <Form.Input required label='ประเภท' width={8} control={Select} options={productTags} value={tagId}
-                                            onChange={(e, { value }) => setTagId(value)} />
-                                        <Form.Input required label='จำนวนสินค้าในคลัง' width={8} type="number" value={stock}
-                                            onChange={e => setStock(e.target.value)} />
-                                    </Form.Group>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
+                                        <Form.Group>
+                                            <Form.Input required label='ประเภท' width={8} control={Select} options={productTags} value={tagId}
+                                                onChange={(e, { value }) => setTagId(value)} />
+                                            <Form.Input required label='จำนวนสินค้าในคลัง' width={8} type="number" value={stock}
+                                                onChange={e => setStock(e.target.value)} />
+                                        </Form.Group>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                            <div style={{marginTop: "25px"}}>
+                                <Form.Group>
+                                    <Form.Input required label='คำอธิบาย' width={16} value={description} control={TextArea}
+                                        onChange={e => setDescription(e.target.value)} />
+                                </Form.Group>
+                            </div>
 
-                        <Form.Group>
-                            <Form.Input required label='คำอธิบาย' width={16} value={description} control={TextArea}
-                                onChange={e => setDescription(e.target.value)} />
-                        </Form.Group>
 
-                        <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                            <div></div>
-                            <span content='Submit'>
-                                <Loader active={isAddProductLoading} inline size='small' style={{ marginRight: "20px" }} />
-                                <CustomButton
-                                    color="#FDFEFE"
-                                    height="40px"
-                                    width="100px"
-                                    backgroundColor="#185341"
-                                    buttonText="บันทึก"
-                                />
-                            </span>
-                        </div>
-                    </Form>
-                </Modal.Content>
+                            <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                                <div></div>
+                                <span content='Submit'>
+                                    <Loader active={isAddProductLoading} inline size='small' style={{ marginRight: "20px" }} />
+                                    <CustomButton
+                                        color="#FDFEFE"
+                                        height="40px"
+                                        width="100px"
+                                        backgroundColor="#185341"
+                                        buttonText="บันทึก"
+                                    />
+                                </span>
+                            </div>
+                        </Form>
+                    </Modal.Content>
+                </div>
+
             </Modal>
         </div>
     )
@@ -224,7 +229,7 @@ const Center = styled.div`
 
 const Border = styled.div`
     width: 300px;
-    border: 1px solid #DEDEDF;
+    /* border: 1px solid #DEDEDF; */
     border-radius: 5px;
     padding: 10px
 `
