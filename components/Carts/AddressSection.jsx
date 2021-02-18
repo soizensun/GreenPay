@@ -8,17 +8,16 @@ import AddAddressModal from './AddAddressModal'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-export default function AddressSection() {
+export default function AddressSection(props) {
     const [address, setAddress] = useState({});
 
     useEffect(() => {
-        (localStorage.getItem("userToken") !== undefined) ?
+        (localStorage.getItem("userToken") !== undefined) &&
             Axios.post('api/getAddress', JSON.stringify({ "tokenId": localStorage.getItem("userToken") }), HEADERS)
                 .then(res => {
-                    // console.log(res.data);
                     setAddress(res.data)
+                    props.checkAddress(res.data)
                 })
-            : ""
     }, [])
 
     return (
@@ -30,12 +29,8 @@ export default function AddressSection() {
             {
                 (address.houseNumber !== undefined) ?
                     <div style={{ display: "flex" }}>
-                        {address.houseNumber} หมู่ {address.moo} ถนน {address.road} ตำบล {address.subDistrict} อำเภอ {address.district} จังหวัด {address.province} {address.postCode}
-
-
-                        <AddAddressModal buttonStyle={
-                            <div></div>
-                        } />
+                        {address.houseNumber} หมู่ {address.moo || "-"} ถนน {address.road || "-"} ตำบล {address.subDistrict || "-"} อำเภอ {address.district} จังหวัด {address.province} {address.postCode}
+                        {/* <AddAddressModal buttonStyle={<div></div>} /> */}
 
                         {/* edit address */}
                         {/* <AddAddressModal buttonStyle={

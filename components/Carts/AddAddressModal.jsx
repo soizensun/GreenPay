@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Header, Form, Modal, Divider } from 'semantic-ui-react'
+import { Header, Form, Modal, Divider } from 'semantic-ui-react'
 import CustomButton from "../util/CustomButton";
 import Axios from "axios";
 
@@ -19,7 +19,6 @@ export default function AddAddressModal(props) {
     const [district, setDistrict] = useState('');
     const [province, setProvince] = useState('');
     const [postCode, setPostCode] = useState('');
-
 
     const inlineStyle = {
         height: "auto",
@@ -49,7 +48,8 @@ export default function AddAddressModal(props) {
             }
             Axios.post('api/addAddress', JSON.stringify(body), HEADERS)
                 .then(res => {
-                    console.log(res.data);
+                    setOpen(false)
+                    window.location.reload();
                 })
         }
     }
@@ -61,16 +61,12 @@ export default function AddAddressModal(props) {
                 dimmer="blurring"
                 open={open}
                 trigger={props.buttonStyle}
-                onClose={() => {
-                    window.location.reload();
-                    setOpen(false)
-                }}
+                onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 size="large"
                 style={inlineStyle}
             >
                 <Header style={{ fontFamily: "Prompt" }} textAlign='center'>สร้างที่อยู่จัดส่ง</Header>
-                {/* <Modal.Content> */}
                 <div style={{ padding: "20px 70px 50px 70px", fontFamily: 'Prompt' }}>
 
                     <Form size="large" onSubmit={handleSubmit}>
@@ -123,20 +119,6 @@ export default function AddAddressModal(props) {
 
                     </Form>
                 </div>
-
-                {/* </Modal.Content> */}
-                {/* <Modal.Actions>
-
-                    <span>
-                        <CustomButton
-                            color="#FDFEFE"
-                            height="40px"
-                            width="100px"
-                            backgroundColor="#90B099"
-                            buttonText="บันทึก"
-                        />
-                    </span>
-                </Modal.Actions> */}
             </Modal>
         </div>
     )

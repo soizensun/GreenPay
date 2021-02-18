@@ -36,7 +36,6 @@ export default function PromtPayModal(props) {
                     <SubContainerImage>
                         {
                             (typeof window !== "undefined") ?
-                                // console.log(localStorage.getItem('greenPrice'))
                                 <Image mainPicture={`https://promptpay.io/0845858267/${parseInt(localStorage.getItem('greenPrice')) + parseInt(localStorage.getItem('totalPrice'))}`} />
                                 : ""
                         }

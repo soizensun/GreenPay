@@ -4,6 +4,7 @@ import styled from 'styled-components'
 export default function CustomButton(props) {
     return (
         <PrimaryButton
+            disabled={props.disabled}
             color={props.color}
             width={props.width}
             height={props.height}

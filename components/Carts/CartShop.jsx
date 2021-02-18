@@ -80,28 +80,23 @@ export default function CartShop(props) {
             } 
         }
 
-        return (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-                <div>ยอดสั่งซื้อ ({count} ชิ้น) : {amountPrice} บาท</div>
-            </div>
-        )
+        return <div>ยอดสั่งซื้อ ({count} รายการ) : {amountPrice} บาท</div>
+        
     }
 
 
     return (
         <div>
-
             <ShopContainer>
                 <ShopNameLabel>
                     ร้าน {shop.name}
                 </ShopNameLabel>
 
                 {
-                    (products.length != 0) ?
+                    (products.length != 0) &&
                         products.map((product, index) =>
-                            <ProductList key={index} product={product} amount={amount[index]} />
+                            <ProductList key={index} product={product} amount={amount[index]} disableNextBtn={props.disableNextBtn}/>
                         )
-                        : ""
                 }
 
                 <PriceLabel>
@@ -113,13 +108,12 @@ export default function CartShop(props) {
                     </span>
                 </PriceLabel>
             </ShopContainer>
-
         </div>
     )
 }
 
 const ShopContainer = styled.div`
-    box-shadow: 1px 1px 3px #ABB2B9;
+    border: 1px solid #CDCDCF;
     border-radius: 5px;
     align-items: center;
     margin: 10px 50px 10px 50px;
@@ -129,12 +123,14 @@ const ShopNameLabel = styled.div`
     font-size: 17px;
     padding: 20px 0 20px 37px;
     color: white;
+    border: 1px solid #679072;
     background-color: #679072;
     border-radius: 5px 5px 0px 0px;
     border-color: #679072;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: -1px
 `
 
 const PriceLabel = styled.div`
@@ -143,9 +139,9 @@ const PriceLabel = styled.div`
     padding: 15px 35px 15px 0;
     color: #131B15;
     background-color: #EFF4F1;
-    border-radius: 0px 0px 0px 0px;
     border-color: #EFF4F1;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 0 0 5px 5px
 `

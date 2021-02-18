@@ -6,6 +6,7 @@ import AddressSection from '../components/Carts/AddressSection'
 import CustomButton from '../components/util/CustomButton'
 import ConfirmCartModal from '../components/Carts/ConfirmCartModal'
 import Skeleton from '@material-ui/lab/Skeleton';
+import NoItem from '../components/util/NoItem'
 import styled from 'styled-components'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
@@ -15,6 +16,7 @@ export default function Cart() {
     const [isLoading, setIsLoading] = useState(true);
     const [tmpCart, setTmpCart] = useState([]);
     const [userId, setUserId] = useState("");
+    const [disableBtn, setDisableBtn] = useState(false);
 
     useEffect(() => {
 
@@ -66,6 +68,8 @@ export default function Cart() {
         return realCart
     }
 
+    const disableNextBtn = () => {setDisableBtn(true)}
+
     return (
 
         <MainLayout>
@@ -91,7 +95,7 @@ export default function Cart() {
                                 <div>
                                     {
                                         carts.map(shop =>
-                                            <CartShop shop={shop} />
+                                            <CartShop shop={shop} disableNextBtn={disableNextBtn}/>
                                         )
                                     }
 
@@ -101,13 +105,14 @@ export default function Cart() {
                                             <span>
                                                 <CustomButton
                                                     buttonText="ถัดไป"
+                                                    disabled={disableBtn}
                                                 />
                                             </span>
                                         } />
                                     </CartFooter>
                                 </div>
                                 :
-                                <div>no cart</div>
+                                <NoItem/>
                         }
                     </div>
             }

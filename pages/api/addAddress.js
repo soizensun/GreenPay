@@ -9,7 +9,7 @@ const res = async (req, res) => {
             "x-auth-token":  data.tokenId
         }
     }
-
+    console.log(`=> ${data}`);
     delete data.tokenId
 
     Axios.post(`http://localhost:4000/users/addAddress`,data, HEADERS)

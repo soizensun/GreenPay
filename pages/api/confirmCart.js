@@ -9,7 +9,6 @@ const res = async (req, res) => {
             "x-auth-token":  data.tokenId
         }
     }
-    console.log(data);
 
     delete data.tokenId
 
