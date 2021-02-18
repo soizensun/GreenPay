@@ -3,7 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import Axios from 'axios'
 import styled from 'styled-components'
 import ProductCard from '../components/index/ProductCard'
-import { Divider, Grid, Sticky, Ref } from 'semantic-ui-react'
+
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 

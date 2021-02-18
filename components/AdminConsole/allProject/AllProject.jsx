@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Axios from 'axios'
 import { Dropdown, Loader } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
-import ProjectCard from './ProjectCart'
+import ProjectCard from './ProjectCard'
 import SnakeBar from '../../util/CustomSnakeBar'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }

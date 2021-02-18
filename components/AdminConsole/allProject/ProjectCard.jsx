@@ -9,7 +9,7 @@ import Axios from 'axios';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
-export default function ProjectCart(props) {
+export default function ProjectCard(props) {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isActivateStatus, setIsActivateStatus] = useState(props.project.isActivate);
 
