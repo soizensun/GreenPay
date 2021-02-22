@@ -5,6 +5,8 @@ import { Dropdown, Loader } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
 import ProjectCard from './ProjectCard'
 import SnakeBar from '../../util/CustomSnakeBar'
+import Skeleton from '@material-ui/lab/Skeleton';
+import NoItem from '../../util/NoItem'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -20,9 +22,12 @@ export default function AllProject() {
     const [editSnakebarStatus, setEditSnakebarStatus] = useState(false);
     const [visibelSnakebarStatus, setVisibelSnakebarStatus] = useState(false);
 
+    const [isLoadingProject, setIsLoadingProject] = useState(true);
+
     useEffect(() => {
         Axios.get('api/getAllProject', HEADERS)
             .then(res => {
+                setIsLoadingProject(false)
                 setAllProject(res.data)
 
                 let weeklyProjects = res.data.filter(project => project.isWeeklyProject)
@@ -73,7 +78,7 @@ export default function AllProject() {
             <div style={{ textAlign: 'center', margin: " 20px 0 50px 0", fontSize: "17px" }}>
                 <p> โครงการประจำสัปดาห์ </p>
                 <div style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}>
-                    {weeklyProject.name} {weeklyProject.location}
+                    {weeklyProject.name} {weeklyProject.location || "ชื่อโครงการประจำสัปดาห์"}
                 </div>
                 <div>
                     <div style={{ margin: "10px 0 5px 0", fontSize: "15px" }}> เปลี่ยนโครงการประจำสัปดาห์ </div>
@@ -112,21 +117,43 @@ export default function AllProject() {
             </div>
 
             {
-                allProject.map(project =>
-                    <ProjectCard
-                        project={project}
-                        updateProject={(newAllProject) => {
-                            setAllProject(newAllProject)
-                            setEditSnakebarStatus(true)
-                            buildOption(newAllProject)
-                        }}
-                        updateProjectVisibleCase={(newAllProject) => {
-                            setAllProject(newAllProject)
-                            setVisibelSnakebarStatus(true)
-                            buildOption(newAllProject)
-                        }}
-                    />
-                )
+                isLoadingProject ?
+                    <div>
+                        {
+                            [1, 2, 3].map(a =>
+                                <div style={{ margin: "10px 15px 10px 15px" }}>
+                                    <Skeleton animation="wave" variant="rect" height={110} />
+                                </div>)
+                        }
+                    </div>
+                    :
+                    <div>
+                        {
+                            (allProject.length != 0) ?
+                                <div>
+                                    {
+                                        allProject.map(project =>
+                                            <ProjectCard
+                                                project={project}
+                                                updateProject={(newAllProject) => {
+                                                    setAllProject(newAllProject)
+                                                    setEditSnakebarStatus(true)
+                                                    buildOption(newAllProject)
+                                                }}
+                                                updateProjectVisibleCase={(newAllProject) => {
+                                                    setAllProject(newAllProject)
+                                                    setVisibelSnakebarStatus(true)
+                                                    buildOption(newAllProject)
+                                                }}
+                                            />
+                                        )
+                                    }
+                                </div>
+                            : <NoItem wording="ไม่มีโครงการ" />
+                            
+                        }
+                    </div>
+
             }
         </div>
     )

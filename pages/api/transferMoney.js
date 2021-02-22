@@ -5,7 +5,7 @@ const res = async (req, res) => {
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-    Axios.post(`http://localhost:4000/admins/transferMoney`,data, HEADERS)
+    Axios.post(`${process.env.serverUrl}/admins/transferMoney`,data, HEADERS)
         .then(r => 
 
             res.status(200).send(r.data)

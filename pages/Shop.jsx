@@ -4,17 +4,17 @@ import Axios from 'axios'
 import styled from 'styled-components'
 import ProductCard from '../components/index/ProductCard'
 import { Divider, Grid, Sticky, Ref } from 'semantic-ui-react'
-
+import Skeleton from '@material-ui/lab/Skeleton';
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
 export default function Shop() {
-
     const [shop, setShop] = useState({});
     const [products, setProducts] = useState([]);
     const [allType, setAllType] = useState([]);
     const [type, setType] = useState("");
     const [tag, setTag] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -30,6 +30,7 @@ export default function Shop() {
                         .then(res => {
                             console.log(res.data);
                             setProducts(res.data);
+                            setIsLoading(false)
                             filterTag(res.data)
                         })
                 })
@@ -106,37 +107,50 @@ export default function Shop() {
                     </Grid.Column>
 
                     <Grid.Column width={13}>
+                        {
+                            isLoading ?
+                                <ProductContainer>
+                                    {
+                                        [1, 2, 3, 4, 5, 6, 7, 8, 9].map(a =>
+                                            <Card>
+                                                <Skeleton variant="rect" animation="wave" height="100%" width="100%" />
+                                            </Card>)
+                                    }
+                                </ProductContainer>
+                                :
+                                <ProductContainer>
+                                    {
+                                        products.map(item => {
+                                            if (!tag) {
+                                                return (
+                                                    <ProductCard
+                                                        shopId={item.shopId}
+                                                        imageUrl={item.mainPicture}
+                                                        name={item.name}
+                                                        price={item.price + item.greenPrice}
+                                                        greenPrice={item.greenPrice}
+                                                        id={item._id}
+                                                    />)
+                                            }
+                                            else {
+                                                if (item.tagId == type) {
+                                                    return (
+                                                        <ProductCard
+                                                            shopId={item.shopId}
+                                                            imageUrl={item.mainPicture}
+                                                            name={item.name}
+                                                            price={item.price + item.greenPrice}
+                                                            greenPrice={item.greenPrice}
+                                                            id={item._id}
+                                                        />)
+                                                }
+                                            }
+                                        })
+                                    }
+                                </ProductContainer>
+                        }
 
-                        <ProductContainer>
-                            {
-                                products.map(item => {
-                                    if (!tag) {
-                                        return (
-                                            <ProductCard
-                                                shopId={item.shopId}
-                                                imageUrl={item.mainPicture}
-                                                name={item.name}
-                                                price={item.price + item.greenPrice}
-                                                greenPrice={item.greenPrice}
-                                                id={item._id}
-                                            />)
-                                    }
-                                    else {
-                                        if (item.tagId == type) {
-                                            return (
-                                                <ProductCard
-                                                    shopId={item.shopId}
-                                                    imageUrl={item.mainPicture}
-                                                    name={item.name}
-                                                    price={item.price + item.greenPrice}
-                                                    greenPrice={item.greenPrice}
-                                                    id={item._id}
-                                                />)
-                                        }
-                                    }
-                                })
-                            }
-                        </ProductContainer>
+
                     </Grid.Column>
                 </Grid>
             </Container>
@@ -222,4 +236,11 @@ const TypeLabel = styled.div`
     margin: 0 0 25px 0;
     font-size: 17px;
     font-weight: bold;
+`
+
+const Card = styled.div`
+    width: 250px;
+    height: 270px;
+    margin: 8px;
+    border-radius: 10px;
 `

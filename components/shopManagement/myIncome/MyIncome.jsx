@@ -4,18 +4,21 @@ import NoItem from '../../util/NoItem'
 import styled from 'styled-components'
 import CustomButton from '../../util/CustomButton'
 import Axios from 'axios'
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function MyIncome() {
     const [incomeList, setIncomeList] = useState([]);
     const [totalMoney, setTotalMoney] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
             if (localStorage.getItem("userShop") != null) {
                 Axios.post("/api/getMyIncome", JSON.stringify({ shopId: localStorage.getItem("userShop") }), HEADERS)
                     .then(res => {
+                        setIsLoading(false)
                         setIncomeList(res.data)
                     })
 
@@ -40,8 +43,6 @@ export default function MyIncome() {
 
     return (
         <div>
-
-
             {
                 (incomeList.length !== 0) ?
                     <FlexContainer>
@@ -59,22 +60,42 @@ export default function MyIncome() {
 
                     </FlexContainer>
                     :
-                    <div style={{textAlign: 'center'}}>
+                    <div style={{ textAlign: 'center' }}>
                         <TotalDiv2>
                             รายรับทั้งหมด <BoldSpan>{totalMoney}</BoldSpan> บาท
                         </TotalDiv2>
                     </div>
             }
             {
-                (incomeList.length !== 0) ?
+                (isLoading) ?
+                    <div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                    </div> :
                     <div>
                         {
-                            incomeList.map(aList => <IncomeCard aList={aList} />)
+                            (incomeList.length !== 0) ?
+                                <div>
+                                    {
+                                        incomeList.map(aList => <IncomeCard aList={aList} />)
+                                    }
+                                </div>
+                                :
+                                <NoItem wording="ไม่มีประวิติรายรับ" />
                         }
                     </div>
-                    :
-                    <NoItem wording="ไม่มีประวิติรายรับ" />
             }
+
         </div>
     )
 }

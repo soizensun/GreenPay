@@ -10,7 +10,9 @@ const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function myProducts() {
     const [allProduct, setAllProduct] = useState([]);
-    const [isLonding, setIsLonding] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    // const [loadFinish, setLoadFinish] = useState(false);
+
 
     const [openSnakebarOnDeleteSus, setOpenSnakebarOnDeleteSus] = useState(false);
     const [openSnakebarOnUpdateSus, setOpenSnakebarOnUpdateSus] = useState(false);
@@ -21,7 +23,7 @@ export default function myProducts() {
                 Axios.post("/api/getMyProducts", JSON.stringify({ shopId: localStorage.getItem("userShop") }), HEADERS)
                     .then(res => {
                         filterAllProduct(res.data)
-                        setIsLonding(false)
+                        setIsLoading(false)
                     })
             }
         }
@@ -54,47 +56,56 @@ export default function myProducts() {
         <div>
 
             <SnakeBar snakeStatus={openSnakebarOnDeleteSus} setSnakeStatus={setOpenSnakebarOnDeleteSus} wording="ลบสำเร็จ" />
-            <SnakeBar snakeStatus={openSnakebarOnUpdateSus} setSnakeStatus={setOpenSnakebarOnUpdateSus} wording="แก้ไขเรียบร้อย"/>
+            <SnakeBar snakeStatus={openSnakebarOnUpdateSus} setSnakeStatus={setOpenSnakebarOnUpdateSus} wording="แก้ไขเรียบร้อย" />
 
             {
-                (allProduct.length !== 0) ?
-                    (isLonding) ?
-                        <div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                        </div>
-                        :
-                        <div>
-                            <TotalDiv>
-                                ทั้งหมด <BoldSpan>{allProduct.length}</BoldSpan> รายการ
-                            </TotalDiv>
-                            <div>
-                                {
-                                    allProduct.map(item => {
-                                        return (
-                                            <ProductCard
-                                                key={item._id}
-                                                product={item}
-                                                deleteProduct={deleteProduct}
-                                                updateProduct={updateProduct}
-                                            />)
-                                    })
-                                }
-                            </div>
-                        </div>
 
+                (isLoading) ?
+                    <div>
+                        <div style={{ margin: "20px 15px 35px 15px", display: "flex", justifyContent: 'space-between' }}>
+                            <div></div>
+                            <Skeleton animation="wave" variant="rect" height={35 } width={240}/>
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                        <div style={{ margin: "10px 15px 10px 15px" }}>
+                            <Skeleton animation="wave" variant="rect" height={150} />
+                        </div>
+                    </div>
                     :
-                    <NoItem wording="ไม่มีสินค้า" />
+                    <div>
+                        {
+                            (allProduct.length !== 0) ?
+                                <div>
+                                    <TotalDiv>
+                                        ทั้งหมด <BoldSpan>{allProduct.length}</BoldSpan> รายการ
+                            </TotalDiv>
+                                    <div>
+                                        {
+                                            allProduct.map(item => {
+                                                return (
+                                                    <ProductCard
+                                                        key={item._id}
+                                                        product={item}
+                                                        deleteProduct={deleteProduct}
+                                                        updateProduct={updateProduct}
+                                                    />)
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                : <NoItem wording="ไม่มีสินค้า" />
+                        }
+                    </div>
+
+
             }
         </div>
 

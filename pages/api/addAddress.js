@@ -12,7 +12,7 @@ const res = async (req, res) => {
     console.log(`=> ${data}`);
     delete data.tokenId
 
-    Axios.post(`http://localhost:4000/users/addAddress`,data, HEADERS)
+    Axios.post(`${process.env.serverUrl}/users/addAddress`,data, HEADERS)
         .then(r =>
             res.status(200).send(r.data)
         )

@@ -10,7 +10,7 @@ const res = async (req, res) => {
         }
     }
 
-    Axios.get('http://localhost:4000/users/loginUser', HEADERS)
+    Axios.get(`${process.env.serverUrl}/users/loginUser`, HEADERS)
         .then(r => res.status(200).send(r.data))
         .catch((err) => {
             console.log(err);

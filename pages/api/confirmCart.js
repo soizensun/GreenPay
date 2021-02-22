@@ -12,7 +12,7 @@ const res = async (req, res) => {
 
     delete data.tokenId
 
-    Axios.post(`http://localhost:4000/carts/confirmCart`, data , HEADERS)
+    Axios.post(`${process.env.serverUrl}/carts/confirmCart`, data , HEADERS)
         .then(r => 
             res.status(200).send(r.data)
         )

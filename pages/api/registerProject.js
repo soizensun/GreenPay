@@ -6,7 +6,7 @@ const res = async (req, res) => {
     let HEADERS = {headers: {"Content-Type": "application/json",}}
 
 
-    Axios.post(`http://localhost:4000/projects/register`, data, HEADERS)
+    Axios.post(`${process.env.serverUrl}/projects/register`, data, HEADERS)
         .then(r =>
             res.status(200).send(r.data)
         )

@@ -5,7 +5,7 @@ const res = async (req, res) => {
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-    Axios.delete(`http://localhost:4000/shops/clearIncomeHistory/${data.shopId}`, HEADERS)
+    Axios.delete(`${process.env.serverUrl}/shops/clearIncomeHistory/${data.shopId}`, HEADERS)
         .then(r => 
 
             res.status(200).send(r.data)

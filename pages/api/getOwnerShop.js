@@ -12,7 +12,7 @@ const res = async (req, res) => {
 
     delete data.tokenId
 
-    Axios.get(`http://localhost:4000/users/getShop`, HEADERS)
+    Axios.get(`${process.env.serverUrl}/users/getShop`, HEADERS)
         .then(r =>{
             res.status(200).send(r.data)}
         )

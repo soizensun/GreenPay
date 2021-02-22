@@ -5,7 +5,7 @@ const res = async (req, res) => {
 
     let HEADERS = { headers: { "Content-Type": "application/json" } }
 
-    Axios.get(`http://localhost:4000/shops/closeOrder/${data.orderId}`, HEADERS)
+    Axios.get(`${process.env.serverUrl}/shops/closeOrder/${data.orderId}`, HEADERS)
         .then(r => 
 
             res.status(200).send(r.data)

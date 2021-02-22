@@ -26,38 +26,36 @@ export default function MoneyAccount() {
 
     return (
         <div>
+            <DateDiv>
+                {currentDate}
+            </DateDiv>
+            <div style={{ textAlign: 'center', marginBottom: "40px", color: "#E74C3C" }}>* โอนไม่เกิน 20.00 น. ของแต่ละวัน</div>
             {
-                (allShop.length !== 0) ?
-                    (isLonding) ?
-                        <div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                            <div style={{ margin: "10px 15px 10px 15px" }}>
-                                <Skeleton animation="wave" variant="rect" height={150} />
-                            </div>
-                        </div>
-                        :
-                        <div>
-                            <DateDiv>
-                                {currentDate}
-                            </DateDiv>
-                            <div style={{textAlign: 'center', marginBottom: "40px", color: "#E74C3C"}}>* โอนไม่เกิน 20.00 น. ของแต่ละวัน</div>
-                            
-                            {
-                                allShop.map(shop =>
-                                    <AccountCard shop={shop} />
-                                )
-                            }
-                        </div>
+
+                (isLonding) ?
+                    <div>
+                        {
+                            [1, 2, 3].map(a =>
+                                <div style={{ margin: "10px 15px 10px 15px" }}>
+                                    <Skeleton animation="wave" variant="rect" height={110} />
+                                </div>)
+                        }
+                    </div>
                     :
-                    <NoItem wording="ไม่มีรายการ" />
+                    <div>
+                        {
+                            (allShop.length !== 0) ?
+                                <div>
+                                    {
+                                        allShop.map(shop =>
+                                            <AccountCard shop={shop} />
+                                        )
+                                    }
+                                </div>
+                                :
+                                <NoItem wording="ไม่มีรายการ" />
+                        }
+                    </div>
             }
         </div>
     )

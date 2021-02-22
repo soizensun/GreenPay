@@ -7,6 +7,7 @@ import { Grid } from 'semantic-ui-react'
 import CustomButton from '../components/util/CustomButton'
 import NoItem from '../components/util/NoItem'
 import ProjectDetailModal from '../components/Project/ProjectDetailModal'
+import Skeleton from '@material-ui/lab/Skeleton';
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -14,13 +15,14 @@ export default function Project() {
     const [allProject, setAllProject] = useState([]);
     const [weeklyProject, setWeeklyProject] = useState({});
     const [tabStatus, setTabStatus] = useState("allProject");
-    // const [randerList, setRanderList] = useState([]);
     const [activateList, setActivateList] = useState([]);
     const [closedList, setClosedList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Axios.get('api/getAllProject', HEADERS)
             .then(res => {
+                setIsLoading(false)
 
                 let allProject = res.data.filter(project => project.isActivate)
                 setAllProject(allProject)
@@ -40,8 +42,20 @@ export default function Project() {
     const renderList = () => {
         switch (tabStatus) {
             case 'allProject':
-                return (allProject.length == 0) ? <NoItem wording="ไม่มีรายการโปรเจค" />
-                    : allProject.map(project => <ProjectCard project={project} />)
+                return (isLoading) ?
+                    <div>
+                        {
+                            [1, 2, 3].map(a =>
+                                <div style={{ margin: "10px 15px 10px 15px" }}>
+                                    <Skeleton animation="wave" variant="rect" height={150} />
+                                </div>)
+                        }
+                    </div>
+                    :
+                    (allProject.length == 0) ?
+                        <NoItem wording="ไม่มีรายการโปรเจค" />
+                        :
+                        allProject.map(project => <ProjectCard project={project} />)
             case 'currentProject':
                 return (activateList.length == 0) ? <NoItem wording="ไม่มีรายการโปรเจคที่กำลังระดมทุน" />
                     : activateList.map(project => <ProjectCard project={project} />)
@@ -62,7 +76,7 @@ export default function Project() {
 
                         <div>
                             <div style={{ fontWeight: "bold", fontSize: "23px", margin: '30px' }}>
-                                {weeklyProject.name} {weeklyProject.location}
+                                {weeklyProject.name} {weeklyProject.location || "ชื่อโครงการประจำสัปดาห์"}
                             </div>
                         </div>
 
@@ -89,8 +103,6 @@ export default function Project() {
                                 }
                                 project={weeklyProject}
                             />
-
-
                         </div>
                     </WeeklyProject>
                 </Grid.Column>

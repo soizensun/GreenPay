@@ -6,16 +6,19 @@ import styled from "styled-components";
 import { Divider, Grid, Sticky, Ref } from 'semantic-ui-react'
 import CustomButton from '../components/util/CustomButton'
 import Link from 'next/link'
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function Home() {
   const [allProduct, setAllProduct] = useState([]);
   const [weeklyProject, setWeeklyProject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     Axios.get("/api/getAllProduct", HEADERS)
       .then((res) => {
+        setIsLoading(false)
         setAllProduct(res.data)
       })
 
@@ -48,7 +51,7 @@ export default function Home() {
                 </Topic>
 
                 <div>
-                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>"{weeklyProject.name} {weeklyProject.location}"</div>
+                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>{weeklyProject.name || "ชื่อโครงการประจำสัปดาห์"} {weeklyProject.location}</div>
                   <div style={{ marginBottom: "40px" }}>จำนวนเงินเป้าหมาย {weeklyProject.targetBudget} บาท</div>
                 </div>
 
@@ -71,22 +74,36 @@ export default function Home() {
 
         <Divider horizontal style={{ margin: "20px" }}>สินค้าทั้งหมด</Divider>
 
-        <ProductContainer>
+        {
+          isLoading ?
+            <ProductContainer>
+              {
+                [1, 2, 3, 4, 5, 6, 7, 8, 9].map(a =>
+                  <Card>
+                    <Skeleton variant="rect" animation="wave" height="100%" width="100%" />
+                  </Card>)
+              }
+            </ProductContainer>
+            :
+            <ProductContainer>
+              {
+                allProduct.map(item => {
+                  return (
+                    <ProductCard
+                      shopId={item.shopId}
+                      imageUrl={item.mainPicture}
+                      name={item.name}
+                      price={item.price + item.greenPrice}
+                      greenPrice={item.greenPrice}
+                      id={item._id}
+                    />)
+                })
+              }
+            </ProductContainer>
 
-          {
-            allProduct.map(item => {
-              return (
-                <ProductCard
-                  shopId={item.shopId}
-                  imageUrl={item.mainPicture}
-                  name={item.name}
-                  price={item.price + item.greenPrice}
-                  greenPrice={item.greenPrice}
-                  id={item._id}
-                />)
-            })
-          }
-        </ProductContainer>
+        }
+
+
 
 
       </MainLayout>
@@ -132,4 +149,11 @@ const Topic = styled.p`
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 50px;
+`
+
+const Card = styled.div`
+    width: 250px;
+    height: 270px;
+    margin: 8px;
+    border-radius: 10px;
 `

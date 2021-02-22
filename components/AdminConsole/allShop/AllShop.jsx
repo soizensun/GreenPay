@@ -3,6 +3,7 @@ import Axios from 'axios'
 import ShopList from './ShopList'
 import styled from 'styled-components'
 import NoItem from '../../util/NoItem'
+import Skeleton from '@material-ui/lab/Skeleton';
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -12,10 +13,12 @@ export default function AllShop() {
     const [activeShop, setActiveShop] = useState([]);
     const [nonActiveShop, setNonActiveShop] = useState([]);
     const [filter, setFilter] = useState('all');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Axios.get('api/getAllShop', HEADERS)
             .then(res => {
+                setIsLoading(false)
                 filtering(res.data)
             })
     }, [])
@@ -37,9 +40,19 @@ export default function AllShop() {
     const switchRender = () => {
         switch (filter) {
             case 'all':
-                return (allShop.length == 0) ? <NoItem />
+                return (isLoading) ?
+                    <div>
+                        {
+                            [1, 2, 3].map(a =>
+                                <div style={{ margin: "10px 15px 10px 15px" }}>
+                                    <Skeleton animation="wave" variant="rect" height={110} />
+                                </div>)
+                        }
+                    </div>
                     :
-                    allShop.map(shop => <ShopList shop={shop} updateShopList={(newShopList) => filtering(newShopList)} />)
+                    (allShop.length == 0) ? <NoItem />
+                        :
+                        allShop.map(shop => <ShopList shop={shop} updateShopList={(newShopList) => filtering(newShopList)} />)
             case 'newShop':
                 return (nonActiveShop.length == 0) ? <NoItem />
                     :

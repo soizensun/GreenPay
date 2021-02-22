@@ -36,7 +36,7 @@ export default function ProductDetail(props) {
                 .catch(err => {
                     console.log(err);
                 })
-            : ""
+            : console.log("no user")
     }
 
     return (
@@ -69,11 +69,8 @@ export default function ProductDetail(props) {
                                     </Counter>
                                     จำนวนสินค้าในคลัง : -
                                     <div style={{ marginTop: "10px" }}>
-                                        <div>
-                                            <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
-                                        </div>
 
-                                        <div style={{ marginTop: "5px" }}>
+                                        <div >
                                             <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F"></CustomButton>
                                         </div>
 
@@ -107,9 +104,13 @@ export default function ProductDetail(props) {
                                     </Counter>
                                     จำนวนสินค้าในคลัง : {stock}
                                     <div style={{ marginTop: "10px" }}>
-                                        <div onClick={addToCart}>
-                                            <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
-                                        </div>
+                                        {
+                                            (localStorage.getItem("userToken") != null) &&
+                                            <div onClick={addToCart}>
+                                                <CustomButton buttonText="เพิ่มลงตะกร้า" ></CustomButton>
+                                            </div>
+                                        }
+
                                         <Link href="/Shop" passHref>
                                             <div style={{ marginTop: "5px" }}>
                                                 <CustomButton buttonText="ไปที่ร้านค้า" backgroundColor="#F1C40F" color="#2C3E50"></CustomButton>
