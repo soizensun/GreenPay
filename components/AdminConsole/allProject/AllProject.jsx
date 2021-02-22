@@ -15,7 +15,7 @@ export default function AllProject() {
 
     const [dropdownChange, setDropdownChange] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const [changeWeeklySnakebarStatus, setChangeWeeklySnakebarStatus] = useState(false);
     const [editSnakebarStatus, setEditSnakebarStatus] = useState(false);
     const [visibelSnakebarStatus, setVisibelSnakebarStatus] = useState(false);
@@ -31,28 +31,32 @@ export default function AllProject() {
             })
 
         Axios.get('api/getAllProject', HEADERS)
-            .then(res => {
-                let options = []
-                res.data.map((a, index) => {
-                    let tmpJson = {}
-                    tmpJson.key = index
-                    tmpJson.text = a.name
-                    tmpJson.value = {
-                        id: a._id,
-                        name: a.name,
-                        location: a.location,
-                        isWeeklyProject: a.isWeeklyProject
-                    }
-
-                    options.push(tmpJson)
-                })
-
-                setOptions(options)
-            })
+            .then(res => buildOption(res.data))
     }, [])
 
+    const buildOption = datas => {
+        let options = []
+
+        let filteredProject = datas.filter(project => !project.isClose && project.isActivate)
+
+        filteredProject.map((a, index) => {
+            let tmpJson = {}
+            tmpJson.key = index
+            tmpJson.text = a.name
+            tmpJson.value = {
+                id: a._id,
+                name: a.name,
+                location: a.location,
+                isWeeklyProject: a.isWeeklyProject
+            }
+
+            options.push(tmpJson)
+        })
+
+        setOptions(options)
+    }
+
     const handleDropdown = (e, { value }) => {
-        console.log(value);
         setWeeklyProject(value)
         setDropdownChange(true)
     }
@@ -75,7 +79,6 @@ export default function AllProject() {
                     <div style={{ margin: "10px 0 5px 0", fontSize: "15px" }}> เปลี่ยนโครงการประจำสัปดาห์ </div>
                     <Dropdown
                         placeholder='เลือกโครงการอื่นๆ'
-                        // fluid
                         selection
                         onChange={handleDropdown}
                         options={options}
@@ -115,10 +118,12 @@ export default function AllProject() {
                         updateProject={(newAllProject) => {
                             setAllProject(newAllProject)
                             setEditSnakebarStatus(true)
+                            buildOption(newAllProject)
                         }}
                         updateProjectVisibleCase={(newAllProject) => {
                             setAllProject(newAllProject)
                             setVisibelSnakebarStatus(true)
+                            buildOption(newAllProject)
                         }}
                     />
                 )

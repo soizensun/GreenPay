@@ -22,8 +22,12 @@ export default function ConfirmCartModal(props) {
 
         Axios.get('api/getAllProject', HEADERS)
             .then(res => {
+
+                let filteredProject = res.data.filter(project => !project.isClose && project.isActivate)
+
+
                 let options = []
-                res.data.map((a, index) => {
+                filteredProject.map((a, index) => {
                     let tmpJson = {}
                     tmpJson.key = index
                     tmpJson.text = a.name

@@ -95,6 +95,7 @@ const Tab = styled.span`
         transition: 0.3s;
     `}
 `
+
 const Detail = styled.div`
     /* background-color: red; */
     margin: 30px 0 0 0;

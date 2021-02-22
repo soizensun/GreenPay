@@ -48,14 +48,14 @@ export default function Home() {
                 </Topic>
 
                 <div>
-                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>"{weeklyProject.name} จังหวัด{weeklyProject.location}"</div>
+                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>"{weeklyProject.name} {weeklyProject.location}"</div>
                   <div style={{ marginBottom: "40px" }}>จำนวนเงินเป้าหมาย {weeklyProject.targetBudget} บาท</div>
                 </div>
 
                 <Link href="/Project">
                   <div>
                     <CustomButton
-                      buttonText="ดูรายละเอียดโปรเจคเพิ่มเติม"
+                      buttonText="ดูโปรเจคอื่นเพิ่มเติม"
                       color="#FDFEFE"
                       height="45px"
                       width="290px"

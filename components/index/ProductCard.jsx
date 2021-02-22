@@ -31,6 +31,7 @@ const Card = styled.div`
     margin: 8px;
     cursor: pointer;
     padding: 16px;
+    background-color: white;
 
     &:hover{
         box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
@@ -51,10 +52,13 @@ const Name = styled.div`
     color: #185341;
     font-weight: bold;
     margin-bottom: 5px;
-    text-align: center
+    text-align: center;
 `
 
 const Price = styled.div`
     margin-top: 15px;
-    font-size: 17px
+    font-size: 17px;
+    font-weight: bold;
 `
+
+

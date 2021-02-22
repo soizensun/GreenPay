@@ -24,7 +24,7 @@ const PrimaryButton = styled.button`
     color: ${props => props.color || "white"};
     width: ${props => props.width || "200px"};
     height: ${props => props.height || "45px"};
-    border: solid 1.5px ${props => props.backgroundColor || "#5C6E9A"}; ;
+    border: solid 1.5px ${props => props.backgroundColor || "#5C6E9A"};
     font-size: 17px;
     border-radius: 7px;
     transition: .6s;

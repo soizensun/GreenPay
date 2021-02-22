@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, createRef } from 'react'
 import MainLayout from "../layouts/MainLayout";
 import Axios from 'axios'
 import styled from 'styled-components'
 import ProductCard from '../components/index/ProductCard'
+import { Divider, Grid, Sticky, Ref } from 'semantic-ui-react'
 
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
 export default function Shop() {
+
     const [shop, setShop] = useState({});
     const [products, setProducts] = useState([]);
     const [allType, setAllType] = useState([]);
@@ -61,9 +63,12 @@ export default function Shop() {
             <Container>
                 <Grid>
                     <Grid.Column width={3}>
+
                         <ShopDetailContainer>
                             <ImageContainer>
-                                <Image imageUrl={shop.logo} />
+                                <ImageFrame>
+                                    <Image imageUrl={shop.logo} />
+                                </ImageFrame>
                             </ImageContainer>
                             <Label>
                                 ร้าน {shop.name}
@@ -72,7 +77,7 @@ export default function Shop() {
                             <DescriptionContainer>
                                 {shop.description}
                             </DescriptionContainer>
-                            <Divider/>
+                            <Divider />
                             <div>
                                 <TypeLabel>หมวดหมู่</TypeLabel>
                                 <ProductTag
@@ -95,16 +100,14 @@ export default function Shop() {
                                         </ProductTag>
                                     )
                                 }
-
                             </div>
                         </ShopDetailContainer>
+
                     </Grid.Column>
 
                     <Grid.Column width={13}>
 
-                        {/* <div style={{ textAlign: "center", fontSize: '18px', margin: "22px", fontWeight: "bold" }}>สินค้าท้ังหมด</div> */}
                         <ProductContainer>
-
                             {
                                 products.map(item => {
                                     if (!tag) {
@@ -131,15 +134,13 @@ export default function Shop() {
                                                 />)
                                         }
                                     }
-
-
                                 })
                             }
                         </ProductContainer>
                     </Grid.Column>
                 </Grid>
             </Container>
-        </MainLayout>
+        </MainLayout >
     )
 }
 
@@ -151,20 +152,20 @@ const Label = styled.p`
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    margin-top: 18px
+    margin-top: 18px;
+    /* color: white; */
 `
 
 const ShopDetailContainer = styled.div`
     /* text-align: center; */
-    margin: 5px;
-    padding: 15px;
-    /* background-color: #90B099; */
+    /* margin: 5px; */
+    padding: 30px;
+    background-color: #D0DDD4;
     /* border: 1px solid #CDCDCF; */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* color: white; */
 `
 
 const Image = styled.div`
@@ -173,26 +174,33 @@ const Image = styled.div`
     background-image: url(${props => props.imageUrl || "https://firebasestorage.googleapis.com/v0/b/greenpay1234.appspot.com/o/00001.png?alt=media&token=3b8a8e86-2373-48e8-9bd8-b8912459b84f"});
     background-size: 120px 120px;
     border-radius: 100px;
-    margin: 0 20px 0 20px;
+    /* margin: 0 20px 0 20px; */
 `
+
+const ImageFrame = styled.div`
+    padding: 8px;
+    background-color: white;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+`
+
 const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
 `
 
 const DescriptionContainer = styled.p`
-    /* background-color: red; */
     margin: 0px 0 10px 0;
     text-align: center;
     font-size: 16px;
+    /* color: white; */
 `
 
 const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
-  /* background-color: red; */
-  margin: 0 0 0 100px;
+  margin: 0 0 0 70px;
 `
 
 const ProductTag = styled.div`
@@ -203,8 +211,8 @@ const ProductTag = styled.div`
     cursor: pointer;
 
     ${({ active }) => active && `
-        background: #90B099;
-        color: white;
+        background: white;
+        color: #185341;
         transition: 0.3s;
     `}
 
