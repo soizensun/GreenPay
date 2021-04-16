@@ -8,6 +8,7 @@ import CustomButton from '../components/util/CustomButton'
 import NoItem from '../components/util/NoItem'
 import ProjectDetailModal from '../components/Project/ProjectDetailModal'
 import Skeleton from '@material-ui/lab/Skeleton';
+import NumberFormat from 'react-number-format';
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -25,10 +26,12 @@ export default function Project() {
                 setIsLoading(false)
 
                 let allProject = res.data.filter(project => project.isActivate)
-                setAllProject(allProject)
+                
+                setAllProject(filterAllProject(allProject))
 
                 let activateList = allProject.filter(project => !project.isClose)
-                setActivateList(activateList)
+                
+                setActivateList(filterAllProject(activateList))
 
                 let closedList = allProject.filter(project => project.isClose)
                 setClosedList(closedList)
@@ -38,6 +41,12 @@ export default function Project() {
             })
     }, [])
 
+    const filterAllProject = (allProject) => { 
+        let tmpList = []
+        allProject.map(p => (p.isWeeklyProject) && tmpList.push(p))
+        allProject.map(p => (!p.isWeeklyProject) && tmpList.push(p))
+        return tmpList 
+    }
 
     const renderList = () => {
         switch (tabStatus) {
@@ -53,14 +62,14 @@ export default function Project() {
                     </div>
                     :
                     (allProject.length == 0) ?
-                        <NoItem wording="ไม่มีรายการโปรเจค" />
+                        <NoItem wording="ไม่มีรายการโครงการ" />
                         :
                         allProject.map(project => <ProjectCard project={project} />)
             case 'currentProject':
-                return (activateList.length == 0) ? <NoItem wording="ไม่มีรายการโปรเจคที่กำลังระดมทุน" />
+                return (activateList.length == 0) ? <NoItem wording="ไม่มีรายการโครงการที่กำลังระดมทุน" />
                     : activateList.map(project => <ProjectCard project={project} />)
             case 'pastProject':
-                return (closedList.length == 0) ? <NoItem wording="ไม่มีรายการโปรเจคที่ผ่านมา" />
+                return (closedList.length == 0) ? <NoItem wording="ไม่มีรายการโครงการที่ผ่านมา" />
                     : closedList.map(project => <ProjectCard project={project} />)
         }
     }
@@ -82,10 +91,13 @@ export default function Project() {
 
                         <div style={{ fontSize: "16px", marginBottom: "40px" }}>
                             <div>
-                                ยอดเงินบริจาคขณะนี้ : <span style={{ fontWeight: 'bold' }}>{weeklyProject.budget}</span> บาท
+                                ยอดเงินบริจาคขณะนี้ : <NumberFormat value={weeklyProject.budget} displayType={'text'} thousandSeparator={true}renderText={value => <span style={{ fontWeight: 'bold' }}>{value}</span>} /> บาท
                             </div>
+                            
                             <div>
-                                เป้าหมาย : <span style={{ fontWeight: 'bold' }}>{weeklyProject.targetBudget}</span> บาท
+                                เป้าหมาย : <NumberFormat value={weeklyProject.targetBudget} displayType={'text'} thousandSeparator={true}renderText={value => <span style={{ fontWeight: 'bold' }}>{value}</span>} /> บาท
+
+                                
                             </div>
                         </div>
                         <div>
@@ -109,27 +121,27 @@ export default function Project() {
 
                 <Grid.Column width={5}>
                     <Slogan>
-                        <div style={{ margin: "0 0 25px 0" }}>จัดเรียงโดย</div>
+                        <div style={{ margin: "0 0 25px 0" }}>หมวดหมู่</div>
                         <Tab active={tabStatus == "allProject"}
                             onClick={() => {
                                 setTabStatus('allProject')
                                 // filterAllProject()
                             }}>
-                            โปรเจคทั้งหมด
+                            โครงการทั้งหมด
                         </Tab>
                         <Tab active={tabStatus == "currentProject"}
                             onClick={() => {
                                 setTabStatus('currentProject')
                                 // filterAllProject()
                             }}>
-                            โปรเจคที่กำลังระดมทุน
+                            โครงการที่กำลังระดมทุน
                         </Tab>
                         <Tab active={tabStatus == "pastProject"}
                             onClick={() => {
                                 setTabStatus('pastProject')
                                 // filterAllProject()
                             }}>
-                            โปรเจคที่ผ่านมา
+                            โครงการที่ผ่านมา
                         </Tab>
                     </Slogan>
                 </Grid.Column>

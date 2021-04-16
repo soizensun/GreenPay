@@ -38,11 +38,11 @@ export default function myProducts() {
 
     const deleteProduct = (productId) => {
         console.log(productId);
-        setIsLonding(true)
+        setIsLoading(true)
         Axios.post("/api/deleteProduct", JSON.stringify({ productId }), HEADERS)
             .then(res => {
                 filterAllProduct(res.data)
-                setIsLonding(false)
+                setIsLoading(false)
                 setOpenSnakebarOnDeleteSus(true)
             })
     }
@@ -64,7 +64,7 @@ export default function myProducts() {
                     <div>
                         <div style={{ margin: "20px 15px 35px 15px", display: "flex", justifyContent: 'space-between' }}>
                             <div></div>
-                            <Skeleton animation="wave" variant="rect" height={35 } width={240}/>
+                            <Skeleton animation="wave" variant="rect" height={35} width={240} />
                         </div>
                         <div style={{ margin: "10px 15px 10px 15px" }}>
                             <Skeleton animation="wave" variant="rect" height={150} />
@@ -86,7 +86,7 @@ export default function myProducts() {
                                 <div>
                                     <TotalDiv>
                                         ทั้งหมด <BoldSpan>{allProduct.length}</BoldSpan> รายการ
-                            </TotalDiv>
+                                    </TotalDiv>
                                     <div>
                                         {
                                             allProduct.map(item => {

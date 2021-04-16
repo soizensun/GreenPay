@@ -5,6 +5,7 @@ import { AiOutlineQrcode } from "react-icons/ai";
 import CustomButton from '../../util/CustomButton'
 import PromtPayModal from './PromtPayModal';
 import SnakeBar from '../../util/CustomSnakeBar'
+import NumberFormat from 'react-number-format';
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -57,9 +58,13 @@ export default function Controller(props) {
                 promptpayNumber={props.promptpayNumber}
             />
 
-            <div>
-                ยอดที่ต้องโอน <MoneySpan>{(totalPrice != 0) ? totalPrice : "-"}</MoneySpan> บาท
-            </div>
+
+
+            <NumberFormat value={(totalPrice != 0) ? totalPrice : "-"} displayType={'text'} thousandSeparator={true} renderText={value =>
+                <div>
+                    ยอดที่ต้องโอน <MoneySpan>{value}</MoneySpan> บาท
+                </div>
+            } />
 
             <BtnSpan onClick={transfer}>
                 <CustomButton

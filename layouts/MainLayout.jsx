@@ -48,7 +48,7 @@ export default function MainLayout(props) {
                                 // window.location.reload();
                                 setUserShop(r.data)
                             })
-                        
+
                     })
             }
         }
@@ -85,8 +85,16 @@ export default function MainLayout(props) {
         <div style={{ paddingBottom: "70px" }}>
             <Navbar collapseOnSelect variant="dark" sticky="top" style={{ backgroundColor: "white", height: "40px", fontSize: "15px" }}>
                 <Nav className="mr-auto" style={{ marginLeft: "14px" }}>
-                    <Nav.Link style={{ color: "#2C3E50" }}>วิธีขาย</Nav.Link>
-                    <Nav.Link style={{ color: "#2C3E50" }}>วิธีสั่งซื้อ</Nav.Link>
+                    {
+                        (typeof window !== "undefined") &&
+                        (
+                            (localStorage.getItem('userShop') !== null && localStorage.getItem('userShop') === 'undefined') &&
+                            <Link href="/ShopRegister" passHref>
+                                <Nav.Link style={{ color: "#2C3E50" }}>สมัครร้านค้า</Nav.Link>
+                            </Link>
+                        )
+                    }
+
                     <Link href="/Test" passHref>
                         <Nav.Link style={{ color: "#2C3E50" }}>เกี่ยวกับ GreenPay</Nav.Link>
                     </Link>
@@ -131,7 +139,7 @@ export default function MainLayout(props) {
                     {
                         (typeof window !== "undefined") &&
                         (
-                            (localStorage.getItem('userShop') !== null && localStorage.getItem('userShop') !== 'undefined') &&
+                            localStorage.getItem('userShop') !== null && localStorage.getItem('userShop') !== 'undefined' &&
                             <Link href="/ShopManagement" passHref>
                                 <Nav.Link style={{ color: "white" }}>จัดการร้านค้า</Nav.Link>
                             </Link>
@@ -164,10 +172,10 @@ export default function MainLayout(props) {
                         )
                     }
 
-                    <Search
+                    {/* <Search
                         style={{ marginLeft: "20px" }}
                         size='mini'
-                    />
+                    /> */}
                 </Nav>
             </Navbar>
 

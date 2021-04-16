@@ -4,6 +4,7 @@ import NoItem from '../../util/NoItem'
 import styled from 'styled-components'
 import CustomButton from '../../util/CustomButton'
 import Axios from 'axios'
+import NumberFormat from 'react-number-format';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
@@ -11,6 +12,7 @@ const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 export default function MyIncome() {
     const [incomeList, setIncomeList] = useState([]);
     const [totalMoney, setTotalMoney] = useState(0);
+    const [participateMoney, setParticipateMoney] = useState(0)
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -25,6 +27,7 @@ export default function MyIncome() {
                 Axios.post("/api/getShopDetail", JSON.stringify({ shopId: localStorage.getItem("userShop") }), HEADERS)
                     .then(res => {
                         setTotalMoney(res.data.totalMoney);
+                        setParticipateMoney(res.data.participateMoney)
                     })
             }
         }
@@ -54,16 +57,33 @@ export default function MyIncome() {
                                 width="100px"
                             />
                         </ClearDiv>
-                        <TotalDiv>
-                            รายรับทั้งหมด <BoldSpan>{totalMoney}</BoldSpan> บาท
-                        </TotalDiv>
+                        <NumberFormat value={totalMoney} displayType={'text'} thousandSeparator={true} renderText={value =>
+                            <TotalDiv>
+                                รายรับทั้งหมด <BoldSpan>{value}</BoldSpan> บาท
+                            </TotalDiv>
+                        } />
+
+                        <NumberFormat value={participateMoney} displayType={'text'} thousandSeparator={true} renderText={value =>
+                            <TotalDiv>
+                                ยอดเงินที่มีส่วนร่วมบริจาค <BoldSpan>{value}</BoldSpan> บาท
+                            </TotalDiv>
+                        } />
+
 
                     </FlexContainer>
                     :
                     <div style={{ textAlign: 'center' }}>
-                        <TotalDiv2>
-                            รายรับทั้งหมด <BoldSpan>{totalMoney}</BoldSpan> บาท
-                        </TotalDiv2>
+
+                        <NumberFormat value={totalMoney} displayType={'text'} thousandSeparator={true} renderText={value =>
+                            <TotalDiv2>
+                                รายรับทั้งหมด <BoldSpan>{value}</BoldSpan> บาท
+                            </TotalDiv2>
+                        } />
+                        <NumberFormat value={participateMoney} displayType={'text'} thousandSeparator={true} renderText={value =>
+                            <TotalDiv2>
+                                ยอดเงินที่มีส่วนร่วมบริจาค <BoldSpan>{value}</BoldSpan> บาท
+                            </TotalDiv2>
+                        } />
                     </div>
             }
             {
@@ -111,7 +131,7 @@ const TotalDiv2 = styled.div`
     font-size: 24px;
     border: 1px solid #CDCDCF;
     border-radius: 10px;
-    margin: 30px 0 10px 0;
+    margin: 10px 0 10px 0;
     color: #185341;
     padding: 40px;
 `

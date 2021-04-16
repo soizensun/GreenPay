@@ -65,12 +65,12 @@ export default function ProjectDetailModal(props) {
                         </Grid.Column>
 
                     </Grid>
-                    <Divider horizontal style={{ margin: "25px" }}>รายละเอียดโปรเจค</Divider>
+                    <Divider horizontal style={{ margin: "25px" }}>รายละเอียดโครงการ</Divider>
                     <div style={{ textAlign: 'center', fontSize: "18px", padding: '10px 20px 10px 20px' }}>
                         {props.project.description}
                     </div>
 
-                    <Divider horizontal style={{ margin: "25px" }}>รูปภาพที่เกี่ยวข้องกับโปรเจค</Divider>
+                    <Divider horizontal style={{ margin: "25px" }}>รูปภาพที่เกี่ยวข้องกับโครงการ</Divider>
                     <PreviewPicContainer>
                         {(props.project.mainPicture) ? props.project.mainPicture.map(pic => <Image imageUrl={pic} />) : ""}
                     </PreviewPicContainer>

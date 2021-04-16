@@ -3,11 +3,13 @@ import Axios from 'axios';
 import styled from 'styled-components'
 import CustomButton from "../util/CustomButton";
 import { AiTwotoneDelete } from "react-icons/ai";
-import { CgTrees } from "react-icons/cg";
+import { Grid, Popup } from 'semantic-ui-react'
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function ProductCartList(props) {
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     return (
 
@@ -22,7 +24,7 @@ export default function ProductCartList(props) {
                 <ProductAmount>
                     {
                         (props.amount > props.product.stock) ?
-                            <div style={{display: "flex", flexDirection: "column", color: "#E74C3C", fontSize: "15px"}}>
+                            <div style={{ display: "flex", flexDirection: "column", color: "#E74C3C", fontSize: "15px" }}>
                                 <div>สินค้าในคลังไม่พอ</div>
                                 <div>กรุณาลบออกจากตะกร้า</div>
                                 {props.disableNextBtn()}
@@ -74,33 +76,70 @@ export default function ProductCartList(props) {
 
                 <ProductPrice>
                     ราคา {props.product.price + props.product.greenPrice} บาท/ชิ้น
-                    {/* <span style={{ fontSize: "25px", color: "#679072", marginLeft: "10px"}}><CgTrees/></span> {props.product.greenPrice} บาท */}
                 </ProductPrice>
 
                 <ProductAmountPrice>
                     ราคารวม {(props.product.price + props.product.greenPrice) * props.amount} บาท
                 </ProductAmountPrice>
 
-                <ProductDeleteIcon>
-                    <DeleteBTN onClick={() => {
-                        (localStorage.getItem("userToken") != null) ?
-                            Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
-                                "tokenId": localStorage.getItem("userToken"),
-                                "productId": props.product._id,
-                                "amount": (props.amount) * -1
-                            }), HEADERS)
-                                .then(res => {
-                                    console.log(res.data);
-                                    window.location.reload();
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                })
-                            : ""
-                    }}>
-                        <AiTwotoneDelete />
-                    </DeleteBTN>
-                </ProductDeleteIcon>
+                <Popup
+                    wide
+                    position="bottom right"
+                    size='small'
+                    on='click'
+                    open={isPopupOpen}
+                    onClose={() => setIsPopupOpen(false)}
+                    onOpen={() => setIsPopupOpen(true)}
+                    trigger={
+                        <ProductDeleteIcon>
+                            <DeleteBTN>
+                                <AiTwotoneDelete />
+                            </DeleteBTN>
+                        </ProductDeleteIcon>
+                    }
+                >
+                    <ConfirmPopup>
+                        ยืนยันการลบ ?
+                    </ConfirmPopup>
+
+                    <Grid columns='equal'>
+                        <Grid.Column>
+                            <span onClick={() => setIsPopupOpen(false)} style={{ cursor: "pointer" }}>
+                                <CustomButton
+                                    buttonText="ยกเลิก"
+                                    width="100px"
+                                    height="40px"
+                                    backgroundColor="#D5D8DC"
+                                    color="#1C2833" />
+                            </span>
+
+                        </Grid.Column>
+                        <Grid.Column>
+                            <span onClick={() => {
+                                (localStorage.getItem("userToken") != null) ?
+                                    Axios.post('api/addOrDeleteAProductInCart', JSON.stringify({
+                                        "tokenId": localStorage.getItem("userToken"),
+                                        "productId": props.product._id,
+                                        "amount": (props.amount) * -1
+                                    }), HEADERS)
+                                        .then(res => {
+                                            window.location.reload();
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        })
+                                    : ""
+                            }}
+                                style={{ cursor: "pointer" }}>
+                                <CustomButton
+                                    buttonText="ลบ"
+                                    width="100px"
+                                    height="40px"
+                                    backgroundColor="#E74C3C" />
+                            </span>
+                        </Grid.Column>
+                    </Grid>
+                </Popup>
 
             </ProductContainer>
         </div>
@@ -148,6 +187,7 @@ const ProductPrice = styled.div`
 `
 
 const ProductAmountPrice = styled.div`
+    width: 100px;
     flex-grow: 1;
 `
 
@@ -182,4 +222,11 @@ const DeleteBTN = styled.div`
         background-color: #E74C3C;
         transition: 0.3s;
     }
+`
+
+const ConfirmPopup = styled.div`
+    text-align: center;
+    margin: 10px 0 20px 0;
+    font-size: 16px;
+    font-family: Prompt;
 `

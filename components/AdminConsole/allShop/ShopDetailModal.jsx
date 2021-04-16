@@ -73,7 +73,7 @@ export default function ShopDetailModal(props) {
                                 <MainContent>
                                     <Content><SubLabel>ชื่อ</SubLabel>{shopOwner.displayName}</Content>
                                     <Content><SubLabel>อีเมล</SubLabel>{shopOwner.email}</Content>
-                                    <Content><SubLabel>เบอร์โทรศัทพ์</SubLabel>{shopOwner.phoneNumber}</Content>
+                                    <Content><SubLabel>เบอร์โทรศัพท์</SubLabel>{shopOwner.phoneNumber}</Content>
                                 </MainContent>
 
                             </Grid.Column>

@@ -93,9 +93,9 @@ export default function AddAddressModal(props) {
                                 onChange={e => setRoad(e.target.value)} />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Input label='ตำบล' width={8} value={subDistrict}
+                            <Form.Input label='ตำบล/แขวง' width={8} value={subDistrict}
                                 onChange={e => setSubDistrict(e.target.value)} />
-                            <Form.Input required label='อำเภอ' width={8} value={district}
+                            <Form.Input required label='อำเภอ/เขต' width={8} value={district}
                                 onChange={e => setDistrict(e.target.value)} />
                         </Form.Group>
                         <Form.Group>

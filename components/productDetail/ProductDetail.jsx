@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Link from 'next/link'
 import Axios from 'axios';
 import Skeleton from '@material-ui/lab/Skeleton';
+import NumberFormat from 'react-number-format';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -30,8 +31,7 @@ export default function ProductDetail(props) {
                 "amount": count
             }), HEADERS)
                 .then(res => {
-                    console.log('add cart success');
-                    // window.location.reload();
+                    window.location.reload();
                 })
                 .catch(err => {
                     console.log(err);
@@ -88,8 +88,17 @@ export default function ProductDetail(props) {
                         <SubContainerDetail>
                             <NameContainer>
                                 <NameLabel>{product.name}</NameLabel>
-                                <PriceLabel>ราคา <span style={{ fontWeight: "bold" }}>{product.price + product.greenPrice}</span> บาท</PriceLabel>
-                                <PriceLabel>Green price <span style={{ fontWeight: "bold" }}>{product.greenPrice}</span> บาท</PriceLabel>
+
+                                <NumberFormat value={product.price + product.greenPrice} displayType={'text'} thousandSeparator={true} renderText={value =>
+                                    <PriceLabel>ราคารวม <span style={{ fontWeight: "bold" }}>{value}</span> บาท</PriceLabel>
+                                } />
+                                <NumberFormat value={product.price} displayType={'text'} thousandSeparator={true} renderText={value =>
+                                    <PriceLabel2>ราคาสินค้า (ไม่รวม Green price) <span style={{ fontWeight: "bold" }}>{value}</span> บาท</PriceLabel2>
+                                } />
+                                <NumberFormat value={product.greenPrice} displayType={'text'} thousandSeparator={true} renderText={value =>
+                                    <PriceLabel>Green price <span style={{ fontWeight: "bold" }}>{value}</span> บาท</PriceLabel>
+                                } />
+                                  
                             </NameContainer>
                             <div style={{ flexGrow: "6" }}>
                                 <div style={{ textAlign: "center", fontSize: "18px" }}>
@@ -175,6 +184,11 @@ const NameLabel = styled.div`
 
 const PriceLabel = styled.div`
     font-size: 20px;
+    margin-top: 20px;
+`
+
+const PriceLabel2 = styled.div`
+    font-size: 15px;
     margin-top: 20px;
 `
 

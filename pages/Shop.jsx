@@ -214,7 +214,7 @@ const DescriptionContainer = styled.p`
 const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 0 70px;
+  margin: 0 0 0 30px;
 `
 
 const ProductTag = styled.div`
@@ -229,7 +229,6 @@ const ProductTag = styled.div`
         color: #185341;
         transition: 0.3s;
     `}
-
 `
 
 const TypeLabel = styled.div`

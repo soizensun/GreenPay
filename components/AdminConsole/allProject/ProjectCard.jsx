@@ -7,7 +7,7 @@ import EditProject from './EditProject'
 import { Grid, Popup } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
 import Axios from 'axios';
-import { green } from '@material-ui/core/colors';
+import NumberFormat from 'react-number-format';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -29,12 +29,18 @@ export default function ProjectCard(props) {
             </div>
 
             <BudgetDetail>
-                <div>
-                    <CurrentBudget>ยอด {props.project.budget} บาท </CurrentBudget>
-                </div>
-                <div>
-                    ต้องการ {props.project.targetBudget} บาท
-                </div>
+                <NumberFormat value={props.project.budget} displayType={'text'} thousandSeparator={true} renderText={value =>
+                    <div>
+                        <CurrentBudget>ยอด {value} บาท </CurrentBudget>
+                    </div>
+                } />
+
+                <NumberFormat value={props.project.targetBudget} displayType={'text'} thousandSeparator={true} renderText={value =>
+                    <div>
+                        เป้าหมาย {value} บาท
+                    </div>
+                } />
+
             </BudgetDetail>
 
             <Control>

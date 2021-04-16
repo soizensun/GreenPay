@@ -5,6 +5,7 @@ import CustomButton from '../util/CustomButton';
 import styled from 'styled-components'
 import PromtPayModal from './PromtPayModal'
 import Axios from 'axios';
+import Link from 'next/link'
 
 let HEADERS = { headers: { "Content-Type": "application/json" } }
 
@@ -24,7 +25,6 @@ export default function ConfirmCartModal(props) {
             .then(res => {
 
                 let filteredProject = res.data.filter(project => !project.isClose && project.isActivate)
-
 
                 let options = []
                 filteredProject.map((a, index) => {
@@ -109,13 +109,29 @@ export default function ConfirmCartModal(props) {
                             <div style={{ marginBottom: "5px" }}>
                                 หรือ เลือกโครงการอื่นๆ
                             </div>
-                            <Dropdown
-                                placeholder='เลือกโครงการอื่นๆ'
-                                fluid
-                                selection
-                                onChange={handleDropdown}
-                                options={options}
-                            />
+                            <div style={{ display: "flex" }}>
+                                <Dropdown
+                                    placeholder='เลือกโครงการอื่นๆ'
+                                    fluid
+                                    selection
+                                    onChange={handleDropdown}
+                                    options={options}
+                                />
+                                <Link href="/Project">
+                                    <div style={{ marginLeft: "10px" }}>
+
+                                        <CustomButton
+                                            color="#EAFAF1"
+                                            height="40px"
+                                            width="200px"
+                                            backgroundColor="#185341"
+                                            buttonText="ดูโครงการทั้งหมด"
+                                        />
+
+                                    </div>
+                                </Link>
+                            </div>
+
                         </div>
 
                         <AddressSection checkAddress={checkAddress} />

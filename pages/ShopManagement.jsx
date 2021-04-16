@@ -50,7 +50,7 @@ export default function ShopManagement() {
                                         คำสั่งซื้อของฉัน
                                     </Tab>
                                     <Tab active={tab === "myIncome"} onClick={() => setTab("myIncome")}>
-                                        รายรับของฉัน
+                                        การเงิน
                                     </Tab>
                                     <Tab active={tab === "myAccount"} onClick={() => setTab("myAccount")}>
                                         ร้านของฉัน

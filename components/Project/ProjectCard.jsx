@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import ProjectDetailModal from './ProjectDetailModal'
+import NumberFormat from 'react-number-format';
 
 export default function ProjectCard(props) {
     return (
@@ -25,8 +26,9 @@ export default function ProjectCard(props) {
                                 style={{ height: "30px", margin: "0 0 15px 0" }}
                                 variant="warning"
                             />
-                            <div> ยอดเงินบริจาคขณะนี้ : {props.project.budget} บาท </div>
-                            <div> เป้าหมาย : {props.project.targetBudget} บาท </div>
+                            <div> ยอดเงินบริจาคขณะนี้ : <NumberFormat value={props.project.budget} displayType={'text'} thousandSeparator={true}renderText={value => <span>{value}</span>} /> บาท </div>
+                            <div> เป้าหมาย : <NumberFormat value={props.project.targetBudget} displayType={'text'} thousandSeparator={true}renderText={value => <span>{value}</span>} /> บาท </div>
+                            
                         </AccountDetail>
                     </Card>
                 }

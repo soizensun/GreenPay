@@ -34,7 +34,7 @@ export default function moreDetailModel(props) {
                     <Content>
                         <span style={{ padding: "5px" }}><SubLabel>ชื่อ</SubLabel>{props.onwerAddress.recipientName}</span>
                         <span style={{ padding: "5px" }}><SubLabel>อีเมล</SubLabel>{props.onwerAddress.recipientSirName}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>เบอร์โทรศัทพ์</SubLabel>{props.onwerAddress.phoneNumber}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>เบอร์โทรศัพท์</SubLabel>{props.onwerAddress.phoneNumber}</span>
                     </Content>
                 </div>
                 <Divider/>
@@ -47,7 +47,7 @@ export default function moreDetailModel(props) {
                         <span style={{ padding: "5px" }}><SubLabel>ตำบล</SubLabel>{props.onwerAddress.subDistrict || '-'}</span>
                         <span style={{ padding: "5px" }}><SubLabel>อำเภอ</SubLabel>{props.onwerAddress.district}</span>
                         <span style={{ padding: "5px" }}><SubLabel>จังหวัด</SubLabel>{props.onwerAddress.province}</span>
-                        <span style={{ padding: "5px" }}><SubLabel>รหัสไปรษณย์</SubLabel>{props.onwerAddress.postCode}</span>
+                        <span style={{ padding: "5px" }}><SubLabel>รหัสไปรษณีย์</SubLabel>{props.onwerAddress.postCode}</span>
                     </Content>
                 </div>
             </Modal.Content>

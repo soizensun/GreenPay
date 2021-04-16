@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
+import NumberFormat from 'react-number-format';
 
 export default function IncomeCard(props) {
     return (
@@ -11,9 +12,11 @@ export default function IncomeCard(props) {
             <Time>
                 {moment(props.aList.receivedDate).format('เวลา h:mm:ss a')}
             </Time>
-            <Income>
-                ได้รับ <span style={{fontWeight: "bold", padding: "10px"}}>{props.aList.receivedMoney}</span> บาท
-            </Income>
+            <NumberFormat value={props.aList.receivedMoney} displayType={'text'} thousandSeparator={true} renderText={value =>
+                <Income>
+                    ได้รับ <span style={{ fontWeight: "bold", padding: "10px" }}>{value}</span> บาท
+                </Income>
+            } />
 
         </Card>
     )

@@ -1,27 +1,39 @@
 import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
+import Axios from 'axios'
+import NumberFormat from 'react-number-format';
+import ShopBadge from '../index/ShopBadge'
+
+const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
 export default function ProductCard(props) {
+
+
 
     return (
         <div>
             <Link href="/ProductDetails">
                 <Card onClick={() => localStorage.setItem("productDetail", props.id)}>
                     {/* {props.shopId} */}
+
                     <Image imageUrl={props.imageUrl} />
+
                     <Name>{props.name || "product name "}</Name>
-                    <Price>{props.price || "-"} บาท</Price>
+                    <NumberFormat value={props.price || "-"} displayType={'text'} thousandSeparator={true} renderText={value => <Price>{value} บาท</Price>} />
+                    <div style={{ marginTop: "14px" }}>
+                        <ShopBadge shopId={props.shopId} />
+                    </div>
+
                 </Card>
             </Link>
-
         </div>
     )
 }
 
 const Card = styled.div`
-    width: 250px;
-    height: 270px;
+    width: 270px;
+    height: 300px;
     border: 1px solid #CDCDCF;
     border-radius: 10px;
     display: flex;

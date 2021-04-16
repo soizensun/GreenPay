@@ -5,6 +5,7 @@ import { Grid, Popup } from 'semantic-ui-react'
 import CustomButton from '../../util/CustomButton'
 import ProductDetailModal from './ProductDetailModal'
 import Axios from 'axios';
+import NumberFormat from 'react-number-format';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -18,7 +19,7 @@ export default function ProductCard(props) {
                 <Image imageUrl={props.product.mainPicture} />
                 <Name>{props.product.name || "product name"}</Name>
                 <Stock color={props.product.stock}>สินค้าในคลัง {props.product.stock || "-"} ชิ้น</Stock>
-                <Price>ราคา {props.product.price || "-"} บาท</Price>
+                <NumberFormat value={props.product.price || "-"} displayType={'text'} thousandSeparator={true} renderText={value => <Price>{value} บาท</Price>} />
 
                 <Control>
                     <ProductDetailModal

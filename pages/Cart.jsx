@@ -45,7 +45,7 @@ export default function Cart() {
     const filter = (allProduct) => {
         let shopList = []
         let realCart = []
-        
+
         if (allProduct) {
             allProduct.map(product => {
                 if (!shopList.includes(product.shopId)) {
@@ -68,7 +68,7 @@ export default function Cart() {
         return realCart
     }
 
-    const disableNextBtn = () => {setDisableBtn(true)}
+    const disableNextBtn = () => { setDisableBtn(true) }
 
     return (
 
@@ -90,12 +90,17 @@ export default function Cart() {
                     </div>
                     :
                     <div>
+                        <HeaderContainer>
+                            <Label>
+                                ตะกร้าของฉัน
+                            </Label>
+                        </HeaderContainer>
                         {
                             (carts.length !== 0) ?
                                 <div>
                                     {
                                         carts.map(shop =>
-                                            <CartShop shop={shop} disableNextBtn={disableNextBtn}/>
+                                            <CartShop shop={shop} disableNextBtn={disableNextBtn} />
                                         )
                                     }
 
@@ -112,7 +117,7 @@ export default function Cart() {
                                     </CartFooter>
                                 </div>
                                 :
-                                <NoItem/>
+                                <NoItem />
                         }
                     </div>
             }
@@ -128,4 +133,14 @@ const CartFooter = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`
+
+const HeaderContainer = styled.div`
+    margin: 0 0 0 30px;
+    padding: 24px;
+`
+
+const Label = styled.div`
+    font-size: 20px;
+    font-weight: bold;
 `

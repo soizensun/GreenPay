@@ -7,6 +7,7 @@ import { Divider, Grid, Sticky, Ref } from 'semantic-ui-react'
 import CustomButton from '../components/util/CustomButton'
 import Link from 'next/link'
 import Skeleton from '@material-ui/lab/Skeleton';
+import NumberFormat from 'react-number-format';
 
 const HEADERS = { headers: { 'Content-Type': 'application/json' } }
 
@@ -14,12 +15,16 @@ export default function Home() {
   const [allProduct, setAllProduct] = useState([]);
   const [weeklyProject, setWeeklyProject] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [type, setType] = useState("");
+  const [tag, setTag] = useState(false);
+  const [allType, setAllType] = useState([]);
 
   useEffect(() => {
     Axios.get("/api/getAllProduct", HEADERS)
       .then((res) => {
         setIsLoading(false)
         setAllProduct(res.data)
+        filterTag(res.data)
       })
 
     Axios.get('api/getWeeklyProject', HEADERS)
@@ -27,6 +32,28 @@ export default function Home() {
         setWeeklyProject(res.data)
       })
   }, [])
+
+
+  const filterTag = async (products) => {
+    let tmp = []
+    products.map(product => {
+      if (!tmp.includes(product.tagId)) tmp.push(product.tagId)
+    })
+
+    let tmpPromise = []
+    tmp.map(tagId => {
+      const resPromise = Axios.post('/api/getProductTagById', JSON.stringify({ tagId }), HEADERS)
+      tmpPromise.push(resPromise)
+    })
+
+    const res = await Promise.allSettled(tmpPromise)
+      .then(r =>
+        r.map(r => {
+          return r.value.data
+        })
+      );
+    await setAllType(res)
+  }
 
   return (
     <div>
@@ -41,7 +68,6 @@ export default function Home() {
 
             </Slogan>
           </Grid.Column>
-
           <Grid.Column width={11}>
             <WeeklyProject>
               <div style={{ textAlign: "center" }}>
@@ -52,13 +78,24 @@ export default function Home() {
 
                 <div>
                   <div style={{ fontWeight: "bold", fontSize: "20px" }}>{weeklyProject.name || "ชื่อโครงการประจำสัปดาห์"} {weeklyProject.location}</div>
-                  <div style={{ marginBottom: "40px" }}>จำนวนเงินเป้าหมาย {weeklyProject.targetBudget} บาท</div>
+                  <div style={{ marginBottom: "40px" }}>จำนวนเงินเป้าหมาย
+                    <NumberFormat
+                        value={weeklyProject.targetBudget}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        renderText={value =>
+                          <span style={{ fontWeight: 'bold' }}>
+                            {value}
+                          </span>
+                        } />
+                        บาท
+                  </div>
                 </div>
 
                 <Link href="/Project">
                   <div>
                     <CustomButton
-                      buttonText="ดูโปรเจคอื่นเพิ่มเติม"
+                      buttonText="ดูโครงการอื่นเพิ่มเติม"
                       color="#FDFEFE"
                       height="45px"
                       width="290px"
@@ -66,7 +103,6 @@ export default function Home() {
                     />
                   </div>
                 </Link>
-
               </div>
             </WeeklyProject>
           </Grid.Column>
@@ -74,38 +110,81 @@ export default function Home() {
 
         <Divider horizontal style={{ margin: "20px" }}>สินค้าทั้งหมด</Divider>
 
-        {
-          isLoading ?
-            <ProductContainer>
+        <Container>
+          <Grid>
+            <Grid.Column width={3}>
+              <ShopDetailContainer>
+                <div>
+                  <TypeLabel>หมวดหมู่</TypeLabel>
+                  <ProductTag
+                    active={!tag}
+                    onClick={() => {
+                      setTag(false)
+                      setType("")
+                    }}>
+                    สิ้นค้าทั้งหมด
+                </ProductTag>
+                  {
+                    allType.map(aType =>
+                      <ProductTag
+                        active={aType._id == type}
+                        onClick={() => {
+                          setType(aType._id)
+                          setTag(true)
+                        }}>
+                        {aType.name}
+                      </ProductTag>
+                    )
+                  }
+                </div>
+              </ShopDetailContainer>
+            </Grid.Column>
+            <Grid.Column width={13}>
               {
-                [1, 2, 3, 4, 5, 6, 7, 8, 9].map(a =>
-                  <Card>
-                    <Skeleton variant="rect" animation="wave" height="100%" width="100%" />
-                  </Card>)
+                isLoading ?
+                  <ProductContainer>
+                    {
+                      [1, 2, 3, 4, 5, 6, 7, 8, 9].map(a =>
+                        <Card>
+                          <Skeleton variant="rect" animation="wave" height="100%" width="100%" />
+                        </Card>)
+                    }
+                  </ProductContainer>
+                  :
+                  <ProductContainer>
+                    {
+                      allProduct.map(item => {
+                        if (!tag) {
+                          return (
+                            <ProductCard
+                              shopId={item.shopId}
+                              imageUrl={item.mainPicture}
+                              name={item.name}
+                              price={item.price + item.greenPrice}
+                              greenPrice={item.greenPrice}
+                              id={item._id}
+                            />)
+                        }
+                        else {
+                          if (item.tagId == type) {
+                            return (
+                              <ProductCard
+                                shopId={item.shopId}
+                                imageUrl={item.mainPicture}
+                                name={item.name}
+                                price={item.price + item.greenPrice}
+                                greenPrice={item.greenPrice}
+                                id={item._id}
+                              />)
+                          }
+                        }
+                      })
+                    }
+                  </ProductContainer>
               }
-            </ProductContainer>
-            :
-            <ProductContainer>
-              {
-                allProduct.map(item => {
-                  return (
-                    <ProductCard
-                      shopId={item.shopId}
-                      imageUrl={item.mainPicture}
-                      name={item.name}
-                      price={item.price + item.greenPrice}
-                      greenPrice={item.greenPrice}
-                      id={item._id}
-                    />)
-                })
-              }
-            </ProductContainer>
-
-        }
-
-
-
-
+            </Grid.Column>
+          </Grid>
+        </Container>
       </MainLayout>
     </div>
   )
@@ -114,8 +193,11 @@ export default function Home() {
 const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
   margin: 10px;
+`
+const Container = styled.div`
+    padding: 5px 10px 0 30px;
 `
 
 const Slogan = styled.div`
@@ -156,4 +238,36 @@ const Card = styled.div`
     height: 270px;
     margin: 8px;
     border-radius: 10px;
+`
+
+const ShopDetailContainer = styled.div`
+    /* text-align: center; */
+    /* margin: 5px; */
+    padding: 30px;
+    background-color: #D0DDD4;
+    /* border: 1px solid #CDCDCF; */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
+const TypeLabel = styled.div`
+    margin: 0 0 25px 0;
+    font-size: 17px;
+    font-weight: bold;
+`
+
+const ProductTag = styled.div`
+    border-radius: 5px;
+    margin: 2px 0 2px 0;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+
+    ${({ active }) => active && `
+        background: white;
+        color: #185341;
+        transition: 0.3s;
+    `}
 `

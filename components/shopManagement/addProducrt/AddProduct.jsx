@@ -13,7 +13,7 @@ export default function AddProduct() {
     const [isAddProductLoading, setIsAddProductLoading] = useState(false);
 
     const [name, setName] = useState("");
-    const [greenPrice, setGreenPrice] = useState(null);
+    const [greenPrice, setGreenPrice] = useState(1);
     const [price, setPrice] = useState(null);
     const [tagId, setTagId] = useState(null);
     const [stock, setStock] = useState(null);
@@ -85,7 +85,7 @@ export default function AddProduct() {
 
                                     setName("")
                                     setPrice(0)
-                                    setGreenPrice(0)
+                                    setGreenPrice(1)
                                     setTagId("0")
                                     setPreview("")
                                     setStock(0)
@@ -134,9 +134,9 @@ export default function AddProduct() {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Input required label='ราคา' width={8} type="number" value={price}
+                                <Form.Input required label='ราคา' width={8} type="number" min="1" value={price} 
                                     onChange={e => setPrice(e.target.value)} />
-                                <Form.Input required label='Green Price' width={8} type="number" value={greenPrice}
+                                <Form.Input required label='Green Price' width={8} type="number" min="1" value={greenPrice}
                                     onChange={e => setGreenPrice(e.target.value)} />
                             </Form.Group>
 

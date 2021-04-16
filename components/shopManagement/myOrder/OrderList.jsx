@@ -43,7 +43,6 @@ export default function OrderList(props) {
                         setOnwerAddress(res.data)
                     })
             })
-
     }, [])
 
     return (
